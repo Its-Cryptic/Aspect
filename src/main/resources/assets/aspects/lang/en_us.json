@@ -1,0 +1,40 @@
+{
+  "item.aspects.zircon": "Zircon",
+  "item.aspects.raw_zircon": "Raw Zircon",
+  "item.aspects.mizaru_spawn_egg": "§lMizaru Spawn Egg",
+  "item.aspects.kikazaru_spawn_egg": "§lKikazaru Spawn Egg",
+  "item.aspects.iwazaru_spawn_egg": "§lIwazaru Spawn Egg",
+
+
+  "block.aspects.zircon_block": "Zircon Block",
+  "block.aspects.zircon_ore": "Zircon Ore",
+
+  "itemGroup.riftrealms": "Rift Realms",
+  "itemGroup.aspects": "Aspects",
+  "itemGroup.aspects_tools": "Aspects Tools",
+  "itemGroup.aspects_blocks": "Aspects Blocks",
+
+
+  "aspect_proficiency": "Aspect Proficiency",
+  "aspect_power": "Aspect Power",
+  "max_flux": "Max Flux",
+  "flux_regen": "Flux Regen",
+
+  "key.category.aspects.tutorial": "Aspects",
+  "key.aspects.drink_water": "Drink Water",
+  "message.aspects.drink_water": "This water tastes like shit what the fuck",
+  "message.aspects.cant_drink_water": "Dumbass where is the water",
+  "message.aspects.hold_shift": "Press SHIFT for more information",
+
+  "entity.aspects.mizaru": "Mizaru",
+  "entity.aspects.kikazaru": "Kikazaru",
+  "entity.aspects.iwazaru": "Iwazaru",
+
+  "note.aspects.mizaru": "Who sees no evil..",
+  "note.aspects.kikazaru": "Who hears no evil..",
+  "note.aspects.iwazaru": "Who speaks no evil..",
+
+  "note.aspects.mizaru_spawner": "Summons Mizaru",
+  "note.aspects.kikazaru_spawner": "Summons Kikazaru",
+  "note.aspects.iwazaru_spawner": "Summons Iwazaru"
+}
