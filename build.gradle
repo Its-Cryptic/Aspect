@@ -221,6 +221,7 @@ dependencies {
     implementation fg.deobf("dev.architectury:architectury-forge:${architecturyVersion}")
 
     runtimeOnly fg.deobf("curse.maven:probejs-585406:4744799")
+    runtimeOnly fg.deobf("curse.maven:ftb-library-forge-404465:4661834")
 
     // Real mod deobf dependency examples - these get remapped to your current mappings
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency
