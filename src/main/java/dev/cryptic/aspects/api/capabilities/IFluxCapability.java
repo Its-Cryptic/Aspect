@@ -1,5 +1,6 @@
 package dev.cryptic.aspects.api.capabilities;
 
+import dev.cryptic.aspects.kubejs.bindings.AspectType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.INBTSerializable;
 
@@ -16,17 +17,21 @@ public interface IFluxCapability extends INBTSerializable<CompoundTag> {
     
     int removeFlux(final int flux);
 
+    int addMaxFlux(final int flux);
+
+    int removeMaxFlux(final int flux);
+
     default int getAspectLevel() {
         return 0;
     }
 
-    default int getAspectType() {
-        return 0;
+    default AspectType getAspectType() {
+        return AspectType.BASE;
     }
 
     default void setAspectLevel(int level) {
     }
 
-    default void setAspectType(int aspectType) {
+    default void setAspectType(AspectType aspectType) {
     }
 }

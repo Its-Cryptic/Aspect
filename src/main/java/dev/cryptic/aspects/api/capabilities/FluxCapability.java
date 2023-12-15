@@ -1,5 +1,6 @@
 package dev.cryptic.aspects.api.capabilities;
 
+import dev.cryptic.aspects.kubejs.bindings.AspectType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.Nullable;
@@ -14,7 +15,7 @@ public class FluxCapability implements IFluxCapability {
 
     private int aspectLevel;
 
-    private int aspectType;
+    private AspectType aspectType = AspectType.BASE;
 
 
     public FluxCapability(@Nullable final LivingEntity entity) {
@@ -62,12 +63,25 @@ public class FluxCapability implements IFluxCapability {
     }
 
     @Override
+    public int addMaxFlux(int flux) {
+        this.setMaxFlux(this.getMaxFlux() + flux);
+        return this.getMaxFlux();
+    }
+
+    @Override
+    public int removeMaxFlux(int flux) {
+        if (flux < 0) flux = 0;
+        this.setMaxFlux(this.getMaxFlux()- flux);
+        return this.getMaxFlux();
+    }
+
+    @Override
     public int getAspectLevel() {
         return aspectLevel;
     }
 
     @Override
-    public int getAspectType() {
+    public AspectType getAspectType() {
         return aspectType;
     }
 
@@ -77,8 +91,8 @@ public class FluxCapability implements IFluxCapability {
     }
 
     @Override
-    public void setAspectType(int aspectType) {
-        this.aspectType = aspectType;
+    public void setAspectType(AspectType type) {
+        this.aspectType = type;
     }
 
     @Override
@@ -87,7 +101,7 @@ public class FluxCapability implements IFluxCapability {
         tag.putInt("flux", getCurrentFlux());
         tag.putInt("maxFlux", getMaxFlux());
         tag.putInt("aspectLevel", getAspectLevel());
-        tag.putInt("aspectType", getAspectType());
+        tag.putInt("aspectType", getAspectType().getId());
         return tag;
     }
 
@@ -96,6 +110,6 @@ public class FluxCapability implements IFluxCapability {
         setFlux(tag.getInt("flux"));
         setMaxFlux(tag.getInt("maxFlux"));
         setAspectLevel(tag.getInt("aspectLevel"));
-        setAspectType(tag.getInt("aspectType"));
+        setAspectType(AspectType.getById(tag.getInt("aspectType")));
     }
 }
