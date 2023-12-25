@@ -95,6 +95,11 @@ public class FluxCapability implements IFluxCapability {
         this.aspectType = type;
     }
 
+    public boolean isAspectActive() {
+        return this.aspectLevel > 0;
+    }
+
+
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();

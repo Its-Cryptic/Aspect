@@ -18,27 +18,61 @@ import java.util.List;
 public class AbstractFluxItem extends Item {
 
     private static final String FLUX_KEY = "Flux";
-    private static final int MAX_FLUX = 100;
 
-    public AbstractFluxItem(Properties properties) {
+    private static int THRESHOLD_MIN_FLUX;
+    private static int SAFE_MAX_FLUX;
+    private static int MAX_FLUX;
+
+    private static int FLUX;
+
+    public AbstractFluxItem(int threshholdMin, int safeMax, int max, Properties properties) {
         super(properties);
+        THRESHOLD_MIN_FLUX = Math.max(threshholdMin, 0);
+        SAFE_MAX_FLUX = Math.min(safeMax, max);
+        MAX_FLUX = Math.max(0, max);
+
     }
 
-    @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-        ItemStack itemStack = player.getItemInHand(hand);
+//    @Override
+//    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+//        ItemStack itemStack = player.getItemInHand(hand);
+//
+//        if (!level.isClientSide()) {
+//            CompoundTag tag = itemStack.getOrCreateTag();
+//            int currentFlux = tag.getInt(FLUX_KEY);
+//            if (currentFlux < MAX_FLUX) {
+//                currentFlux++;
+//                tag.putInt(FLUX_KEY, currentFlux + 1);
+//            }
+//            itemStack.setTag(tag);
+//        }
+//
+//        return InteractionResultHolder.success(itemStack);
+//    }
 
-        if (!level.isClientSide()) {
-            CompoundTag tag = itemStack.getOrCreateTag();
-            int currentFlux = tag.getInt(FLUX_KEY);
-            if (currentFlux < MAX_FLUX) {
-                currentFlux++;
-                tag.putInt(FLUX_KEY, currentFlux + 1);
-            }
-            itemStack.setTag(tag);
+    public void increaseFlux(ItemStack itemStack) {
+        CompoundTag tag = itemStack.getOrCreateTag();
+        int currentFlux = tag.getInt(FLUX_KEY);
+        if (currentFlux < MAX_FLUX) {
+            currentFlux++;
+            tag.putInt(FLUX_KEY, currentFlux);
         }
+        itemStack.setTag(tag);
+    }
 
-        return InteractionResultHolder.success(itemStack);
+    public void decreaseFlux(ItemStack itemStack) {
+        CompoundTag tag = itemStack.getOrCreateTag();
+        int currentFlux = tag.getInt(FLUX_KEY);
+        if (currentFlux > 0) {
+            currentFlux--;
+            tag.putInt(FLUX_KEY, currentFlux);
+        }
+        itemStack.setTag(tag);
+    }
+
+    public int getFlux(ItemStack itemStack) {
+        CompoundTag tag = itemStack.getOrCreateTag();
+        return tag.getInt(FLUX_KEY);
     }
 
     @Override

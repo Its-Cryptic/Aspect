@@ -2,6 +2,7 @@ package dev.cryptic.aspects.api.networking.packet;
 
 import dev.cryptic.aspects.api.capabilities.PlayerFluxProvider;
 import dev.cryptic.aspects.api.networking.ModMessages;
+import dev.cryptic.aspects.item.custom.AbstractFluxItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -9,6 +10,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -28,20 +31,20 @@ public class UseRawFluxC2SPacket {
 
     }
 
-    public boolean handle(Supplier<NetworkEvent.Context> supplier) {
-        NetworkEvent.Context context = supplier.get();
+    public void handle(Supplier<NetworkEvent.Context> contextSupplier) {
+        NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
-            // HERE WE ARE ON THE SERVER!
-            ServerPlayer player = context.getSender();
-            ServerLevel level = player.getLevel();
-
-            player.getCapability(PlayerFluxProvider.PLAYER_FLUX).ifPresent(energy -> {
-                if (energy.getFlux() > 0) {
-                    energy.removeFlux(1);
+            Player player = context.getSender();
+            if (player != null) {
+                ItemStack itemStack = player.getMainHandItem(); // Or check offhand as well
+                if (itemStack.getItem() instanceof AbstractFluxItem) {
+                    AbstractFluxItem fluxItem = (AbstractFluxItem) itemStack.getItem();
+                    fluxItem.increaseFlux(itemStack); // Method to increase flux
                 }
-            });
+            }
         });
-        return true;
+        context.setPacketHandled(true);
     }
+
 
 }

@@ -35,7 +35,8 @@ public class ModItems {
                     new Item.Properties().tab(ModCreativeModeTab.ASPECTS_BLOCKS).rarity(Rarity.EPIC)));
 
     public static final RegistryObject<Item> FLUX = ITEMS.register("whistle",
-            () -> new AbstractFluxItem(new Item.Properties().tab(ModCreativeModeTab.ASPECTS_BLOCKS).rarity(Rarity.EPIC)));
+            () -> new AbstractFluxItem(20, 80, 100,
+                    new Item.Properties().tab(ModCreativeModeTab.ASPECTS_BLOCKS).rarity(Rarity.EPIC)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
