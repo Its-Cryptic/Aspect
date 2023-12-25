@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.cryptic.aspects.Aspects;
 import dev.cryptic.aspects.api.client.ThirstHudOverlay;
+import dev.cryptic.aspects.api.client.gui.FluxItemUI;
 import dev.cryptic.aspects.api.networking.ModMessages;
 import dev.cryptic.aspects.api.networking.packet.DrinkWaterC2SPacket;
 import dev.cryptic.aspects.api.networking.packet.UseRawFluxC2SPacket;
@@ -43,14 +44,21 @@ public class ClientEvents {
 
         @SubscribeEvent
         public static void onClientTick(TickEvent.ClientTickEvent event) {
+            // Sends packet when held down
             if (event.phase == TickEvent.Phase.START) {
                 Minecraft minecraft = Minecraft.getInstance();
                 if (minecraft.player != null) {
                     if (KeyBinding.USE_RAW_FLUX_KEY.isDown()) {
-                        minecraft.player.sendSystemMessage(Component.literal("Pressed Raw Flux Use Key!"));
                         ModMessages.sendToServer(new UseRawFluxC2SPacket());
-                    } else {
-                        minecraft.player.sendSystemMessage(Component.literal("Not Pressed Raw Flux Use Key!"));
+                    }
+                }
+            }
+            // Sends packet when double tapped within 5 ticks
+            if (event.phase == TickEvent.Phase.START) {
+                Minecraft minecraft = Minecraft.getInstance();
+                if (minecraft.player != null) {
+                    if (KeyBinding.USE_RAW_FLUX_KEY.isDown()) {
+                        ModMessages.sendToServer(new UseRawFluxC2SPacket());
                     }
                 }
             }
@@ -59,28 +67,6 @@ public class ClientEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             // Client setup code here
-        }
-
-        @SubscribeEvent
-        public static void onRenderPlayer(RenderPlayerEvent event) {
-            renderArmOverlay(event);
-        }
-
-        private static void renderArmOverlay(RenderPlayerEvent event) {
-            Minecraft mc = Minecraft.getInstance();
-            ResourceLocation overlayTexture = new ResourceLocation(Aspects.MODID, "textures/arm_overlay.png");
-            PoseStack matrixStack = event.getPoseStack();
-
-            RenderSystem.setShaderTexture(0, overlayTexture);
-
-            // You will need to adjust the rendering code to position and scale the texture correctly.
-            // This is a complex task and requires understanding of the player model and rendering system.
-
-            // Example rendering code (this is very basic and likely needs adjustment):
-            matrixStack.pushPose();
-            // Position and scale the texture
-            // Render the texture
-            matrixStack.popPose();
         }
     }
 
@@ -97,6 +83,7 @@ public class ClientEvents {
         @SubscribeEvent
         public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
             event.registerAboveAll("thirst", ThirstHudOverlay.HUD_THIRST);
+            event.registerAboveAll("flux_item_ui", FluxItemUI.OVERLAY);
         }
 
     }

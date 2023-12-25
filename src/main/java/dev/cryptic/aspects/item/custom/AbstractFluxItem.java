@@ -5,6 +5,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -19,11 +20,9 @@ public class AbstractFluxItem extends Item {
 
     private static final String FLUX_KEY = "Flux";
 
-    private static int THRESHOLD_MIN_FLUX;
-    private static int SAFE_MAX_FLUX;
-    private static int MAX_FLUX;
-
-    private static int FLUX;
+    public static int THRESHOLD_MIN_FLUX;
+    public static int SAFE_MAX_FLUX;
+    public static int MAX_FLUX;
 
     public AbstractFluxItem(int threshholdMin, int safeMax, int max, Properties properties) {
         super(properties);
@@ -32,23 +31,6 @@ public class AbstractFluxItem extends Item {
         MAX_FLUX = Math.max(0, max);
 
     }
-
-//    @Override
-//    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-//        ItemStack itemStack = player.getItemInHand(hand);
-//
-//        if (!level.isClientSide()) {
-//            CompoundTag tag = itemStack.getOrCreateTag();
-//            int currentFlux = tag.getInt(FLUX_KEY);
-//            if (currentFlux < MAX_FLUX) {
-//                currentFlux++;
-//                tag.putInt(FLUX_KEY, currentFlux + 1);
-//            }
-//            itemStack.setTag(tag);
-//        }
-//
-//        return InteractionResultHolder.success(itemStack);
-//    }
 
     public void increaseFlux(ItemStack itemStack) {
         CompoundTag tag = itemStack.getOrCreateTag();
@@ -82,5 +64,10 @@ public class AbstractFluxItem extends Item {
         components.add(Component.literal("Charge: " + currentFlux + " / " + MAX_FLUX).withStyle(ChatFormatting.GREEN));
 
         super.appendHoverText(stack, level, components, flag);
+    }
+
+    @Override
+    public boolean isFireResistant() {
+        return true;
     }
 }
