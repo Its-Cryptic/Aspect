@@ -1,11 +1,10 @@
-package dev.cryptic.aspects.kubejs.bindings;
+package dev.cryptic.aspects.api.flux;
 
 import dev.cryptic.aspects.api.capabilities.CapabilityRegistry;
 import dev.latvian.mods.kubejs.typings.Info;
 import net.minecraft.world.entity.player.Player;
 
-public class AspectJSWrapper {
-
+public class FluxUtil {
     @Info("Get a player's current flux")
     public static int getCurrentFlux(Player player) {
         final int[] flux = new int[1];
