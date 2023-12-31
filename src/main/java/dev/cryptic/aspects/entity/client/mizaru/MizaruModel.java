@@ -1,4 +1,4 @@
-package dev.cryptic.aspects.entity.client;
+package dev.cryptic.aspects.entity.client.mizaru;
 
 import dev.cryptic.aspects.Aspects;
 import net.minecraft.resources.ResourceLocation;

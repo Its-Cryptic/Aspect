@@ -1,6 +1,6 @@
 package dev.cryptic.aspects.api.capabilities;
 
-import dev.cryptic.aspects.kubejs.bindings.AspectType;
+import dev.cryptic.aspects.api.flux.AspectType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.Nullable;

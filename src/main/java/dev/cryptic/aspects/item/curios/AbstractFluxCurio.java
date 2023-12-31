@@ -18,7 +18,7 @@ public abstract class AbstractFluxCurio extends AspectCurio {
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
         Multimap<Attribute, AttributeModifier> attributeModifiers = super.getAttributeModifiers(slotContext, uuid, stack);
-        attributeModifiers.put(AttributeRegistry.MAX_FLUX.get(), new AttributeModifier(uuid, "max_flux_modifier_curio", 100, AttributeModifier.Operation.ADDITION));
+        //attributeModifiers.put(AttributeRegistry.MAX_FLUX.get(), new AttributeModifier(uuid, "max_flux_modifier_curio", 100, AttributeModifier.Operation.ADDITION));
         attributeModifiers.put(AttributeRegistry.FLUX_REGEN.get(), new AttributeModifier(uuid, "max_flux_modifier_curio", 10, AttributeModifier.Operation.ADDITION));
         return attributeModifiers;
     }

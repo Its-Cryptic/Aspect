@@ -20,8 +20,9 @@
   "max_flux": "Max Flux",
   "flux_regen": "Flux Regen",
 
-  "key.category.aspects.tutorial": "Aspects",
+  "key.category.aspects": "Aspects",
   "key.aspects.drink_water": "Drink Water",
+  "key.aspects.use_raw_flux": "Use Flux",
   "message.aspects.drink_water": "This water tastes like shit what the fuck",
   "message.aspects.cant_drink_water": "Dumbass where is the water",
   "message.aspects.hold_shift": "Press SHIFT for more information",

@@ -27,7 +27,7 @@ public class FluxItemUI extends GuiComponent {
         int currentFlux = fluxItem.getFlux(fluxItemStack);
 
 
-        int barWidth = 182;
+        int barWidth = 100; // 182
         int barHeight = 5;
         int posX = (screenWidth - barWidth) / 2;
         int posY = screenHeight - 50;

@@ -22,8 +22,8 @@ public class AttributeRegistry {
 
     public static final RegistryObject<Attribute> ASPECT_PROFICIENCY = registerAttribute("aspect_proficiency",(id) -> new RangedAttribute(id, 0.0D, 0, 10).setSyncable(true), "cd455036-75b4-4013-b9ea-ecccfe08f917");
     public static final RegistryObject<Attribute> ASPECT_POWER = registerAttribute("aspect_power",(id) -> new RangedAttribute(id, 0.0D, 0, 10).setSyncable(true), "53dd12dd-383d-41fa-b5e9-a0334ea07ffb");
-    public static final RegistryObject<Attribute> MAX_FLUX = registerAttribute("max_flux",(id) -> new RangedAttribute(id, 100.0D, 0, 1024).setSyncable(true), "59c5c348-ff7b-4419-801b-7f55654dc095");
-    public static final RegistryObject<Attribute> FLUX_REGEN = registerAttribute("flux_regen",(id) -> new RangedAttribute(id, 2.0D, 0, 1024).setSyncable(true), "007d37b4-9aec-45ec-9ea5-df9d383143f6");
+    public static final RegistryObject<Attribute> FLUX_REGEN = registerAttribute("flux_regen",(id) -> new RangedAttribute(id, 2.0D, 0, 10000).setSyncable(true), "007d37b4-9aec-45ec-9ea5-df9d383143f6");
+    public static final RegistryObject<Attribute> FLAT_MAX_FLUX = registerAttribute("max_flux_flat_bonus",(id) -> new RangedAttribute(id, 0.0D, 0, 10000).setSyncable(true), "59c5c348-ff7b-4419-801b-7f55654dc095");
 
 
     public static RegistryObject<Attribute> registerAttribute(String name, Function<String, Attribute> attribute, String uuid) {
@@ -38,39 +38,9 @@ public class AttributeRegistry {
 
     @SubscribeEvent
     public static void modifyEntityAttributes(EntityAttributeModificationEvent event) {
-//        event.getTypes().forEach(entity -> {
-//            RiftRealmsCore.LOGGER.error(entity.toString());
-//            event.add(entity, ASPECT_PROFICIENCY.get());
-//            event.add(entity, ASPECT_POWER.get());
-//        });
         event.add(EntityType.PLAYER, ASPECT_PROFICIENCY.get());
         event.add(EntityType.PLAYER, ASPECT_POWER.get());
-        event.add(EntityType.PLAYER, MAX_FLUX.get());
         event.add(EntityType.PLAYER, FLUX_REGEN.get());
+        event.add(EntityType.PLAYER, FLAT_MAX_FLUX.get());
     }
-
-//    @SubscribeEvent
-//    public static void modifyEntityAttributes(EntityAttributeModificationEvent event) {
-//        event.getTypes().stream().filter(e -> e == EntityType.PLAYER).forEach(e -> {
-//            ATTRIBUTES.getEntries().forEach((v)->{
-//                event.add(e, v.get());
-//            });
-//        });
-//    }
-
-//    @SubscribeEvent
-//    public static void modifyEntityAttributes(EntityAttributeModificationEvent event) {
-//        for (EntityType<? extends LivingEntity> e : event.getTypes())
-//            if (e == EntityType.PLAYER) for (RegistryObject<Attribute> v : ATTRIBUTES.getEntries())
-//                event.add(e, v.get());
-//    }
-
-//    @SubscribeEvent
-//    public void modifyEntityAttributes(EntityAttributeModificationEvent event) {
-//        if (!event.has(EntityType.PLAYER, ASPECT_PROFICIENCY.get())) {
-//            event.add(EntityType.PLAYER, ASPECT_PROFICIENCY.get());
-//        }
-//    }
-
-
 }

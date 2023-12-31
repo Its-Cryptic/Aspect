@@ -1,10 +1,8 @@
 package dev.cryptic.aspects.api.gamerule;
 
-import dev.cryptic.aspects.Aspects;
 import dev.cryptic.aspects.api.util.GameruleFactory;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.GameRules.Category;
-import net.minecraftforge.fml.common.Mod;
 
 public class GameruleRegistry {
     public static GameRules.Key<GameRules.BooleanValue> BRAIN_DAMAGE;
@@ -22,4 +20,5 @@ public class GameruleRegistry {
         ASPECT_PVP = GameruleFactory.createBoolean("allowAspectPVP", Category.PLAYER, true);
         FLUX_CYCLE = GameruleFactory.createBoolean("doFluxCycle", Category.MISC, true);
     }
+
 }

@@ -1,6 +1,7 @@
 package dev.cryptic.aspects.entity;
 
 import dev.cryptic.aspects.Aspects;
+import dev.cryptic.aspects.entity.ability.flame.fireblast.FireBlastProjectile;
 import dev.cryptic.aspects.entity.threewisemonkeys.Mizaru;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -18,6 +19,11 @@ public class ModEntityTypes {
             ENTITY_TYPES.register("mizaru", () -> EntityType.Builder.of(Mizaru::new, MobCategory.MONSTER)
             .sized(0.7F, 2.0F)
             .build(new ResourceLocation(Aspects.MODID, "mizaru").toString()));
+
+    public static final RegistryObject<EntityType<FireBlastProjectile>> FIRE_BLAST =
+            ENTITY_TYPES.register("fire_blast", () -> EntityType.Builder.of(FireBlastProjectile::create, MobCategory.MISC)
+                    .sized(0.7F, 2.0F)
+                    .build(new ResourceLocation(Aspects.MODID, "fire_blast").toString()));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

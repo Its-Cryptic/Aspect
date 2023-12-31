@@ -3,11 +3,13 @@ package dev.cryptic.aspects;
 import com.mojang.logging.LogUtils;
 import dev.cryptic.aspects.api.gamerule.GameruleRegistry;
 import dev.cryptic.aspects.api.networking.ModMessages;
+import dev.cryptic.aspects.block.ModBlockEntities;
 import dev.cryptic.aspects.block.ModBlocks;
 import dev.cryptic.aspects.config.AspectClientConfig;
 import dev.cryptic.aspects.config.AspectCommonConfig;
 import dev.cryptic.aspects.entity.ModEntityTypes;
-import dev.cryptic.aspects.entity.client.MizaruRenderer;
+import dev.cryptic.aspects.entity.ability.flame.fireblast.FireBlastRenderer;
+import dev.cryptic.aspects.entity.client.mizaru.MizaruRenderer;
 import dev.cryptic.aspects.item.ModItems;
 import dev.cryptic.aspects.setup.ModSetup;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -44,6 +46,8 @@ public class Aspects {
 
         ModBlocks.register(modEventBus);
 
+        ModBlockEntities.register(modEventBus);
+
         ModEntityTypes.register(modEventBus);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AspectCommonConfig.SPEC, "aspect-common.toml");
@@ -78,6 +82,7 @@ public class Aspects {
         public static void onClientSetup(FMLClientSetupEvent event)
         {
             EntityRenderers.register(ModEntityTypes.MIZARU.get(), MizaruRenderer::new);
+            EntityRenderers.register(ModEntityTypes.FIRE_BLAST.get(), FireBlastRenderer::new);
         }
     }
 }

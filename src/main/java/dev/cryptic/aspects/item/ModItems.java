@@ -33,7 +33,7 @@ public class ModItems {
             () -> new MonkeySpawnItem(ModEntityTypes.MIZARU, Constants.IWAZARU_NOTE, Constants.IWAZARU_SPAWN_NOTE,
                     new Item.Properties().tab(ModCreativeModeTab.ASPECTS_BLOCKS).rarity(Rarity.EPIC)));
 
-    public static final RegistryObject<Item> FLUX = ITEMS.register("whistle",
+    public static final RegistryObject<Item> FLUX_WHISTLE = ITEMS.register("whistle",
             () -> new Whistle(20, 80, 100,
                     new Item.Properties().tab(ModCreativeModeTab.ASPECTS_BLOCKS).rarity(Rarity.EPIC)));
 

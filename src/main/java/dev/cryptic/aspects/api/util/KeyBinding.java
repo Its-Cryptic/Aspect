@@ -6,7 +6,7 @@ import net.minecraftforge.client.settings.KeyConflictContext;
 import org.lwjgl.glfw.GLFW;
 
 public class KeyBinding {
-    public static final String KEY_CATEGORY_ASPECTS = "key.aspects.riftrealms.aspects";
+    public static final String KEY_CATEGORY_ASPECTS = "key.category.aspects";
     public static final String KEY_DRINK_WATER = "key.aspects.drink_water";
     public static final String KEY_USE_RAW_FLUX = "key.aspects.use_raw_flux";
 

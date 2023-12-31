@@ -1,4 +1,4 @@
-package dev.cryptic.aspects.kubejs.bindings;
+package dev.cryptic.aspects.api.flux;
 
 import dev.cryptic.aspects.api.capabilities.FluxProperties;
 

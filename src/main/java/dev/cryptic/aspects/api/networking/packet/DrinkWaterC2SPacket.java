@@ -16,8 +16,8 @@ import java.util.function.Supplier;
 
 public class DrinkWaterC2SPacket {
     //C2S (Client 2 Server)
-    public static final String MESSAGE_DRINK_WATER = "message.riftrealms.drink_water";
-    public static final String MESSAGE_CANT_DRINK_WATER = "message.riftrealms.cant_drink_water";
+    public static final String MESSAGE_DRINK_WATER = "message.aspects.drink_water";
+    public static final String MESSAGE_CANT_DRINK_WATER = "message.aspects.cant_drink_water";
     public DrinkWaterC2SPacket() {
 
     }

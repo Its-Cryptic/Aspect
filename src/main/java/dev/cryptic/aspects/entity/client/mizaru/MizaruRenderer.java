@@ -1,4 +1,4 @@
-package dev.cryptic.aspects.entity.client;
+package dev.cryptic.aspects.entity.client.mizaru;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

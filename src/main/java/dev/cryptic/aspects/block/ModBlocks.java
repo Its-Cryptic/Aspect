@@ -1,6 +1,7 @@
 package dev.cryptic.aspects.block;
 
 import dev.cryptic.aspects.Aspects;
+import dev.cryptic.aspects.block.custom.FluxCoreBlock;
 import dev.cryptic.aspects.item.ModCreativeModeTab;
 import dev.cryptic.aspects.item.ModItems;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -33,6 +34,14 @@ public class ModBlocks {
                     .requiresCorrectToolForDrops(),
                     UniformInt.of(3,7)),
             ModCreativeModeTab.ASPECTS);
+
+    public static final RegistryObject<Block> FLUX_CORE_BLOCK = registerBlock("flux_core",
+            () -> new FluxCoreBlock(BlockBehaviour.Properties.of(Material.AMETHYST)
+                    .strength(6f)
+                    .requiresCorrectToolForDrops()),
+            ModCreativeModeTab.ASPECTS_BLOCKS);
+
+
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block, CreativeModeTab tab) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);

@@ -9,15 +9,14 @@ import dev.cryptic.aspects.api.networking.ModMessages;
 import dev.cryptic.aspects.api.networking.packet.DrinkWaterC2SPacket;
 import dev.cryptic.aspects.api.networking.packet.UseRawFluxC2SPacket;
 import dev.cryptic.aspects.api.util.KeyBinding;
+import dev.cryptic.aspects.entity.ModEntityTypes;
+import dev.cryptic.aspects.entity.ability.flame.fireblast.FireBlastRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -54,14 +53,14 @@ public class ClientEvents {
                 }
             }
             // Sends packet when double tapped within 5 ticks
-            if (event.phase == TickEvent.Phase.START) {
-                Minecraft minecraft = Minecraft.getInstance();
-                if (minecraft.player != null) {
-                    if (KeyBinding.USE_RAW_FLUX_KEY.isDown()) {
-                        ModMessages.sendToServer(new UseRawFluxC2SPacket());
-                    }
-                }
-            }
+//            if (event.phase == TickEvent.Phase.START) {
+//                Minecraft minecraft = Minecraft.getInstance();
+//                if (minecraft.player != null) {
+//                    if (KeyBinding.USE_RAW_FLUX_KEY.isDown()) {
+//                        ModMessages.sendToServer(new UseRawFluxC2SPacket());
+//                    }
+//                }
+//            }
         }
 
         @SubscribeEvent
