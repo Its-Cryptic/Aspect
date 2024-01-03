@@ -21,7 +21,7 @@ public class FireBlastRenderer extends EntityRenderer<FireBlastProjectile> {
             new ResourceLocation("textures/entity/enderdragon/dragon_fireball.png"),
             new ResourceLocation("textures/entity/enderdragon/dragon_fireball.png"),
             new ResourceLocation("textures/entity/enderdragon/dragon_fireball.png"),
-            new ResourceLocation("textures/entity/enderdragon/dragon_fireball.png"),
+            new ResourceLocation("textures/block/bedrock.png"),
             new ResourceLocation("textures/entity/enderdragon/dragon_fireball.png"),
     };
 
@@ -50,11 +50,11 @@ public class FireBlastRenderer extends EntityRenderer<FireBlastProjectile> {
         Matrix4f poseMatrix = pose.pose();
         Matrix3f normalMatrix = pose.normal();
 
-        VertexConsumer consumer = bufferSource.getBuffer(RenderType.energySwirl(getTextureLocation(animOffset), 0, 0));
+        VertexConsumer consumer = bufferSource.getBuffer(RenderType.entitySolid(getTextureLocation(animOffset)));
 
         float halfWidth = 2;
         float halfHeight = 1;
-        float angleCorrection = 55;
+        float angleCorrection = 0;
         //Vertical plane
         poseStack.mulPose(Vector3f.XP.rotationDegrees(angleCorrection));
         consumer.vertex(poseMatrix, 0, -halfWidth, -halfHeight).color(255, 255, 255, 255).uv(0f, 1f).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).normal(normalMatrix, 0f, 1f, 0f).endVertex();
