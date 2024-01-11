@@ -1,1 +1,1 @@
-dev.cryptic.aspects.AspectsPlugin
+dev.cryptic.aspects.AspectPlugin

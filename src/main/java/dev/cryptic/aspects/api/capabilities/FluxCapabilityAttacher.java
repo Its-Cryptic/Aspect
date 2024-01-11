@@ -1,6 +1,6 @@
 package dev.cryptic.aspects.api.capabilities;
 
-import dev.cryptic.aspects.Aspects;
+import dev.cryptic.aspects.Aspect;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -17,7 +17,7 @@ public class FluxCapabilityAttacher {
     private static class FluxCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
         // This will be the object's ID in the player's nbt under ForgeCaps
-        public static final ResourceLocation ID = new ResourceLocation(Aspects.MODID, "flux");
+        public static final ResourceLocation ID = new ResourceLocation(Aspect.MODID, "flux");
 
         private final IFluxCapability capability = new FluxCapability(null);
         private final LazyOptional<IFluxCapability> optional = LazyOptional.of(() -> capability);

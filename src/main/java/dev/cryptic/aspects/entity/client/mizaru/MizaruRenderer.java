@@ -3,7 +3,7 @@ package dev.cryptic.aspects.entity.client.mizaru;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
-import dev.cryptic.aspects.Aspects;
+import dev.cryptic.aspects.Aspect;
 import dev.cryptic.aspects.entity.threewisemonkeys.Mizaru;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -21,7 +21,7 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
         this.shadowRadius = 0.6f;
     }
 
-    private static final ResourceLocation UV_TEST = new ResourceLocation(Aspects.MODID, "textures/vfx/uv_test.png");
+    private static final ResourceLocation UV_TEST = new ResourceLocation(Aspect.MODID, "textures/vfx/uv_test.png");
 
     private float accumulatedRotation = 0.0f;
 
@@ -52,7 +52,7 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
 
     @Override
     public ResourceLocation getTextureLocation(Mizaru instance) {
-        return new ResourceLocation(Aspects.MODID, "textures/entity/chomper_texture.png");
+        return new ResourceLocation(Aspect.MODID, "textures/entity/chomper_texture.png");
     }
 
     @Override

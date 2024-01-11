@@ -3,19 +3,21 @@ package dev.cryptic.aspects.api.flux;
 import dev.cryptic.aspects.api.capabilities.FluxProperties;
 
 public enum AspectType {
-    BASE(0, new FluxProperties(0,0)),
-    LIGHTNING(1, new FluxProperties(0.2,0.5)),
-    FLAME(2, new FluxProperties(0.2,0.5)),
-    BLOOD(3, new FluxProperties(0.2,0.5)),
-    SOLAR(4, new FluxProperties(0.2,0.5));
+    BASE(0, "", new FluxProperties(0,0)),
+    LIGHTNING(1, "", new FluxProperties(0.2,0.5)),
+    FLAME(2, "", new FluxProperties(0.2,0.5)),
+    BLOOD(3, "", new FluxProperties(0.2,0.5)),
+    SOLAR(4, "", new FluxProperties(0.2,0.5));
 
 
 
     private final int id;
+    private final String name;
     private final FluxProperties properties;
 
-    AspectType(int id, FluxProperties properties) {
+    AspectType(int id, String name, FluxProperties properties) {
         this.id = id;
+        this.name = name;
         this.properties = properties;
     }
 

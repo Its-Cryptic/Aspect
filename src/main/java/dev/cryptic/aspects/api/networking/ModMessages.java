@@ -1,9 +1,9 @@
 package dev.cryptic.aspects.api.networking;
 
-import dev.cryptic.aspects.Aspects;
-import dev.cryptic.aspects.api.networking.packet.DrinkWaterC2SPacket;
+import dev.cryptic.aspects.Aspect;
+//import dev.cryptic.aspects.api.networking.packet.DrinkWaterC2SPacket;
 import dev.cryptic.aspects.api.networking.packet.ExampleC2SPacket;
-import dev.cryptic.aspects.api.networking.packet.ThirstDataSyncS2CPacket;
+//import dev.cryptic.aspects.api.networking.packet.ThirstDataSyncS2CPacket;
 import dev.cryptic.aspects.api.networking.packet.UseRawFluxC2SPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -20,9 +20,10 @@ public class ModMessages {
         return packetId++;
     }
 
+
     public static void register() {
         SimpleChannel net = NetworkRegistry.ChannelBuilder
-                .named(new ResourceLocation(Aspects.MODID, "messages"))
+                .named(new ResourceLocation(Aspect.MODID, "messages"))
                 .networkProtocolVersion(() -> "1.0")
                 .clientAcceptedVersions(s -> true)
                 .serverAcceptedVersions(s -> true)
@@ -37,17 +38,17 @@ public class ModMessages {
                 .consumerMainThread(ExampleC2SPacket::handle)
                 .add();
 
-        net.messageBuilder(DrinkWaterC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(DrinkWaterC2SPacket::new)
-                .encoder(DrinkWaterC2SPacket::toBytes)
-                .consumerMainThread(DrinkWaterC2SPacket::handle)
-                .add();
-
-        net.messageBuilder(ThirstDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
-                .decoder(ThirstDataSyncS2CPacket::new)
-                .encoder(ThirstDataSyncS2CPacket::toBytes)
-                .consumerMainThread(ThirstDataSyncS2CPacket::handle)
-                .add();
+//        net.messageBuilder(DrinkWaterC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+//                .decoder(DrinkWaterC2SPacket::new)
+//                .encoder(DrinkWaterC2SPacket::toBytes)
+//                .consumerMainThread(DrinkWaterC2SPacket::handle)
+//                .add();
+//
+//        net.messageBuilder(ThirstDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+//                .decoder(ThirstDataSyncS2CPacket::new)
+//                .encoder(ThirstDataSyncS2CPacket::toBytes)
+//                .consumerMainThread(ThirstDataSyncS2CPacket::handle)
+//                .add();
 
         net.messageBuilder(UseRawFluxC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(UseRawFluxC2SPacket::new)

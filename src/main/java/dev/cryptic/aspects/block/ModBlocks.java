@@ -1,6 +1,6 @@
 package dev.cryptic.aspects.block;
 
-import dev.cryptic.aspects.Aspects;
+import dev.cryptic.aspects.Aspect;
 import dev.cryptic.aspects.block.custom.FluxCoreBlock;
 import dev.cryptic.aspects.item.ModCreativeModeTab;
 import dev.cryptic.aspects.item.ModItems;
@@ -20,7 +20,7 @@ import net.minecraftforge.registries.RegistryObject;
 import java.util.function.Supplier;
 
 public class ModBlocks {
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Aspects.MODID);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Aspect.MODID);
 
     public static final RegistryObject<Block> ZIRCON_BLOCK = registerBlock("zircon_block",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE)

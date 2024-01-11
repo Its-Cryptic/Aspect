@@ -1,6 +1,6 @@
 package dev.cryptic.aspects.api.attribute;
 
-import dev.cryptic.aspects.Aspects;
+import dev.cryptic.aspects.Aspect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
@@ -15,10 +15,10 @@ import java.util.HashMap;
 import java.util.UUID;
 import java.util.function.Function;
 
-@Mod.EventBusSubscriber(modid = Aspects.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = Aspect.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AttributeRegistry {
     public static final HashMap<RegistryObject<Attribute>, UUID> UUIDS = new HashMap<>();
-    public static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, Aspects.MODID);
+    public static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, Aspect.MODID);
 
     public static final RegistryObject<Attribute> ASPECT_PROFICIENCY = registerAttribute("aspect_proficiency",(id) -> new RangedAttribute(id, 0.0D, 0, 10).setSyncable(true), "cd455036-75b4-4013-b9ea-ecccfe08f917");
     public static final RegistryObject<Attribute> ASPECT_POWER = registerAttribute("aspect_power",(id) -> new RangedAttribute(id, 0.0D, 0, 10).setSyncable(true), "53dd12dd-383d-41fa-b5e9-a0334ea07ffb");

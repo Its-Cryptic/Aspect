@@ -2,7 +2,7 @@ package dev.cryptic.aspects.api.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import dev.cryptic.aspects.Aspects;
+import dev.cryptic.aspects.Aspect;
 import dev.cryptic.aspects.api.capabilities.CapabilityRegistry;
 import dev.cryptic.aspects.api.capabilities.IFluxCapability;
 import net.minecraft.client.Minecraft;
@@ -16,7 +16,7 @@ public class FluxGUI extends GuiComponent {
 
     public static final Minecraft minecraft = Minecraft.getInstance();
 
-    private static final ResourceLocation UV_TEST = new ResourceLocation(Aspects.MODID, "textures/vfx/uv_test.png");
+    private static final ResourceLocation UV_TEST = new ResourceLocation(Aspect.MODID, "textures/vfx/uv_test.png");
 
     public static boolean shouldDisplayBar() {
 

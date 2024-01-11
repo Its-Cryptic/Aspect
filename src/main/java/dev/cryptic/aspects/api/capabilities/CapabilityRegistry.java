@@ -1,9 +1,7 @@
 package dev.cryptic.aspects.api.capabilities;
 
-import dev.cryptic.aspects.Aspects;
-import dev.cryptic.aspects.api.networking.ModMessages;
-import dev.cryptic.aspects.api.networking.packet.ThirstDataSyncS2CPacket;
-import net.minecraft.server.level.ServerPlayer;
+import dev.cryptic.aspects.Aspect;
+//import dev.cryptic.aspects.api.networking.packet.ThirstDataSyncS2CPacket;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -14,7 +12,6 @@ import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
@@ -32,7 +29,7 @@ public class CapabilityRegistry {
         return entity.getCapability(FLUX_CAPABILITY);
     }
 
-    @Mod.EventBusSubscriber(modid = Aspects.MODID)
+    @Mod.EventBusSubscriber(modid = Aspect.MODID)
     public static class EventHandler {
 
         @SubscribeEvent
@@ -64,10 +61,10 @@ public class CapabilityRegistry {
         public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
             if (event.player.tickCount % 5 == 0) {
                 if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.START) {
-                    Aspects.LOGGER.info("Tick: " + event.player.tickCount + ", LogicalSide:" + event.side + ", Phase:" + event.phase);
-                    Aspects.LOGGER.info(getFlux(event.player).toString());
+                    Aspect.LOGGER.info("Tick: " + event.player.tickCount + ", LogicalSide:" + event.side + ", Phase:" + event.phase);
+                    Aspect.LOGGER.info(getFlux(event.player).toString());
                     getFlux(event.player).ifPresent(flux -> {
-                        Aspects.LOGGER.info(String.valueOf(flux.getCurrentFlux()));
+                        Aspect.LOGGER.info(String.valueOf(flux.getCurrentFlux()));
                         flux.addFlux(1);
                     });
                 }

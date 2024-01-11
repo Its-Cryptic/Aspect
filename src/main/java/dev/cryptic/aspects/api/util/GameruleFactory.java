@@ -1,6 +1,6 @@
 package dev.cryptic.aspects.api.util;
 
-import dev.cryptic.aspects.Aspects;
+import dev.cryptic.aspects.Aspect;
 import net.minecraft.world.level.GameRules;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import java.lang.reflect.Method;
@@ -18,7 +18,7 @@ public class GameruleFactory {
             ++count;
             return rule;
         } catch (Exception var6) {
-            Aspects.LOGGER.error("Gamerule Creation error", var6);
+            Aspect.LOGGER.error("Gamerule Creation error", var6);
             return null;
         }
     }

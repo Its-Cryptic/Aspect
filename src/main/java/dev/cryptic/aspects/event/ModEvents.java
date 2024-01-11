@@ -1,29 +1,23 @@
 package dev.cryptic.aspects.event;
 
-import dev.cryptic.aspects.Aspects;
-import dev.cryptic.aspects.api.capabilities.FluxCapability;
-import dev.cryptic.aspects.api.capabilities.PlayerFlux;
-import dev.cryptic.aspects.api.capabilities.PlayerFluxProvider;
-import dev.cryptic.aspects.api.networking.ModMessages;
-import dev.cryptic.aspects.api.networking.packet.ThirstDataSyncS2CPacket;
+import dev.cryptic.aspects.Aspect;
+//import dev.cryptic.aspects.api.capabilities.PlayerFlux;
+//import dev.cryptic.aspects.api.capabilities.PlayerFluxProvider;
+import dev.cryptic.aspects.api.flux.FluxUtil;
+//import dev.cryptic.aspects.api.networking.packet.ThirstDataSyncS2CPacket;
 import dev.cryptic.aspects.entity.ModEntityTypes;
 import dev.cryptic.aspects.entity.threewisemonkeys.Mizaru;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.Entity;
-import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
+import dev.cryptic.aspects.misc.SyncedData;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 
 public class ModEvents {
-    @Mod.EventBusSubscriber(modid = Aspects.MODID)
+    @Mod.EventBusSubscriber(modid = Aspect.MODID)
     public static class ForgeEvents {
 
 
@@ -79,9 +73,25 @@ public class ModEvents {
 //                }
 //            }
 //        }
+
+        @SubscribeEvent
+        public static void updateSyncedDataServerTick(TickEvent.ServerTickEvent event) {
+            if (event.phase == TickEvent.Phase.START && event.side == LogicalSide.SERVER) {
+                MinecraftServer server = event.getServer();
+                Level level = server.getLevel(Level.OVERWORLD);
+
+                SyncedData.setServerTime(server.getTickCount());
+                SyncedData.setLevelTime(level.getGameTime());
+                SyncedData.setDayTime(level.getDayTime());
+                server.getPlayerList().getPlayers().forEach(player -> {
+                    int flux = FluxUtil.getCurrentFlux(player);
+                    SyncedData.setPlayerFlux(player.getUUID(), flux);
+                });
+            }
+        }
     }
 
-    @Mod.EventBusSubscriber(modid = Aspects.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+    @Mod.EventBusSubscriber(modid = Aspect.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ModEventBusEvents {
 
         @SubscribeEvent

@@ -1,8 +1,6 @@
 package dev.cryptic.aspects.aspect.abilities;
 
-import dev.cryptic.aspects.Aspects;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.util.INBTSerializable;
 
 public class Ability implements INBTSerializable<CompoundTag> {

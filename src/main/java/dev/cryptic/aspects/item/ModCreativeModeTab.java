@@ -1,6 +1,6 @@
 package dev.cryptic.aspects.item;
 
-import dev.cryptic.aspects.Aspects;
+import dev.cryptic.aspects.Aspect;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -27,7 +27,7 @@ public class ModCreativeModeTab {
         }
     };
 
-    public static final ResourceLocation BACKGROUND_TAB = new ResourceLocation(Aspects.MODID, "textures/vfx/uv_test.png");
+    public static final ResourceLocation BACKGROUND_TAB = new ResourceLocation(Aspect.MODID, "textures/vfx/uv_test.png");
     public static final CreativeModeTab ASPECTS_BLOCKS = new CreativeModeTab("aspects_blocks") {
         @Override
         public ItemStack makeIcon() {

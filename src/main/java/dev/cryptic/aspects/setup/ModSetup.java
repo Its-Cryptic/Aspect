@@ -1,6 +1,6 @@
 package dev.cryptic.aspects.setup;
 
-import dev.cryptic.aspects.Aspects;
+import dev.cryptic.aspects.Aspect;
 import dev.cryptic.aspects.api.attribute.AttributeRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -22,6 +22,6 @@ public class ModSetup {
         InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.HANDS.getMessageBuilder().build());
         InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.BRACELET.getMessageBuilder().build());
         InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("aspects_l_eye").size(1).icon(new ResourceLocation("curios", "slot/empty_curio_slot")).build());
-        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("aspects_r_eye").size(1).icon(new ResourceLocation(Aspects.MODID, "slot/empty_eye_slot")).build());
+        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("aspects_r_eye").size(1).icon(new ResourceLocation(Aspect.MODID, "slot/empty_eye_slot")).build());
     }
 }

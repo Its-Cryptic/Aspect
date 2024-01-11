@@ -1,10 +1,9 @@
 package dev.cryptic.aspects.api.client.shader;
 
-import com.mojang.blaze3d.shaders.Shader;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
-import dev.cryptic.aspects.Aspects;
+import dev.cryptic.aspects.Aspect;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.resources.ResourceLocation;
@@ -76,9 +75,9 @@ public class AspectShaders implements ResourceManagerReloadListener {
             }
 
             try {
-                shader = new ShaderInstance(location -> provider.getResource(new ResourceLocation(Aspects.MODID, location.getPath())).or(() -> provider.getResource(location)), name, format);
+                shader = new ShaderInstance(location -> provider.getResource(new ResourceLocation(Aspect.MODID, location.getPath())).or(() -> provider.getResource(location)), name, format);
             } catch (final Exception e) {
-                Aspects.LOGGER.error("Failed to reload shader {}", name, e);
+                Aspect.LOGGER.error("Failed to reload shader {}", name, e);
             }
 
             reloadAction.accept(shader);

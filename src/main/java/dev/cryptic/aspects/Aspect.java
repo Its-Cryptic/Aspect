@@ -28,12 +28,12 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod(Aspects.MODID)
-public class Aspects {
-    public static final String MODID = "aspects";
+@Mod(Aspect.MODID)
+public class Aspect {
+    public static final String MODID = "aspect";
     public static final Logger LOGGER = LogUtils.getLogger();
 
-    public Aspects() {
+    public Aspect() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Register the commonSetup method for modloading

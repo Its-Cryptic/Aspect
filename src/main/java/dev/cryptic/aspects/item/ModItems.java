@@ -1,6 +1,6 @@
 package dev.cryptic.aspects.item;
 
-import dev.cryptic.aspects.Aspects;
+import dev.cryptic.aspects.Aspect;
 import dev.cryptic.aspects.entity.ModEntityTypes;
 import dev.cryptic.aspects.item.custom.MonkeySpawnItem;
 import dev.cryptic.aspects.item.custom.fluxitems.Whistle;
@@ -13,7 +13,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class ModItems {
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Aspects.MODID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Aspect.MODID);
 
     public static final RegistryObject<Item> ZIRCON = ITEMS.register("zircon",
             () -> new Item(new Item.Properties().tab(ModCreativeModeTab.ASPECTS)));
