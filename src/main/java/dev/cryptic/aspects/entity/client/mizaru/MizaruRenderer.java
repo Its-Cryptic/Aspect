@@ -4,11 +4,15 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import dev.cryptic.aspects.Aspect;
-import dev.cryptic.aspects.entity.threewisemonkeys.Mizaru;
+import dev.cryptic.aspects.entity.client.SomethingData;
+import dev.cryptic.aspects.entity.fluxentity.golem.threewisemonkeys.Mizaru;
+import dev.cryptic.aspects.misc.CircularBufferTracker;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 import team.lodestar.lodestone.handlers.RenderHandler;
@@ -16,6 +20,8 @@ import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry;
 import team.lodestar.lodestone.systems.rendering.VFXBuilders;
 
 public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
+
+    CircularBufferTracker<SomethingData> positionHistory = new CircularBufferTracker<>(20*20);
     public MizaruRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new MizaruModel());
         this.shadowRadius = 0.6f;
@@ -56,13 +62,35 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
     }
 
     @Override
-    public RenderType getRenderType(Mizaru animatable, float partialTick, PoseStack poseStack,
-                                    @Nullable MultiBufferSource bufferSource,
-                                    @Nullable VertexConsumer buffer, int packedLight,
-                                    ResourceLocation texture) {
+    public RenderType getRenderType(Mizaru animatable, float partialTick, PoseStack poseStack, @Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, int packedLight, ResourceLocation texture) {
+
         poseStack.scale(1.0f, 1.0f, 1.0f);
         renderQuad(poseStack, partialTick);
 
         return super.getRenderType(animatable, partialTick, poseStack, bufferSource, buffer, packedLight, texture);
+    }
+
+    @Override
+    public void render(Mizaru animatable, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+        Vec3 entityPos = animatable.position();
+        SomethingData data = new SomethingData(entityPos, poseStack);
+
+        positionHistory.recordValue(data);
+        if (positionHistory.getValue(20*15) == null) return;
+
+        Vec3 ghostPos = positionHistory.getValue(20*15).getPosition();
+        if (ghostPos == null) ghostPos = entityPos;
+
+        Vec3 relativeGhostPos = ghostPos.subtract(entityPos);
+
+        poseStack.pushPose();
+        poseStack.translate(relativeGhostPos.x(), relativeGhostPos.y(), relativeGhostPos.z());
+
+        super.render(animatable, entityYaw, partialTick, poseStack, bufferSource, packedLight);
+
+        poseStack.popPose();
+
+        // Render Original using the original poseStack
+        super.render(animatable, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 }

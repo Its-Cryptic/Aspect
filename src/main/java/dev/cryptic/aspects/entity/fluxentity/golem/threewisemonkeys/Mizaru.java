@@ -1,6 +1,8 @@
-package dev.cryptic.aspects.entity.threewisemonkeys;
+package dev.cryptic.aspects.entity.fluxentity.golem.threewisemonkeys;
 
 import dev.cryptic.aspects.api.attribute.AttributeRegistry;
+import dev.cryptic.aspects.entity.fluxentity.AbstractFluxEntity;
+import dev.cryptic.aspects.entity.fluxentity.golem.AbstractGolem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -8,7 +10,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -20,7 +21,6 @@ import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -37,7 +37,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Mizaru extends Monster implements IAnimatable {
+public class Mizaru extends AbstractGolem {
     private final ServerBossEvent bossEvent = (ServerBossEvent)(new ServerBossEvent(
             this.getDisplayName(), ServerBossEvent.BossBarColor.GREEN, ServerBossEvent.BossBarOverlay.NOTCHED_6))
             .setDarkenScreen(true)
@@ -48,19 +48,21 @@ public class Mizaru extends Monster implements IAnimatable {
 
 
     private AnimationFactory factory = GeckoLibUtil.createFactory(this);
-    public Mizaru(EntityType<? extends Monster> type, Level level) {
+    public Mizaru(EntityType<? extends Mizaru> type, Level level) {
         super(type, level);
         setPersistenceRequired();
         this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0.0F);
     }
 
     public static AttributeSupplier setAttributes() {
-        return Monster.createMobAttributes()
+        return AbstractFluxEntity.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0D)
                 .add(Attributes.ATTACK_DAMAGE, 3.0f)
                 .add(Attributes.ATTACK_SPEED, 1.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.4f)
-                .add(AttributeRegistry.ASPECT_POWER.get(), 5.0f).build();
+
+                .add(AttributeRegistry.FLUX_REGEN.get(), 2.0f)
+                .build();
     }
 
     @Override

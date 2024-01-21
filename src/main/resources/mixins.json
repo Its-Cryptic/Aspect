@@ -1,0 +1,10 @@
+{
+  "package": "dev.cryptic.aspects.mixin",
+  "mixins": [
+    "LivingEntityRendererMixin"
+  ],
+  "client": [
+  ],
+  "server": [
+  ]
+}

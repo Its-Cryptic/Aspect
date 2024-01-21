@@ -1,6 +1,6 @@
 package dev.cryptic.aspects.entity.goal.threewisemonkeys;
 
-import dev.cryptic.aspects.entity.threewisemonkeys.Mizaru;
+import dev.cryptic.aspects.entity.fluxentity.golem.threewisemonkeys.Mizaru;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
 

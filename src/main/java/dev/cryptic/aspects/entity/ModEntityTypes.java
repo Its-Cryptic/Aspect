@@ -2,7 +2,7 @@ package dev.cryptic.aspects.entity;
 
 import dev.cryptic.aspects.Aspect;
 import dev.cryptic.aspects.entity.ability.flame.fireblast.FireBlastProjectile;
-import dev.cryptic.aspects.entity.threewisemonkeys.Mizaru;
+import dev.cryptic.aspects.entity.fluxentity.golem.threewisemonkeys.Mizaru;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;

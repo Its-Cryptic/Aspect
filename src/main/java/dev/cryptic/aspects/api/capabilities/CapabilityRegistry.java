@@ -2,6 +2,9 @@ package dev.cryptic.aspects.api.capabilities;
 
 import dev.cryptic.aspects.Aspect;
 //import dev.cryptic.aspects.api.networking.packet.ThirstDataSyncS2CPacket;
+import dev.cryptic.aspects.api.attribute.AttributeRegistry;
+import dev.cryptic.aspects.entity.fluxentity.AbstractFluxEntity;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -19,6 +22,8 @@ import net.minecraftforge.fml.common.Mod;
 
 public class CapabilityRegistry {
 
+    public static final Integer UPDATE_INTERVAL = 5;
+
     public static final Capability<IFluxCapability> FLUX_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
     });
 
@@ -34,7 +39,7 @@ public class CapabilityRegistry {
 
         @SubscribeEvent
         public static void attachCapabilities(final AttachCapabilitiesEvent<Entity> event) {
-            if (event.getObject() instanceof Player) {
+            if (event.getObject() instanceof Player || event.getObject() instanceof AbstractFluxEntity) {
                 FluxCapabilityAttacher.attach(event);
             }
         }
@@ -59,18 +64,41 @@ public class CapabilityRegistry {
 
         @SubscribeEvent
         public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-            if (event.player.tickCount % 5 == 0) {
-                if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.START) {
-                    Aspect.LOGGER.info("Tick: " + event.player.tickCount + ", LogicalSide:" + event.side + ", Phase:" + event.phase);
-                    Aspect.LOGGER.info(getFlux(event.player).toString());
+            /*
+            Every UPDATE_INTERVAL ticks, update the flux of all
+            players based on their flux regen attribute value
+             */
+            if (event.phase == TickEvent.Phase.START && event.side == LogicalSide.SERVER) {
+                if (event.player.tickCount % UPDATE_INTERVAL == 0) {
                     getFlux(event.player).ifPresent(flux -> {
-                        Aspect.LOGGER.info(String.valueOf(flux.getCurrentFlux()));
-                        flux.addFlux(1);
+                        float fluxRegen = (float) event.player.getAttribute(AttributeRegistry.FLUX_REGEN.get()).getValue();
+                        flux.addFlux(fluxRegen);
                     });
                 }
             }
         }
 
+        @SubscribeEvent
+        public static void onLevelTick(TickEvent.LevelTickEvent event) {
+            /*
+            Every UPDATE_INTERVAL ticks, update the flux of all
+            entities based on their flux regen attribute value
+             */
+            if (event.phase == TickEvent.Phase.START && event.level instanceof ServerLevel) {
+                ServerLevel serverLevel = (ServerLevel) event.level;
+                if (serverLevel.getServer().getTickCount() % UPDATE_INTERVAL == 0) {
+                    serverLevel.getAllEntities().forEach(entity -> {
+                        if (entity instanceof AbstractFluxEntity) {
+                            LivingEntity livingEntity = (LivingEntity) entity;
+                            getFlux(livingEntity).ifPresent(flux -> {
+                                float fluxRegen = (float) livingEntity.getAttribute(AttributeRegistry.FLUX_REGEN.get()).getValue();
+                                flux.addFlux(fluxRegen);
+                            });
+                        }
+                    });
+                }
+            }
 
+        }
     }
 }

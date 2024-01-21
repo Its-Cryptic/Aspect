@@ -75,10 +75,10 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            property 'forge.enabledGameTestNamespaces', 'riftrealms'
+            property 'forge.enabledGameTestNamespaces', 'aspect'
 
             mods {
-                examplemod {
+                aspect {
                     source sourceSets.main
                 }
             }
@@ -91,10 +91,10 @@ minecraft {
 
             property 'forge.logging.console.level', 'debug'
 
-            property 'forge.enabledGameTestNamespaces', 'riftrealms'
+            property 'forge.enabledGameTestNamespaces', 'aspect'
 
             mods {
-                riftrealms {
+                aspect {
                     source sourceSets.main
                 }
             }
@@ -110,10 +110,10 @@ minecraft {
 
             property 'forge.logging.console.level', 'debug'
 
-            property 'forge.enabledGameTestNamespaces', 'riftrealms'
+            property 'forge.enabledGameTestNamespaces', 'aspect'
 
             mods {
-                examplemod {
+                aspect {
                     source sourceSets.main
                 }
             }
@@ -127,10 +127,10 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'aspect', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
-                examplemod {
+                aspect {
                     source sourceSets.main
                 }
             }
@@ -223,6 +223,16 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:probejs-585406:4744799")
     runtimeOnly fg.deobf("curse.maven:ftb-library-forge-404465:4661834")
 
+    implementation 'org.spongepowered:mixin:0.8.2'
+
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    mixin {
+        add sourceSets.main, 'mixins.json'
+        config 'mixins.json'
+        debug.verbose = true
+        debug.export = true
+    }
+
     // Real mod deobf dependency examples - these get remapped to your current mappings
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency
     // runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}") // Adds the full JEI mod as a runtime dependency
@@ -240,7 +250,7 @@ dependencies {
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "riftrealms",
+                "Specification-Title"     : "aspect",
                 "Specification-Vendor"    : "Its Cryptic",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
@@ -272,4 +282,11 @@ publishing {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}
+
+task processAspectMixins(type: Copy) {
+    from 'src/main/resources'
+    include 'mixins.json'
+    into 'build/resources/main'
+    duplicatesStrategy = 'include'
 }

@@ -2,7 +2,7 @@ package dev.cryptic.aspects.entity.client.mizaru;
 
 import dev.cryptic.aspects.Aspect;
 import net.minecraft.resources.ResourceLocation;
-import dev.cryptic.aspects.entity.threewisemonkeys.Mizaru;
+import dev.cryptic.aspects.entity.fluxentity.golem.threewisemonkeys.Mizaru;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 public class MizaruModel extends AnimatedGeoModel<Mizaru> {
