@@ -1,4 +1,4 @@
-package dev.cryptic.aspects.api.attribute;
+package dev.cryptic.aspects.api.registry;
 
 import dev.cryptic.aspects.Aspect;
 import net.minecraft.world.entity.EntityType;

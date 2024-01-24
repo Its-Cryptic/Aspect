@@ -18,7 +18,7 @@ public class GolemCapabilityAttacher {
     private static class GolemCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
         // This will be the object's ID in the player's nbt under ForgeCaps
-        public static final ResourceLocation ID = new ResourceLocation(Aspect.MODID, "flux");
+        public static final ResourceLocation ID = new ResourceLocation(Aspect.MODID, "golems");
 
         private final IGolemCapability capability = new GolemCapability(null);
         private final LazyOptional<IGolemCapability> optional = LazyOptional.of(() -> capability);

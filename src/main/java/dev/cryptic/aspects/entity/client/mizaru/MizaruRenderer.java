@@ -1,27 +1,32 @@
 package dev.cryptic.aspects.entity.client.mizaru;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import dev.cryptic.aspects.Aspect;
-import dev.cryptic.aspects.entity.client.SomethingData;
+import dev.cryptic.aspects.entity.client.RenderData;
 import dev.cryptic.aspects.entity.fluxentity.golem.threewisemonkeys.Mizaru;
 import dev.cryptic.aspects.misc.CircularBufferTracker;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import software.bernie.geckolib3.core.processor.IBone;
+import software.bernie.geckolib3.geo.render.built.GeoModel;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 import team.lodestar.lodestone.handlers.RenderHandler;
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry;
 import team.lodestar.lodestone.systems.rendering.VFXBuilders;
 
 public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
-
-    CircularBufferTracker<SomethingData> positionHistory = new CircularBufferTracker<>(20*20);
+    Logger LOGGER = Aspect.LOGGER;
+    Vec3 lastTickPos;
     public MizaruRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new MizaruModel());
         this.shadowRadius = 0.6f;
@@ -63,34 +68,37 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
 
     @Override
     public RenderType getRenderType(Mizaru animatable, float partialTick, PoseStack poseStack, @Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, int packedLight, ResourceLocation texture) {
-
-        poseStack.scale(1.0f, 1.0f, 1.0f);
-        renderQuad(poseStack, partialTick);
-
         return super.getRenderType(animatable, partialTick, poseStack, bufferSource, buffer, packedLight, texture);
     }
 
     @Override
-    public void render(Mizaru animatable, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-        Vec3 entityPos = animatable.position();
-        SomethingData data = new SomethingData(entityPos, poseStack);
+    public void render(GeoModel model, Mizaru animatable, float partialTick, RenderType type, PoseStack poseStack, @Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 
-        positionHistory.recordValue(data);
-        if (positionHistory.getValue(20*15) == null) return;
+        Vec3 currentPos = animatable.position();
 
-        Vec3 ghostPos = positionHistory.getValue(20*15).getPosition();
-        if (ghostPos == null) ghostPos = entityPos;
+        // Initialize lastTickPos in the first render call or after the entity respawns
+        if (this.lastTickPos == null) this.lastTickPos = currentPos;
 
-        Vec3 relativeGhostPos = ghostPos.subtract(entityPos);
+        Vec3 interpolatedPos = this.lastTickPos.lerp(currentPos, partialTick);
+        Vec3 ghostPos = new Vec3(140, 120, -59);
+        Vec3 relativeGhostPos = ghostPos.subtract(interpolatedPos);
 
         poseStack.pushPose();
         poseStack.translate(relativeGhostPos.x(), relativeGhostPos.y(), relativeGhostPos.z());
 
-        super.render(animatable, entityYaw, partialTick, poseStack, bufferSource, packedLight);
-
+        // Render Ghost Entity
+        super.render(model, animatable, partialTick, type, poseStack, bufferSource, buffer, packedLight, packedOverlay, red, green, blue, alpha);
         poseStack.popPose();
 
-        // Render Original using the original poseStack
-        super.render(animatable, entityYaw, partialTick, poseStack, bufferSource, packedLight);
+        // Render Main Entity using the original poseStack
+        super.render(model, animatable, partialTick, type, poseStack, bufferSource, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+
+        // Update lastTickPos after rendering is done
+        this.lastTickPos = currentPos;
+    }
+
+    @Override
+    public boolean shouldRender(Mizaru p_114491_, Frustum p_114492_, double p_114493_, double p_114494_, double p_114495_) {
+        return true;
     }
 }

@@ -4,7 +4,9 @@ import dev.cryptic.aspects.Aspect;
 //import dev.cryptic.aspects.api.capabilities.PlayerFlux;
 //import dev.cryptic.aspects.api.capabilities.PlayerFluxProvider;
 //import dev.cryptic.aspects.api.networking.packet.ThirstDataSyncS2CPacket;
-import dev.cryptic.aspects.api.flux.FluxUtil;
+import dev.cryptic.aspects.api.util.FluxUtil;
+import dev.cryptic.aspects.api.util.GolemUtil;
+import dev.cryptic.aspects.api.util.MathUtility;
 import dev.cryptic.aspects.entity.ModEntityTypes;
 import dev.cryptic.aspects.entity.fluxentity.golem.AbstractGolem;
 import dev.cryptic.aspects.entity.fluxentity.golem.threewisemonkeys.Mizaru;
@@ -43,13 +45,13 @@ public class ModEvents {
                     playerData.setMaxFlux(FluxUtil.getMaxFlux(player));
                     playerData.setAspectLevel(FluxUtil.getAspectLevel(player));
                     playerData.setAspectType(FluxUtil.getAspectType(player));
-                    playerData.setMaxSoul(FluxUtil.getMaxSoul(player));
+                    playerData.setMaxSoul(GolemUtil.getMaxSoul(player));
 
                     // Update Golem Data :3
-                    List<AbstractGolem> golems = FluxUtil.getGolems(player, level);
+                    List<AbstractGolem> golems = GolemUtil.getGolems(player, level);
                     if (golems != null) {
                         for (AbstractGolem golem : golems) {
-                            int imbuedSoul = FluxUtil.getImbuedSoul(player, golem);
+                            int imbuedSoul = GolemUtil.getImbuedSoul(player, golem);
                             playerData.addGolem(golem, imbuedSoul);
                         }
                     }
@@ -64,16 +66,17 @@ public class ModEvents {
         public static void punchGolemEvent(LivingHurtEvent event) {
             if (event.getSource().getEntity() instanceof Player player) {
                 if (event.getEntity() instanceof AbstractGolem golem) {
-                    if (FluxUtil.hasGolem(player, golem)) {
-                        int soul = FluxUtil.getImbuedSoul(player, golem);
+                    if (GolemUtil.hasGolem(player, golem)) {
+                        int soul = GolemUtil.getImbuedSoul(player, golem);
                         int newSoul = soul + 1;
-                        FluxUtil.addGolem(player, golem, newSoul);
+                        GolemUtil.addGolem(player, golem, newSoul);
                         player.sendSystemMessage(Component.literal("Golem soul: " + newSoul));
                     } else {
-                        FluxUtil.addGolem(player, golem, 1);
+                        GolemUtil.addGolem(player, golem, 1);
                         player.sendSystemMessage(Component.literal("New Golem Registered!"));
                         player.sendSystemMessage(Component.literal("Golem soul: " + 1));
                     }
+                    Aspect.LOGGER.info(MathUtility.slerp());
                 }
             }
         }

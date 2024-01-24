@@ -1,7 +1,8 @@
 {
   "package": "dev.cryptic.aspects.mixin",
   "mixins": [
-    "LivingEntityRendererMixin"
+    "LivingEntityRendererMixin",
+    "QuaternionMixin"
   ],
   "client": [
   ],

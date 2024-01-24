@@ -24,10 +24,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LivingEntityRenderer.class)
 public abstract class LivingEntityRendererMixin {
 
-    @Inject(method = "render*", at = @At("TAIL"))
-    public void render(LivingEntity livingEntity, float f, float g, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo callbackInfo) {
-
-    }
+//    @Inject(method = "render*", at = @At("TAIL"))
+//    public void render(LivingEntity livingEntity, float f, float g, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo callbackInfo) {
+//
+//    }
 
 
 }

@@ -1,12 +1,10 @@
 package dev.cryptic.aspects.api.networking.packet;
 
-import dev.cryptic.aspects.api.flux.FluxUtil;
-import dev.cryptic.aspects.block.custom.FluxBlockEntity;
+import dev.cryptic.aspects.api.util.FluxUtil;
 import dev.cryptic.aspects.blockentities.FluxCoreBlockEntity;
 import dev.cryptic.aspects.item.custom.AbstractFluxItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.player.Player;

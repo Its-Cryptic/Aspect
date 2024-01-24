@@ -1,6 +1,5 @@
 package dev.cryptic.aspects.api.capabilities.golem;
 
-import dev.cryptic.aspects.api.flux.AspectType;
 import dev.cryptic.aspects.entity.fluxentity.golem.AbstractGolem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.INBTSerializable;

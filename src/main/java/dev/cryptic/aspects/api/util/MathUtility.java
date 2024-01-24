@@ -1,5 +1,8 @@
 package dev.cryptic.aspects.api.util;
 
+import com.mojang.math.Quaternion;
+import net.minecraft.util.Mth;
+
 public class MathUtility {
 
     /**
@@ -41,8 +44,23 @@ public class MathUtility {
         return result2;
     }
 
-    public static boolean fluxThresholdCheck(int currentFlux) {
-        return currentFlux >= 100;
+    public static float acos(float value) {
+        if (-1.0f < value ) {
+            if (value < 1.0f) {
+                return (float) Math.acos(value);
+            }
+            return 0.0f;
+        }
+        return Mth.PI;
     }
 
+    public static String slerp() {
+        Quaternion quaternion = new Quaternion(0.0f,0.0f,0.0f,1.0f);
+        Quaternion quaternion1 = new Quaternion(0.0f,0.5f,0.5f,1.0f);
+        quaternion.normalize();
+        quaternion1.normalize();
+
+        quaternion.slerp(quaternion1, 0.5f);
+        return quaternion.toString();
+    }
 }

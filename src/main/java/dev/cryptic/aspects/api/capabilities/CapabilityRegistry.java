@@ -2,7 +2,7 @@ package dev.cryptic.aspects.api.capabilities;
 
 import dev.cryptic.aspects.Aspect;
 //import dev.cryptic.aspects.api.networking.packet.ThirstDataSyncS2CPacket;
-import dev.cryptic.aspects.api.attribute.AttributeRegistry;
+import dev.cryptic.aspects.api.registry.AttributeRegistry;
 import dev.cryptic.aspects.api.capabilities.flux.FluxCapabilityAttacher;
 import dev.cryptic.aspects.api.capabilities.flux.IFluxCapability;
 import dev.cryptic.aspects.api.capabilities.golem.GolemCapabilityAttacher;

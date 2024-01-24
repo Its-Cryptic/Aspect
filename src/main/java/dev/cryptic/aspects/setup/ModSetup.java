@@ -1,7 +1,7 @@
 package dev.cryptic.aspects.setup;
 
 import dev.cryptic.aspects.Aspect;
-import dev.cryptic.aspects.api.attribute.AttributeRegistry;
+import dev.cryptic.aspects.api.registry.AttributeRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.InterModComms;

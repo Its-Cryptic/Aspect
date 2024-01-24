@@ -1,7 +1,7 @@
 package dev.cryptic.aspects.item.curios;
 
 import com.google.common.collect.Multimap;
-import dev.cryptic.aspects.api.attribute.AttributeRegistry;
+import dev.cryptic.aspects.api.registry.AttributeRegistry;
 import dev.cryptic.aspects.api.item.AspectCurio;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
