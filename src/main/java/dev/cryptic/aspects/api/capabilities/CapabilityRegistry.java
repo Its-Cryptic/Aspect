@@ -3,6 +3,10 @@ package dev.cryptic.aspects.api.capabilities;
 import dev.cryptic.aspects.Aspect;
 //import dev.cryptic.aspects.api.networking.packet.ThirstDataSyncS2CPacket;
 import dev.cryptic.aspects.api.attribute.AttributeRegistry;
+import dev.cryptic.aspects.api.capabilities.flux.FluxCapabilityAttacher;
+import dev.cryptic.aspects.api.capabilities.flux.IFluxCapability;
+import dev.cryptic.aspects.api.capabilities.golem.GolemCapabilityAttacher;
+import dev.cryptic.aspects.api.capabilities.golem.IGolemCapability;
 import dev.cryptic.aspects.entity.fluxentity.AbstractFluxEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -24,14 +28,21 @@ public class CapabilityRegistry {
 
     public static final Integer UPDATE_INTERVAL = 5;
 
-    public static final Capability<IFluxCapability> FLUX_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
-    });
+    public static final Capability<IFluxCapability> FLUX_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
+    public static final Capability<IGolemCapability> GOLEM_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
 
     public static LazyOptional<IFluxCapability> getFlux(final LivingEntity entity) {
         if (entity == null) {
             return LazyOptional.empty();
         }
         return entity.getCapability(FLUX_CAPABILITY);
+    }
+
+    public static LazyOptional<IGolemCapability> getGolem(final LivingEntity entity) {
+        if (entity == null) {
+            return LazyOptional.empty();
+        }
+        return entity.getCapability(GOLEM_CAPABILITY);
     }
 
     @Mod.EventBusSubscriber(modid = Aspect.MODID)
@@ -42,22 +53,31 @@ public class CapabilityRegistry {
             if (event.getObject() instanceof Player || event.getObject() instanceof AbstractFluxEntity) {
                 FluxCapabilityAttacher.attach(event);
             }
+            if (event.getObject() instanceof Player) {
+                GolemCapabilityAttacher.attach(event);
+            }
         }
 
         @SubscribeEvent
         public static void registerCapabilities(final RegisterCapabilitiesEvent event) {
             event.register(IFluxCapability.class);
+            event.register(IGolemCapability.class);
         }
 
         @SubscribeEvent
         public static void onPlayerCloned(PlayerEvent.Clone event) {
             Player original = event.getOriginal();
             original.revive();
+
             getFlux(original).ifPresent(oldStore -> getFlux(event.getEntity()).ifPresent(newStore -> {
                 newStore.setMaxFlux(oldStore.getMaxFlux());
                 newStore.setFlux(oldStore.getCurrentFlux());
                 newStore.setAspectLevel(oldStore.getAspectLevel());
                 newStore.setAspectType(oldStore.getAspectType());
+            }));
+            getGolem(original).ifPresent(oldStore -> getGolem(event.getEntity()).ifPresent(newStore -> {
+                newStore.setMaxSoul(oldStore.getMaxSoul());
+                newStore.setAllGolemUUIDs(oldStore.getAllGolemUUIDs());
             }));
             event.getOriginal().invalidateCaps();
         }

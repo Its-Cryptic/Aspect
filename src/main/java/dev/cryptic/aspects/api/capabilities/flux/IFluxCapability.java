@@ -1,4 +1,4 @@
-package dev.cryptic.aspects.api.capabilities;
+package dev.cryptic.aspects.api.capabilities.flux;
 
 import dev.cryptic.aspects.api.flux.AspectType;
 import dev.cryptic.aspects.entity.fluxentity.golem.AbstractGolem;
@@ -24,22 +24,6 @@ public interface IFluxCapability extends INBTSerializable<CompoundTag> {
     int addMaxFlux(final int flux);
 
     int removeMaxFlux(final int flux);
-
-    int getMaxSoul();
-    int addMaxSoul(final int soul);
-    void setMaxSoul(final int soul);
-    int removeMaxSoul(final int soul);
-
-    void addGolem(AbstractGolem golem, int imbuedSoul);
-
-    void removeGolem(AbstractGolem golem);
-
-    boolean hasGolem(AbstractGolem golem);
-
-    int getImbuedSoul(AbstractGolem golem);
-
-    List<UUID> getAllGolemUUIDs();
-
 
     default int getAspectLevel() {
         return 0;

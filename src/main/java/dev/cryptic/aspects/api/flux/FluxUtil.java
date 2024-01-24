@@ -1,13 +1,12 @@
 package dev.cryptic.aspects.api.flux;
 
 import dev.cryptic.aspects.api.capabilities.CapabilityRegistry;
-import dev.cryptic.aspects.api.capabilities.IFluxCapability;
+import dev.cryptic.aspects.api.capabilities.flux.IFluxCapability;
 import dev.cryptic.aspects.entity.fluxentity.golem.AbstractGolem;
 import dev.latvian.mods.kubejs.typings.Info;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.List;

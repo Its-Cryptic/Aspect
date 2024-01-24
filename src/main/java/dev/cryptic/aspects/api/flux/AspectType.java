@@ -1,7 +1,5 @@
 package dev.cryptic.aspects.api.flux;
 
-import dev.cryptic.aspects.api.capabilities.FluxProperties;
-
 public enum AspectType {
     BASE(0, "None", new FluxProperties(0,0)),
     LIGHTNING(1, "Lightning", new FluxProperties(0.2,0.5)),

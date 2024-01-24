@@ -1,4 +1,4 @@
-package dev.cryptic.aspects.api.capabilities;
+package dev.cryptic.aspects.api.flux;
 
 public class FluxProperties {
     private double volatility;

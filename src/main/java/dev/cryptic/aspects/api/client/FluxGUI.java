@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.cryptic.aspects.Aspect;
 import dev.cryptic.aspects.api.capabilities.CapabilityRegistry;
-import dev.cryptic.aspects.api.capabilities.IFluxCapability;
+import dev.cryptic.aspects.api.capabilities.flux.IFluxCapability;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.resources.ResourceLocation;

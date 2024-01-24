@@ -1,6 +1,7 @@
-package dev.cryptic.aspects.api.capabilities;
+package dev.cryptic.aspects.api.capabilities.flux;
 
 import dev.cryptic.aspects.Aspect;
+import dev.cryptic.aspects.api.capabilities.CapabilityRegistry;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
