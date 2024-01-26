@@ -227,8 +227,8 @@ dependencies {
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     mixin {
-        add sourceSets.main, 'mixins.json'
-        config 'mixins.json'
+        add sourceSets.main, 'aspectMixins.json'
+        config 'aspectMixins.json'
         debug.verbose = true
         debug.export = true
     }
@@ -286,7 +286,7 @@ tasks.withType(JavaCompile).configureEach {
 
 task processAspectMixins(type: Copy) {
     from 'src/main/resources'
-    include 'mixins.json'
+    include 'aspectMixins.json'
     into 'build/resources/main'
-    duplicatesStrategy = 'include'
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }

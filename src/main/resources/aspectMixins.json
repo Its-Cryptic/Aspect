@@ -1,0 +1,11 @@
+{
+  "package": "dev.cryptic.aspect.mixin",
+  "mixins": [
+    "LivingEntityRendererMixin",
+    "QuaternionMixin"
+  ],
+  "client": [
+  ],
+  "server": [
+  ]
+}
