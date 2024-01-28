@@ -1,6 +1,6 @@
 package dev.cryptic.aspect.api.capabilities.flux;
 
-import dev.cryptic.aspect.api.flux.AspectType;
+import dev.cryptic.aspect.api.flux.AspectTypes;
 import dev.cryptic.aspect.config.AspectCommonConfig;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
@@ -12,7 +12,7 @@ public class FluxCapability implements IFluxCapability {
     private float flux;
     private int maxFlux = AspectCommonConfig.BASE_MAX_FLUX.get();
     private int aspectLevel;
-    private AspectType aspectType = AspectType.BASE;
+    private AspectTypes aspectType = AspectTypes.BASE;
 
     public FluxCapability(@Nullable final LivingEntity entity) {
         this.livingEntity = entity;
@@ -77,7 +77,7 @@ public class FluxCapability implements IFluxCapability {
     }
 
     @Override
-    public AspectType getAspectType() {
+    public AspectTypes getAspectType() {
         return aspectType;
     }
 
@@ -87,7 +87,7 @@ public class FluxCapability implements IFluxCapability {
     }
 
     @Override
-    public void setAspectType(AspectType type) {
+    public void setAspectType(AspectTypes type) {
         this.aspectType = type;
     }
 
@@ -107,7 +107,7 @@ public class FluxCapability implements IFluxCapability {
         setFlux(tag.getFloat("flux"));
         setMaxFlux(tag.getInt("maxFlux"));
         setAspectLevel(tag.getInt("aspectLevel"));
-        setAspectType(AspectType.getById(tag.getInt("aspectType")));
+        setAspectType(AspectTypes.getById(tag.getInt("aspectType")));
     }
 
 }

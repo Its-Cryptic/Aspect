@@ -3,6 +3,8 @@ package dev.cryptic.aspect;
 import com.mojang.logging.LogUtils;
 import dev.cryptic.aspect.api.gamerule.GameruleRegistry;
 import dev.cryptic.aspect.api.networking.ModMessages;
+import dev.cryptic.aspect.api.registry.AbilityRegistry;
+import dev.cryptic.aspect.api.registry.AspectRegistry;
 import dev.cryptic.aspect.block.ModBlockEntities;
 import dev.cryptic.aspect.block.ModBlocks;
 import dev.cryptic.aspect.config.AspectClientConfig;
@@ -13,6 +15,7 @@ import dev.cryptic.aspect.entity.client.mizaru.MizaruRenderer;
 import dev.cryptic.aspect.item.ModItems;
 import dev.cryptic.aspect.setup.ModSetup;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -41,14 +44,13 @@ public class Aspect {
         modEventBus.addListener(this::sendImc);
 
         ModSetup.registers(modEventBus);
-
         ModItems.register(modEventBus);
-
         ModBlocks.register(modEventBus);
-
         ModBlockEntities.register(modEventBus);
-
         ModEntityTypes.register(modEventBus);
+
+        AbilityRegistry.register(modEventBus);
+        AspectRegistry.register(modEventBus);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AspectCommonConfig.SPEC, "aspect-common.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AspectClientConfig.SPEC, "aspect-client.toml");
@@ -66,14 +68,6 @@ public class Aspect {
         ModSetup.sendIntercoms();
     }
 
-    // You can use SubscribeEvent and let the Event Bus discover methods to call
-    @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event)
-    {
-        // Do something when the server starts
-        LOGGER.info("HELLO from server starting");
-    }
-
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents
@@ -85,4 +79,10 @@ public class Aspect {
             EntityRenderers.register(ModEntityTypes.FIRE_BLAST.get(), FireBlastRenderer::new);
         }
     }
+
+    public ResourceLocation resourceLocation(String path) {
+        return new ResourceLocation(MODID, path);
+    }
+
+
 }

@@ -4,8 +4,13 @@ public abstract class AbstractAbility {
     private String id;
     private String name;
 
-    public AbstractAbility() {
+    public AbstractAbility(String name) {
+        this.id = name;
+        this.name = name;
     }
 
 
+    public String getName() {
+        return name;
+    }
 }

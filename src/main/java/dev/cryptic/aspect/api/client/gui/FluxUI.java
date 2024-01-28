@@ -1,9 +1,11 @@
 package dev.cryptic.aspect.api.client.gui;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.cryptic.aspect.misc.SyncedData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
@@ -19,7 +21,7 @@ public class FluxUI extends GuiComponent {
         float flux = SyncedData.getPlayerData(player).getFlux();
         int maxFlux = SyncedData.getPlayerData(player).getMaxFlux();
         float fluxPercentage = flux / maxFlux;
-        String fluxString = flux + "/" + maxFlux;
+        String fluxString = (int) flux + "/" + maxFlux;
 
 
         int barWidth = 10;

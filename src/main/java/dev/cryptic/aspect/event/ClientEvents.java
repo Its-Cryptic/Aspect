@@ -3,6 +3,7 @@ package dev.cryptic.aspect.event;
 import dev.cryptic.aspect.Aspect;
 import dev.cryptic.aspect.api.client.gui.FluxItemUI;
 import dev.cryptic.aspect.api.client.gui.FluxUI;
+import dev.cryptic.aspect.api.client.gui.SoulUI;
 import dev.cryptic.aspect.api.networking.ModMessages;
 //import dev.cryptic.aspects.api.networking.packet.DrinkWaterC2SPacket;
 import dev.cryptic.aspect.api.networking.packet.UseRawFluxC2SPacket;
@@ -77,6 +78,7 @@ public class ClientEvents {
         public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
             event.registerAboveAll("flux_item_ui", FluxItemUI.OVERLAY);
             event.registerAboveAll("flux_ui", FluxUI.OVERLAY);
+            event.registerAboveAll("soul_ui", SoulUI.OVERLAY);
         }
 
     }

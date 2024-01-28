@@ -1,38 +1,62 @@
 package dev.cryptic.aspect.api.flux;
 
-public enum AspectType {
-    BASE(0, "None", new FluxProperties(0,0)),
-    LIGHTNING(1, "Lightning", new FluxProperties(0.2,0.5)),
-    FLAME(2, "Flame", new FluxProperties(0.2,0.5)),
-    BLOOD(3, "Blood", new FluxProperties(0.2,0.5)),
-    SOLAR(4, "Solar", new FluxProperties(0.2,0.5));
+import dev.cryptic.aspect.Aspect;
+import dev.cryptic.aspect.aspect.abilities.AbstractAbility;
 
+import java.util.ArrayList;
+import java.util.function.Supplier;
 
+public class AspectType {
+    int id;
+    String name;
+    String langKey;
+    AspectColor colors;
+    AspectColor empoweredColors;
+    FluxProperties properties;
+    ArrayList<Supplier<AbstractAbility>> abilities;
 
-    private final int id;
-    private final String name;
-    private final FluxProperties properties;
-
-    AspectType(int id, String name, FluxProperties properties) {
+    public AspectType(int id, String name, AspectColor colors, AspectColor empoweredColors, FluxProperties properties, ArrayList<Supplier<AbstractAbility>> abilities) {
         this.id = id;
         this.name = name;
+        this.langKey = "aspect.aspect." + name.toLowerCase();
+        this.colors = colors;
+        this.empoweredColors = empoweredColors;
         this.properties = properties;
+        this.abilities = abilities;
     }
 
     public int getId() {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getLangKey() {
+        return langKey;
+    }
+
+    public AspectColor getColors() {
+        return colors;
+    }
+
+    public AspectColor getEmpoweredColors() {
+        return empoweredColors;
+    }
+
     public FluxProperties getProperties() {
         return properties;
     }
 
-    public static AspectType getById(int id) {
-        for (AspectType type : AspectType.values()) {
-            if (type.getId() == id) {
-                return type;
-            }
-        }
-        return null; // or throw an exception if an invalid id is provided
+    public ArrayList<Supplier<AbstractAbility>> getAbilities() {
+        return abilities;
     }
+
+
+
+    public String toString() {
+        return Aspect.MODID + ":" + name;
+    }
+
 }

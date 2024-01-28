@@ -2,7 +2,7 @@ package dev.cryptic.aspect.api.util;
 
 import dev.cryptic.aspect.api.capabilities.CapabilityRegistry;
 import dev.cryptic.aspect.api.capabilities.flux.IFluxCapability;
-import dev.cryptic.aspect.api.flux.AspectType;
+import dev.cryptic.aspect.api.flux.AspectTypes;
 import dev.latvian.mods.kubejs.typings.Info;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -82,15 +82,15 @@ public class FluxUtil {
     }
 
     @Info("Set a player's aspect type")
-    public static void setAspectType(Player player, AspectType type) {
+    public static void setAspectType(Player player, AspectTypes type) {
         getFluxCap(player).ifPresent(fluxCap -> {
             fluxCap.setAspectType(type);
         });
     }
 
     @Info("Get a player's aspect type")
-    public static AspectType getAspectType(Player player) {
-        final AspectType[] type = new AspectType[1];
+    public static AspectTypes getAspectType(Player player) {
+        final AspectTypes[] type = new AspectTypes[1];
         getFluxCap(player).ifPresent(fluxCap -> {
             type[0] = fluxCap.getAspectType();
         });

@@ -4,6 +4,7 @@ import dev.cryptic.aspect.Aspect;
 //import dev.cryptic.aspects.api.capabilities.PlayerFlux;
 //import dev.cryptic.aspects.api.capabilities.PlayerFluxProvider;
 //import dev.cryptic.aspects.api.networking.packet.ThirstDataSyncS2CPacket;
+import dev.cryptic.aspect.api.registry.AspectRegistry;
 import dev.cryptic.aspect.api.util.FluxUtil;
 import dev.cryptic.aspect.api.util.GolemUtil;
 import dev.cryptic.aspect.api.util.MathUtility;
@@ -77,6 +78,9 @@ public class ModEvents {
                         player.sendSystemMessage(Component.literal("Golem soul: " + 1));
                     }
                     Aspect.LOGGER.info(MathUtility.slerp());
+                    AspectRegistry.FIRE.get().getAbilities().forEach(ability -> {
+                        Aspect.LOGGER.info(ability.get().getName());
+                    });
                 }
             }
         }

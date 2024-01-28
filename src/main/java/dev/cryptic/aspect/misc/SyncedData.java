@@ -1,6 +1,6 @@
 package dev.cryptic.aspect.misc;
 
-import dev.cryptic.aspect.api.flux.AspectType;
+import dev.cryptic.aspect.api.flux.AspectTypes;
 import dev.cryptic.aspect.entity.fluxentity.golem.AbstractGolem;
 import net.minecraft.world.entity.player.Player;
 
@@ -48,7 +48,7 @@ public class SyncedData {
         public float flux;
         public int maxFlux;
         public int aspectLevel;
-        public AspectType aspectType;
+        public AspectTypes aspectType;
         public int soul;
         public int maxSoul;
         private List<GolemData> golems = new ArrayList<>();
@@ -73,10 +73,10 @@ public class SyncedData {
         public int getAspectLevel() {
             return aspectLevel;
         }
-        public void setAspectType(AspectType aspectType) {
+        public void setAspectType(AspectTypes aspectType) {
             this.aspectType = aspectType;
         }
-        public AspectType getAspectType() {
+        public AspectTypes getAspectType() {
             return aspectType;
         }
         public int getSoul() {
