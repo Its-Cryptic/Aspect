@@ -1,12 +1,16 @@
 package dev.cryptic.aspect.api.networking.packet;
 
+import dev.cryptic.aspect.misc.SyncedData;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
 public abstract class AbstractPacket {
-    public AbstractPacket() { }
+
+    public AbstractPacket() {
+
+    }
     public AbstractPacket(FriendlyByteBuf buf) { }
 
     public abstract void toBytes(FriendlyByteBuf buf);

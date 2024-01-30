@@ -20,18 +20,4 @@ public interface IFluxCapability extends INBTSerializable<CompoundTag> {
     int addMaxFlux(final int flux);
 
     int removeMaxFlux(final int flux);
-
-    default int getAspectLevel() {
-        return 0;
-    }
-
-    default AspectTypes getAspectType() {
-        return AspectTypes.BASE;
-    }
-
-    default void setAspectLevel(int level) {
-    }
-
-    default void setAspectType(AspectTypes aspectType) {
-    }
 }

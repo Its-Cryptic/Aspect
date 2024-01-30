@@ -13,16 +13,16 @@ public class AspectType {
     AspectColor colors;
     AspectColor empoweredColors;
     FluxProperties properties;
-    ArrayList<Supplier<AbstractAbility>> abilities;
+    Supplier<ArrayList<AbstractAbility>> abilitySupplier;
 
-    public AspectType(int id, String name, AspectColor colors, AspectColor empoweredColors, FluxProperties properties, ArrayList<Supplier<AbstractAbility>> abilities) {
+    public AspectType(int id, String name, AspectColor colors, AspectColor empoweredColors, FluxProperties properties, Supplier<ArrayList<AbstractAbility>> abilities) {
         this.id = id;
         this.name = name;
         this.langKey = "aspect.aspect." + name.toLowerCase();
         this.colors = colors;
         this.empoweredColors = empoweredColors;
         this.properties = properties;
-        this.abilities = abilities;
+        this.abilitySupplier = abilities;
     }
 
     public int getId() {
@@ -49,8 +49,12 @@ public class AspectType {
         return properties;
     }
 
-    public ArrayList<Supplier<AbstractAbility>> getAbilities() {
-        return abilities;
+    public Supplier<ArrayList<AbstractAbility>> getAbilitySupplier() {
+        return abilitySupplier;
+    }
+
+    public ArrayList<AbstractAbility> getAbilities() {
+        return abilitySupplier.get();
     }
 
 

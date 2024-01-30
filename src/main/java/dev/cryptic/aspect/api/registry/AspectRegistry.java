@@ -22,15 +22,15 @@ public class AspectRegistry {
     private static final DeferredRegister<AspectType> ASPECTS = DeferredRegister.create(ASPECT_REGISTRY_KEY, Aspect.MODID);
     public static final Supplier<IForgeRegistry<AspectType>> REGISTRY = ASPECTS.makeRegistry(() -> new RegistryBuilder<AspectType>().disableSaving().disableOverrides());
 
-    public static int id = -1;
+    public static int id = 0;
 
-    public static void register(IEventBus eventBus) {
-        ASPECTS.register(eventBus);
-        //eventBus.register(AspectRegistry::clientSetup);
-    }
-
-    private static RegistryObject<AspectType> registerAspect(AspectType aspect) {
-        return ASPECTS.register(aspect.getName(), () -> aspect);
+    public static AspectType getAspectFromId(int id) {
+        for (RegistryObject<AspectType> aspectType : ASPECTS.getEntries()) {
+            if (aspectType.get().getId() == id) {
+                return aspectType.get();
+            }
+        }
+        return null;
     }
 
     public static final RegistryObject<AspectType> NONE = registerAspect(new AspectType(
@@ -42,16 +42,49 @@ public class AspectRegistry {
             null
     ));
 
-    public static final RegistryObject<AspectType> FIRE = registerAspect(new AspectType(
+    public static final RegistryObject<AspectType> FLAME = registerAspect(new AspectType(
             id++,
-            "fire",
+            "flame",
             new AspectColor(0xFF0000, 0xFF0000, 0xFF0000),
             new AspectColor(0xFF0000, 0xFF0000, 0xFF0000),
             new FluxProperties(0, 0),
-            new ArrayList<Supplier<AbstractAbility>>(){{
-                add(AbilityRegistry.FIREBALL_ABILITY);
-                add(AbilityRegistry.FLAME_WHIP_ABILITY);
-            }}
+            () -> {
+                ArrayList<AbstractAbility> abilities = new ArrayList<>();
+                abilities.add(AbilityRegistry.FIREBALL_ABILITY.get());
+                abilities.add(AbilityRegistry.FLAME_WHIP_ABILITY.get());
+
+                return abilities;
+            }
     ));
 
+    public static final RegistryObject<AspectType> LIGHTNING = registerAspect(new AspectType(
+            id++,
+            "lightning",
+            new AspectColor(0xFF0000, 0xFF0000, 0xFF0000),
+            new AspectColor(0xFF0000, 0xFF0000, 0xFF0000),
+            new FluxProperties(0, 0),
+            () -> {
+                ArrayList<AbstractAbility> abilities = new ArrayList<>();
+                abilities.add(AbilityRegistry.SHOCK_ABILITY.get());
+
+                return abilities;
+            }
+    ));
+
+    public static void register(IEventBus eventBus) {
+        ASPECTS.register(eventBus);
+        //eventBus.register(AspectRegistry::clientSetup);
+    }
+
+    private static RegistryObject<AspectType> registerAspect(AspectType aspect) {
+        return ASPECTS.register(aspect.getName(), () -> aspect);
+    }
+
+    public static ArrayList<AspectType> getAspects() {
+        ArrayList<AspectType> aspects = new ArrayList<>();
+        for (RegistryObject<AspectType> aspectType : ASPECTS.getEntries()) {
+            aspects.add(aspectType.get());
+        }
+        return aspects;
+    }
 }

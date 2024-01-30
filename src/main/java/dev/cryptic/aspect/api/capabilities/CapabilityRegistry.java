@@ -2,11 +2,13 @@ package dev.cryptic.aspect.api.capabilities;
 
 import dev.cryptic.aspect.Aspect;
 //import dev.cryptic.aspects.api.networking.packet.ThirstDataSyncS2CPacket;
+import dev.cryptic.aspect.api.capabilities.aspect.AspectCapabilityAttacher;
+import dev.cryptic.aspect.api.capabilities.aspect.IAspectCapability;
 import dev.cryptic.aspect.api.registry.AttributeRegistry;
 import dev.cryptic.aspect.api.capabilities.flux.FluxCapabilityAttacher;
 import dev.cryptic.aspect.api.capabilities.flux.IFluxCapability;
-import dev.cryptic.aspect.api.capabilities.golem.GolemCapabilityAttacher;
-import dev.cryptic.aspect.api.capabilities.golem.IGolemCapability;
+import dev.cryptic.aspect.api.capabilities.golem.SoulCapabilityAttacher;
+import dev.cryptic.aspect.api.capabilities.golem.ISoulCapability;
 import dev.cryptic.aspect.entity.fluxentity.AbstractFluxEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -29,7 +31,8 @@ public class CapabilityRegistry {
     public static final Integer UPDATE_INTERVAL = 5;
 
     public static final Capability<IFluxCapability> FLUX_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
-    public static final Capability<IGolemCapability> GOLEM_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
+    public static final Capability<IAspectCapability> ASPECT_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
+    public static final Capability<ISoulCapability> SOUL_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
 
     public static LazyOptional<IFluxCapability> getFlux(final LivingEntity entity) {
         if (entity == null) {
@@ -38,30 +41,37 @@ public class CapabilityRegistry {
         return entity.getCapability(FLUX_CAPABILITY);
     }
 
-    public static LazyOptional<IGolemCapability> getGolem(final LivingEntity entity) {
+    public static LazyOptional<IAspectCapability> getAspect(final LivingEntity entity) {
         if (entity == null) {
             return LazyOptional.empty();
         }
-        return entity.getCapability(GOLEM_CAPABILITY);
+        return entity.getCapability(ASPECT_CAPABILITY);
     }
 
+    public static LazyOptional<ISoulCapability> getSoul(final LivingEntity entity) {
+        if (entity == null) {
+            return LazyOptional.empty();
+        }
+        return entity.getCapability(SOUL_CAPABILITY);
+    }
     @Mod.EventBusSubscriber(modid = Aspect.MODID)
     public static class EventHandler {
 
         @SubscribeEvent
         public static void attachCapabilities(final AttachCapabilitiesEvent<Entity> event) {
-            if (event.getObject() instanceof Player || event.getObject() instanceof AbstractFluxEntity) {
-                FluxCapabilityAttacher.attach(event);
-            }
             if (event.getObject() instanceof Player) {
-                GolemCapabilityAttacher.attach(event);
+                FluxCapabilityAttacher.attach(event);
+                AspectCapabilityAttacher.attach(event);
+                SoulCapabilityAttacher.attach(event);
+
             }
         }
 
         @SubscribeEvent
         public static void registerCapabilities(final RegisterCapabilitiesEvent event) {
             event.register(IFluxCapability.class);
-            event.register(IGolemCapability.class);
+            event.register(IAspectCapability.class);
+            event.register(ISoulCapability.class);
         }
 
         @SubscribeEvent
@@ -72,13 +82,17 @@ public class CapabilityRegistry {
             getFlux(original).ifPresent(oldStore -> getFlux(event.getEntity()).ifPresent(newStore -> {
                 newStore.setMaxFlux(oldStore.getMaxFlux());
                 newStore.setFlux(oldStore.getCurrentFlux());
-                newStore.setAspectLevel(oldStore.getAspectLevel());
+            }));
+
+            getAspect(original).ifPresent(oldStore -> getAspect(event.getEntity()).ifPresent(newStore -> {
                 newStore.setAspectType(oldStore.getAspectType());
             }));
-            getGolem(original).ifPresent(oldStore -> getGolem(event.getEntity()).ifPresent(newStore -> {
+
+            getSoul(original).ifPresent(oldStore -> getSoul(event.getEntity()).ifPresent(newStore -> {
                 newStore.setMaxSoul(oldStore.getMaxSoul());
                 newStore.setAllGolemUUIDs(oldStore.getAllGolemUUIDs());
             }));
+
             event.getOriginal().invalidateCaps();
         }
 

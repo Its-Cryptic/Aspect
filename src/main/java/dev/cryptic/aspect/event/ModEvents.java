@@ -4,6 +4,9 @@ import dev.cryptic.aspect.Aspect;
 //import dev.cryptic.aspects.api.capabilities.PlayerFlux;
 //import dev.cryptic.aspects.api.capabilities.PlayerFluxProvider;
 //import dev.cryptic.aspects.api.networking.packet.ThirstDataSyncS2CPacket;
+import dev.cryptic.aspect.api.networking.ModMessages;
+import dev.cryptic.aspect.api.networking.packet.SyncedDataS2CPacket;
+import dev.cryptic.aspect.api.registry.AbilityRegistry;
 import dev.cryptic.aspect.api.registry.AspectRegistry;
 import dev.cryptic.aspect.api.util.FluxUtil;
 import dev.cryptic.aspect.api.util.GolemUtil;
@@ -15,6 +18,7 @@ import dev.cryptic.aspect.misc.SyncedData;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
@@ -24,7 +28,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.List;
+import java.util.*;
 
 public class ModEvents {
     @Mod.EventBusSubscriber(modid = Aspect.MODID)
@@ -35,30 +39,21 @@ public class ModEvents {
                 MinecraftServer server = event.getServer();
                 ServerLevel level = server.getLevel(Level.OVERWORLD);
 
-                SyncedData.setServerTime(server.getTickCount());
-                SyncedData.setLevelTime(level.getGameTime());
-                SyncedData.setDayTime(level.getDayTime());
                 server.getPlayerList().getPlayers().forEach(player -> {
-                    SyncedData.PlayerData playerData = SyncedData.getPlayerData(player);
+                    Map<UUID, Float> playerFluxMap = new HashMap<>();
+                    Map<UUID, Integer> playerMaxFluxMap = new HashMap<>();
+                    Map<UUID, ArrayList<UUID>> playerGolemUUIDMap = new HashMap<>();
 
-                    // Update Player Flux :3
-                    playerData.setFlux(FluxUtil.getCurrentFlux(player));
-                    playerData.setMaxFlux(FluxUtil.getMaxFlux(player));
-                    playerData.setAspectLevel(FluxUtil.getAspectLevel(player));
-                    playerData.setAspectType(FluxUtil.getAspectType(player));
-                    playerData.setMaxSoul(GolemUtil.getMaxSoul(player));
+                    server.getPlayerList().getPlayers().forEach(player2 -> {
+                        playerFluxMap.put(player2.getUUID(), FluxUtil.getCurrentFlux(player2));
+                        playerMaxFluxMap.put(player2.getUUID(), FluxUtil.getMaxFlux(player2));
+                        //playerGolemUUIDMap.put(player2.getUUID(), GolemUtil.getGolemUUIDs(player2));
+                    });
 
-                    // Update Golem Data :3
-                    List<AbstractGolem> golems = GolemUtil.getGolems(player, level);
-                    if (golems != null) {
-                        for (AbstractGolem golem : golems) {
-                            int imbuedSoul = GolemUtil.getImbuedSoul(player, golem);
-                            playerData.addGolem(golem, imbuedSoul);
-                        }
-                    }
+                    ModMessages.sendToPlayer(
+                            new SyncedDataS2CPacket(playerFluxMap, playerMaxFluxMap, playerGolemUUIDMap),
+                            player);
 
-                    // Set all data :3
-                    SyncedData.setPlayerData(player, playerData);
                 });
             }
         }
@@ -77,13 +72,26 @@ public class ModEvents {
                         player.sendSystemMessage(Component.literal("New Golem Registered!"));
                         player.sendSystemMessage(Component.literal("Golem soul: " + 1));
                     }
-                    Aspect.LOGGER.info(MathUtility.slerp());
-                    AspectRegistry.FIRE.get().getAbilities().forEach(ability -> {
-                        Aspect.LOGGER.info(ability.get().getName());
-                    });
                 }
             }
         }
+
+//        @SubscribeEvent
+//        public static void onGolemSoulImbuementEvent(GolemEvents.SoulImbuementEvent event) {
+//            ServerPlayer player = event.getPlayer();
+//            AbstractGolem golem = event.getGolem();
+//
+//            if (GolemUtil.hasGolem(player, golem)) {
+//                int soul = GolemUtil.getImbuedSoul(player, golem);
+//                int newSoul = soul + 1;
+//                GolemUtil.addGolem(player, golem, newSoul);
+//                player.sendSystemMessage(Component.literal("Golem soul: " + newSoul));
+//            } else {
+//                GolemUtil.addGolem(player, golem, 1);
+//                player.sendSystemMessage(Component.literal("New Golem Registered!"));
+//                player.sendSystemMessage(Component.literal("Golem soul: " + 1));
+//            }
+//        }
     }
 
     @Mod.EventBusSubscriber(modid = Aspect.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)

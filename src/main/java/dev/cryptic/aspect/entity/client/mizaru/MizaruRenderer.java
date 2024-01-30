@@ -4,7 +4,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import dev.cryptic.aspect.Aspect;
+import dev.cryptic.aspect.api.util.GolemUtil;
+import dev.cryptic.aspect.entity.fluxentity.golem.AbstractGolem;
 import dev.cryptic.aspect.entity.fluxentity.golem.threewisemonkeys.Mizaru;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
@@ -19,6 +23,8 @@ import team.lodestar.lodestone.handlers.RenderHandler;
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry;
 import team.lodestar.lodestone.systems.rendering.VFXBuilders;
 
+import java.util.UUID;
+
 public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
     Logger LOGGER = Aspect.LOGGER;
     Vec3 lastTickPos;
@@ -29,9 +35,44 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
 
     private static final ResourceLocation UV_TEST = new ResourceLocation(Aspect.MODID, "textures/vfx/uv_test.png");
 
+    @Override
+    public ResourceLocation getTextureLocation(Mizaru instance) {
+        return new ResourceLocation(Aspect.MODID, "textures/entity/chomper_texture.png");
+    }
+
+    @Override
+    public RenderType getRenderType(Mizaru animatable, float partialTick, PoseStack poseStack, @Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, int packedLight, ResourceLocation texture) {
+        return super.getRenderType(animatable, partialTick, poseStack, bufferSource, buffer, packedLight, texture);
+    }
+
+    @Override
+    public void render(GeoModel model, Mizaru animatable, float partialTick, RenderType type, PoseStack poseStack, @Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        LocalPlayer clientPlayer = Minecraft.getInstance().player;
+        UUID clientUUID = clientPlayer.getUUID();
+        UUID golemUUID = animatable.getUUID();
+        UUID ownerUUID = animatable.getOwnerUUID();
+        int imbuedSoul = animatable.getImbuedSoul();
+        boolean isOwner = clientUUID.equals(ownerUUID);
+        Aspect.LOGGER.info("Client UUID: " + clientUUID);
+        Aspect.LOGGER.info("Owner UUID: " + ownerUUID);
+        Aspect.LOGGER.info(isOwner ? "Client is owner" : "Client is not owner");
+        Aspect.LOGGER.info("Imbued soul: " + imbuedSoul);
+        if (clientUUID == ownerUUID) {
+            poseStack.scale(1.0f + imbuedSoul / 10.0f, 1.0f + imbuedSoul / 10.0f, 1.0f + imbuedSoul / 10.0f);
+        }
+
+
+
+        super.render(model, animatable, partialTick, type, poseStack, bufferSource, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        this.renderQuad(poseStack, partialTick);
+    }
+
+    @Override
+    public boolean shouldRender(Mizaru p_114491_, Frustum p_114492_, double p_114493_, double p_114494_, double p_114495_) {
+        return true;
+    }
+
     private float accumulatedRotation = 0.0f;
-
-
     public void renderQuad(PoseStack poseStack, float partialTicks) {
         float height = 0.0f;
         float width = 1.5f;
@@ -53,47 +94,5 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
         builder.setPosColorLightmapDefaultFormat();
 
         poseStack.popPose();
-    }
-
-
-    @Override
-    public ResourceLocation getTextureLocation(Mizaru instance) {
-        return new ResourceLocation(Aspect.MODID, "textures/entity/chomper_texture.png");
-    }
-
-    @Override
-    public RenderType getRenderType(Mizaru animatable, float partialTick, PoseStack poseStack, @Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, int packedLight, ResourceLocation texture) {
-        return super.getRenderType(animatable, partialTick, poseStack, bufferSource, buffer, packedLight, texture);
-    }
-
-    @Override
-    public void render(GeoModel model, Mizaru animatable, float partialTick, RenderType type, PoseStack poseStack, @Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-
-        Vec3 currentPos = animatable.position();
-
-        // Initialize lastTickPos in the first render call or after the entity respawns
-        if (this.lastTickPos == null) this.lastTickPos = currentPos;
-
-        Vec3 interpolatedPos = this.lastTickPos.lerp(currentPos, partialTick);
-        Vec3 ghostPos = new Vec3(140, 120, -59);
-        Vec3 relativeGhostPos = ghostPos.subtract(interpolatedPos);
-
-        poseStack.pushPose();
-        poseStack.translate(relativeGhostPos.x(), relativeGhostPos.y(), relativeGhostPos.z());
-
-        // Render Ghost Entity
-        super.render(model, animatable, partialTick, type, poseStack, bufferSource, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-        poseStack.popPose();
-
-        // Render Main Entity using the original poseStack
-        super.render(model, animatable, partialTick, type, poseStack, bufferSource, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-
-        // Update lastTickPos after rendering is done
-        this.lastTickPos = currentPos;
-    }
-
-    @Override
-    public boolean shouldRender(Mizaru p_114491_, Frustum p_114492_, double p_114493_, double p_114494_, double p_114495_) {
-        return true;
     }
 }

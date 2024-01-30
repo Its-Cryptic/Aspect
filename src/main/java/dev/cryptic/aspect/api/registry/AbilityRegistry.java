@@ -43,14 +43,17 @@ public class AbilityRegistry {
 
     // Lightning
     public static final RegistryObject<AbstractAbility> SHOCK_ABILITY = registerAbility(new ShockAbility(
-            "shock"
+            "shock",
+            AspectRegistry.LIGHTNING
     ));
 
     public static final RegistryObject<AbstractAbility> FIREBALL_ABILITY = registerAbility(new FireballAbility(
-            "fireball"
+            "fireball",
+            AspectRegistry.FLAME
     ));
 
     public static final RegistryObject<AbstractAbility> FLAME_WHIP_ABILITY = registerAbility(new FlameWhipAbility(
-            "flame_whip"
+            "flame_whip",
+            AspectRegistry.FLAME
     ));
 }

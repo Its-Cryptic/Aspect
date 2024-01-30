@@ -73,36 +73,4 @@ public class FluxUtil {
             fluxCap.removeMaxFlux(flux);
         });
     }
-
-    @Info("Set a player's aspect level")
-    public static void setAspectLevel(Player player, int level) {
-        getFluxCap(player).ifPresent(fluxCap -> {
-            fluxCap.setAspectLevel(level);
-        });
-    }
-
-    @Info("Set a player's aspect type")
-    public static void setAspectType(Player player, AspectTypes type) {
-        getFluxCap(player).ifPresent(fluxCap -> {
-            fluxCap.setAspectType(type);
-        });
-    }
-
-    @Info("Get a player's aspect type")
-    public static AspectTypes getAspectType(Player player) {
-        final AspectTypes[] type = new AspectTypes[1];
-        getFluxCap(player).ifPresent(fluxCap -> {
-            type[0] = fluxCap.getAspectType();
-        });
-        return type[0];
-    }
-
-    @Info("Get a player's aspect level")
-    public static int getAspectLevel(ServerPlayer player) {
-        final int[] level = new int[1];
-        getFluxCap(player).ifPresent(fluxCap -> {
-            level[0] = fluxCap.getAspectLevel();
-        });
-        return level[0];
-    }
 }

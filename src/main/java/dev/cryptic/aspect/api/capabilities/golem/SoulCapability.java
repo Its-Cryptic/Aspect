@@ -9,13 +9,13 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class GolemCapability implements IGolemCapability {
+public class SoulCapability implements ISoulCapability {
 
     private final LivingEntity livingEntity;
     private int maxSoul = AspectCommonConfig.BASE_MAX_SOUL.get();
     private final Map<UUID, Integer> golems = new HashMap<>();
 
-    public GolemCapability(@Nullable final LivingEntity entity) {
+    public SoulCapability(@Nullable final LivingEntity entity) {
         this.livingEntity = entity;
     }
     @Override
@@ -64,6 +64,25 @@ public class GolemCapability implements IGolemCapability {
     @Override
     public void setAllGolemUUIDs(List<UUID> uuids) {
 
+    }
+
+    @Override
+    public Map<UUID, Integer> getGolemMap() {
+        return golems;
+    }
+
+    @Override
+    public int getTotalImbuedSoul() {
+        int total = 0;
+        for (Map.Entry<UUID, Integer> entry : golems.entrySet()) {
+            total += entry.getValue();
+        }
+        return total;
+    }
+
+    @Override
+    public int getRemainingSoul() {
+        return getMaxSoul() - getTotalImbuedSoul();
     }
 
     @Override

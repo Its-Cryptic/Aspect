@@ -6,13 +6,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.Nullable;
 
+import java.math.BigDecimal;
+
 public class FluxCapability implements IFluxCapability {
 
     private final LivingEntity livingEntity;
     private float flux;
     private int maxFlux = AspectCommonConfig.BASE_MAX_FLUX.get();
-    private int aspectLevel;
-    private AspectTypes aspectType = AspectTypes.BASE;
+    private final int roundPlaces = 3;
 
     public FluxCapability(@Nullable final LivingEntity entity) {
         this.livingEntity = entity;
@@ -35,6 +36,7 @@ public class FluxCapability implements IFluxCapability {
 
     @Override
     public float setFlux(float flux) {
+        flux = round(flux);
         if (flux > getMaxFlux()) {
             this.flux = getMaxFlux();
         } else if (flux < 0) {
@@ -47,8 +49,7 @@ public class FluxCapability implements IFluxCapability {
 
     @Override
     public float addFlux(float flux) {
-        this.setFlux(this.getCurrentFlux() + flux);
-        return this.getCurrentFlux();
+        return setFlux(this.getCurrentFlux() + flux);
     }
 
     @Override
@@ -72,32 +73,10 @@ public class FluxCapability implements IFluxCapability {
     }
 
     @Override
-    public int getAspectLevel() {
-        return aspectLevel;
-    }
-
-    @Override
-    public AspectTypes getAspectType() {
-        return aspectType;
-    }
-
-    @Override
-    public void setAspectLevel(int aspectLevel) {
-        this.aspectLevel = aspectLevel;
-    }
-
-    @Override
-    public void setAspectType(AspectTypes type) {
-        this.aspectType = type;
-    }
-
-    @Override
     public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();
         tag.putFloat("flux", getCurrentFlux());
         tag.putInt("maxFlux", getMaxFlux());
-        tag.putInt("aspectLevel", getAspectLevel());
-        tag.putInt("aspectType", getAspectType().getId());
 
         return tag;
     }
@@ -106,8 +85,13 @@ public class FluxCapability implements IFluxCapability {
     public void deserializeNBT(CompoundTag tag) {
         setFlux(tag.getFloat("flux"));
         setMaxFlux(tag.getInt("maxFlux"));
-        setAspectLevel(tag.getInt("aspectLevel"));
-        setAspectType(AspectTypes.getById(tag.getInt("aspectType")));
+
+    }
+
+    private float round(float value) {
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(roundPlaces, BigDecimal.ROUND_HALF_UP);
+        return bd.floatValue();
     }
 
 }

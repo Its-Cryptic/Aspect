@@ -13,7 +13,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 public abstract class AbstractGolem extends AbstractFluxEntity implements OwnableEntity {
-    protected static final EntityDataAccessor<Optional<UUID>> OWNER_UUID_DATA = SynchedEntityData.defineId(AbstractGolem.class, EntityDataSerializers.OPTIONAL_UUID);
+    public static final EntityDataAccessor<Optional<UUID>> OWNER_UUID_DATA = SynchedEntityData.defineId(AbstractGolem.class, EntityDataSerializers.OPTIONAL_UUID);
+    public static final EntityDataAccessor<Integer> IMBUED_SOUL_DATA = SynchedEntityData.defineId(AbstractGolem.class, EntityDataSerializers.INT);
 
     protected AbstractGolem(EntityType<? extends AbstractGolem> type, Level level) {
         super(type, level);
@@ -23,13 +24,45 @@ public abstract class AbstractGolem extends AbstractFluxEntity implements Ownabl
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(OWNER_UUID_DATA, Optional.empty());
+        this.entityData.define(IMBUED_SOUL_DATA, 0);
     }
 
+    @Override
     public void addAdditionalSaveData(CompoundTag nbt) {
         super.addAdditionalSaveData(nbt);
-        if (this.getOwnerUUID() != null) {
-            nbt.putUUID("Owner", this.getOwnerUUID());
+        // Save the imbued soul
+        nbt.putInt("ImbuedSoul", this.getImbuedSoul());
+
+        // Save the owner UUID, if present
+//        Optional<UUID> ownerUuid = Optional.ofNullable(this.getOwnerUUID());
+//        ownerUuid.ifPresent(uuid -> nbt.putUUID("OwnerUUID", uuid));
+        if (getOwnerUUID() != null) {
+            nbt.putUUID("OwnerUUID", getOwnerUUID());
         }
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag nbt) {
+        super.readAdditionalSaveData(nbt);
+        // Load the imbued soul
+        if (nbt.contains("ImbuedSoul", 3)) { // 3 is the NBT tag type for integers
+            this.setImbuedSoul(nbt.getInt("ImbuedSoul"));
+        }
+
+        // Load the owner UUID, if it exists
+        if (nbt.hasUUID("OwnerUUID")) {
+            setOwnerUUID(nbt.getUUID("OwnerUUID"));
+        } else {
+            setOwnerUUID(null);
+        }
+    }
+
+    public int getImbuedSoul() {
+        return this.entityData.get(IMBUED_SOUL_DATA);
+    }
+
+    public void setImbuedSoul(int imbuedSoul) {
+        this.entityData.set(IMBUED_SOUL_DATA, imbuedSoul);
     }
 
     @Nullable
@@ -46,12 +79,16 @@ public abstract class AbstractGolem extends AbstractFluxEntity implements Ownabl
         return p_21831_ == this.getOwner();
     }
 
-    @Nullable
-    public UUID getOwnerUUID() {
-        return this.entityData.get(OWNER_UUID_DATA).orElse((UUID)null);
+    public @Nullable UUID getOwnerUUID() {
+        return this.getEntityData().get(OWNER_UUID_DATA).orElse(null);
     }
 
-    public void setOwnerUUID(@Nullable UUID p_21817_) {
-        this.entityData.set(OWNER_UUID_DATA, Optional.ofNullable(p_21817_));
+    public void setOwnerUUID(@Nullable UUID uuid) {
+        this.entityData.set(OWNER_UUID_DATA, Optional.ofNullable(uuid));
+    }
+
+    @Override
+    public boolean canChangeDimensions() {
+        return false;
     }
 }

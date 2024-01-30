@@ -1,4 +1,4 @@
-package dev.cryptic.aspect.api.capabilities.golem;
+package dev.cryptic.aspect.api.capabilities.aspect;
 
 import dev.cryptic.aspect.Aspect;
 import dev.cryptic.aspect.api.capabilities.CapabilityRegistry;
@@ -14,19 +14,19 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class GolemCapabilityAttacher {
-    private static class GolemCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
+public class AspectCapabilityAttacher {
+    private static class AspectCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
         // This will be the object's ID in the player's nbt under ForgeCaps
-        public static final ResourceLocation ID = new ResourceLocation(Aspect.MODID, "golems");
+        public static final ResourceLocation ID = new ResourceLocation(Aspect.MODID, "aspect");
 
-        private final IGolemCapability capability = new GolemCapability(null);
-        private final LazyOptional<IGolemCapability> optional = LazyOptional.of(() -> capability);
+        private final IAspectCapability capability = new AspectCapability(null);
+        private final LazyOptional<IAspectCapability> optional = LazyOptional.of(() -> capability);
 
         @NotNull
         @Override
         public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-            return CapabilityRegistry.GOLEM_CAPABILITY.orEmpty(cap, this.optional);
+            return CapabilityRegistry.ASPECT_CAPABILITY.orEmpty(cap, this.optional);
         }
 
         void invalidate() {
@@ -46,7 +46,7 @@ public class GolemCapabilityAttacher {
     }
 
     public static void attach(final AttachCapabilitiesEvent<Entity> event) {
-        final GolemCapabilityProvider provider = new GolemCapabilityProvider();
-        event.addCapability(GolemCapabilityProvider.ID, provider);
+        final AspectCapabilityProvider provider = new AspectCapabilityProvider();
+        event.addCapability(AspectCapabilityProvider.ID, provider);
     }
 }
