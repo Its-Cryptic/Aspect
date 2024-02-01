@@ -46,6 +46,11 @@ public class GolemUtil {
         golem.setOwnerUUID(player.getUUID());
         // Sets golem's imbued soul (Most likely will be 1)
         golem.setImbuedSoul(imbuedSoul);
+
+        // Adds golem to SavedData
+        //GolemManager.INSTANCE.addGolem((ServerPlayer) player, golem, imbuedSoul);
+        AspectSavedData savedData = AspectSavedData.get(player.level);
+        if (savedData != null) savedData.addGolem((ServerLevel) player.level, player, golem, imbuedSoul);
     }
 
     public static void removeGolem(Player player, AbstractGolem golem) {

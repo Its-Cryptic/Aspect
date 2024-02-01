@@ -1,7 +1,6 @@
 package dev.cryptic.aspect.api.capabilities;
 
 import dev.cryptic.aspect.Aspect;
-//import dev.cryptic.aspects.api.networking.packet.ThirstDataSyncS2CPacket;
 import dev.cryptic.aspect.api.capabilities.aspect.AspectCapabilityAttacher;
 import dev.cryptic.aspect.api.capabilities.aspect.IAspectCapability;
 import dev.cryptic.aspect.api.registry.AttributeRegistry;
@@ -9,11 +8,17 @@ import dev.cryptic.aspect.api.capabilities.flux.FluxCapabilityAttacher;
 import dev.cryptic.aspect.api.capabilities.flux.IFluxCapability;
 import dev.cryptic.aspect.api.capabilities.golem.SoulCapabilityAttacher;
 import dev.cryptic.aspect.api.capabilities.golem.ISoulCapability;
+import dev.cryptic.aspect.api.util.GolemUtil;
 import dev.cryptic.aspect.entity.fluxentity.AbstractFluxEntity;
+import dev.cryptic.aspect.entity.fluxentity.golem.AbstractGolem;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.LevelData;
+import net.minecraft.world.level.storage.LevelResource;
+import net.minecraft.world.level.storage.WorldData;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.CapabilityToken;
@@ -21,10 +26,14 @@ import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
+
+import java.io.File;
+import java.util.UUID;
 
 public class CapabilityRegistry {
 
@@ -132,6 +141,29 @@ public class CapabilityRegistry {
                     });
                 }
             }
+        }
+
+        @SubscribeEvent
+        public static void onGolemDeath(LivingDeathEvent event) {
+            if (event.getEntity() instanceof AbstractGolem golem) {
+                UUID ownerUUID = golem.getOwnerUUID();
+                if (ownerUUID != null) {
+                    Player player = event.getEntity().getServer().getPlayerList().getPlayer(ownerUUID);
+                    if (player != null) {
+                        GolemUtil.removeGolem(player, golem);
+                    } else {
+                        removeGolemOffline(ownerUUID, golem);
+                    }
+                }
+            }
+        }
+
+        private static void removeGolemOffline(UUID playerUUID, AbstractGolem golem) {
+            UUID golemUUID = golem.getUUID();
+            LevelResource LevelR = LevelResource.PLAYER_DATA_DIR;
+            File playerDir = golem.getServer().getWorldPath(LevelR).toFile();
+
+
 
         }
     }
