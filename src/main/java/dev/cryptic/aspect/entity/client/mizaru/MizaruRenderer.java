@@ -53,10 +53,10 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
         UUID ownerUUID = animatable.getOwnerUUID();
         int imbuedSoul = animatable.getImbuedSoul();
         boolean isOwner = clientUUID.equals(ownerUUID);
-        Aspect.LOGGER.info("Client UUID: " + clientUUID);
-        Aspect.LOGGER.info("Owner UUID: " + ownerUUID);
-        Aspect.LOGGER.info(isOwner ? "Client is owner" : "Client is not owner");
-        Aspect.LOGGER.info("Imbued soul: " + imbuedSoul);
+//        Aspect.LOGGER.info("Client UUID: " + clientUUID);
+//        Aspect.LOGGER.info("Owner UUID: " + ownerUUID);
+//        Aspect.LOGGER.info(isOwner ? "Client is owner" : "Client is not owner");
+//        Aspect.LOGGER.info("Imbued soul: " + imbuedSoul);
         if (clientUUID == ownerUUID) {
             poseStack.scale(1.0f + imbuedSoul / 10.0f, 1.0f + imbuedSoul / 10.0f, 1.0f + imbuedSoul / 10.0f);
         }

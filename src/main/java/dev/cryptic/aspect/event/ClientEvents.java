@@ -1,6 +1,7 @@
 package dev.cryptic.aspect.event;
 
 import dev.cryptic.aspect.Aspect;
+import dev.cryptic.aspect.api.client.SyncedGolemData;
 import dev.cryptic.aspect.api.client.gui.FluxItemUI;
 import dev.cryptic.aspect.api.client.gui.FluxUI;
 import dev.cryptic.aspect.api.client.gui.SoulUI;
@@ -56,6 +57,16 @@ public class ClientEvents {
 //                    }
 //                }
 //            }
+
+            if (event.phase == TickEvent.Phase.START) {
+                if (SyncedGolemData.playerGolemMap != null) {
+                    SyncedGolemData.playerGolemMap.forEach((uuid, golemDataList) -> {
+                        golemDataList.forEach(golemData -> {
+                            Aspect.LOGGER.info("Golem UUID: " + golemData.golemUUID() + " Imbued Soul: " + golemData.imbuedSoul());
+                        });
+                    });
+                }
+            }
         }
 
         @SubscribeEvent

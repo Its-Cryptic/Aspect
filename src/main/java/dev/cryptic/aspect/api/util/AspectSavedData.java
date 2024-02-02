@@ -1,5 +1,8 @@
 package dev.cryptic.aspect.api.util;
 
+import dev.cryptic.aspect.Aspect;
+import dev.cryptic.aspect.api.networking.ModMessages;
+import dev.cryptic.aspect.api.networking.packet.GolemDataS2CPacket;
 import dev.cryptic.aspect.entity.fluxentity.golem.AbstractGolem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -7,16 +10,20 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.storage.DimensionDataStorage;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@Mod.EventBusSubscriber(modid = Aspect.MODID)
 public class AspectSavedData extends SavedData {
     private static final String IDENTIFIER = "aspect_data";
     private Map<UUID, ArrayList<GolemData>> playerGolemMap = new HashMap<>();
-    private record GolemData(UUID golemUUID, int imbuedSoul) {}
+    public record GolemData(UUID golemUUID, int imbuedSoul) {}
     private static final String GOLEM_TAG = "GolemMap";
 
     private AspectSavedData() {
@@ -106,4 +113,19 @@ public class AspectSavedData extends SavedData {
         nbt.put(GOLEM_TAG, golemTag);
         return nbt;
     }
+
+    @SubscribeEvent
+    public static void onServerTick(TickEvent.ServerTickEvent event) {
+        if (event.phase == TickEvent.Phase.START) {
+            Level level = event.getServer().getLevel(Level.OVERWORLD);
+            AspectSavedData savedData = get(level);
+            if (savedData != null) {
+                if (savedData.playerGolemMap.isEmpty()) return;
+                event.getServer().getPlayerList().getPlayers().forEach(player -> {
+                    ModMessages.sendToPlayer(new GolemDataS2CPacket(savedData.playerGolemMap), player);
+                });
+            }
+        }
+    }
+
 }

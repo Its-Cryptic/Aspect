@@ -4,6 +4,7 @@ import dev.cryptic.aspect.Aspect;
 //import dev.cryptic.aspects.api.networking.packet.DrinkWaterC2SPacket;
 import dev.cryptic.aspect.api.networking.packet.ExampleC2SPacket;
 //import dev.cryptic.aspects.api.networking.packet.ThirstDataSyncS2CPacket;
+import dev.cryptic.aspect.api.networking.packet.GolemDataS2CPacket;
 import dev.cryptic.aspect.api.networking.packet.SyncedDataS2CPacket;
 import dev.cryptic.aspect.api.networking.packet.UseRawFluxC2SPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -61,6 +62,12 @@ public class ModMessages {
                 .decoder(SyncedDataS2CPacket::new)
                 .encoder(SyncedDataS2CPacket::toBytes)
                 .consumerMainThread(SyncedDataS2CPacket::handle)
+                .add();
+
+        net.messageBuilder(GolemDataS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(GolemDataS2CPacket::new)
+                .encoder(GolemDataS2CPacket::toBytes)
+                .consumerMainThread(GolemDataS2CPacket::handle)
                 .add();
 
 
