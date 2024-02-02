@@ -11,6 +11,9 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 public class ModEntityTypes {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
         DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, Aspect.MODID);
@@ -28,4 +31,8 @@ public class ModEntityTypes {
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);
     }
+
+
+
+
 }

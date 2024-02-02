@@ -10,6 +10,7 @@ import dev.cryptic.aspect.api.networking.ModMessages;
 import dev.cryptic.aspect.api.networking.packet.UseRawFluxC2SPacket;
 import dev.cryptic.aspect.api.util.KeyBinding;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.*;
@@ -39,10 +40,11 @@ public class ClientEvents {
 
         @SubscribeEvent
         public static void onClientTick(TickEvent.ClientTickEvent event) {
+            Minecraft minecraft = Minecraft.getInstance();
+            LocalPlayer player = minecraft.player;
             // Sends packet when held down
             if (event.phase == TickEvent.Phase.START) {
-                Minecraft minecraft = Minecraft.getInstance();
-                if (minecraft.player != null) {
+                if (player != null) {
                     if (KeyBinding.USE_RAW_FLUX_KEY.isDown()) {
                         ModMessages.sendToServer(new UseRawFluxC2SPacket());
                     }
@@ -58,13 +60,16 @@ public class ClientEvents {
 //                }
 //            }
 
-            if (event.phase == TickEvent.Phase.START) {
-                if (SyncedGolemData.playerGolemMap != null) {
-                    SyncedGolemData.playerGolemMap.forEach((uuid, golemDataList) -> {
-                        golemDataList.forEach(golemData -> {
-                            Aspect.LOGGER.info("Golem UUID: " + golemData.golemUUID() + " Imbued Soul: " + golemData.imbuedSoul());
+
+            if (minecraft.player != null) {
+                if (event.phase == TickEvent.Phase.START) {
+                    if (SyncedGolemData.playerGolemMap != null) {
+                        SyncedGolemData.playerGolemMap.forEach((uuid, golemDataList) -> {
+                            golemDataList.forEach(golemData -> {
+                                Aspect.LOGGER.info("Golem UUID: " + golemData.golemUUID() + " Imbued Soul: " + golemData.imbuedSoul());
+                            });
                         });
-                    });
+                    }
                 }
             }
         }
