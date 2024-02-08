@@ -91,4 +91,6 @@ public abstract class AbstractGolem extends AbstractFluxEntity implements Ownabl
     public boolean canChangeDimensions() {
         return false;
     }
+
+
 }

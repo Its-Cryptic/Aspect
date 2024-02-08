@@ -2,11 +2,8 @@ package dev.cryptic.aspect.api.networking;
 
 import dev.cryptic.aspect.Aspect;
 //import dev.cryptic.aspects.api.networking.packet.DrinkWaterC2SPacket;
-import dev.cryptic.aspect.api.networking.packet.ExampleC2SPacket;
+import dev.cryptic.aspect.api.networking.packet.*;
 //import dev.cryptic.aspects.api.networking.packet.ThirstDataSyncS2CPacket;
-import dev.cryptic.aspect.api.networking.packet.GolemDataS2CPacket;
-import dev.cryptic.aspect.api.networking.packet.SyncedDataS2CPacket;
-import dev.cryptic.aspect.api.networking.packet.UseRawFluxC2SPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -40,18 +37,6 @@ public class ModMessages {
                 .consumerMainThread(ExampleC2SPacket::handle)
                 .add();
 
-//        net.messageBuilder(DrinkWaterC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-//                .decoder(DrinkWaterC2SPacket::new)
-//                .encoder(DrinkWaterC2SPacket::toBytes)
-//                .consumerMainThread(DrinkWaterC2SPacket::handle)
-//                .add();
-//
-//        net.messageBuilder(ThirstDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
-//                .decoder(ThirstDataSyncS2CPacket::new)
-//                .encoder(ThirstDataSyncS2CPacket::toBytes)
-//                .consumerMainThread(ThirstDataSyncS2CPacket::handle)
-//                .add();
-
         net.messageBuilder(UseRawFluxC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(UseRawFluxC2SPacket::new)
                 .encoder(UseRawFluxC2SPacket::toBytes)
@@ -70,7 +55,11 @@ public class ModMessages {
                 .consumerMainThread(GolemDataS2CPacket::handle)
                 .add();
 
-
+        net.messageBuilder(ForgeCapDataS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(ForgeCapDataS2CPacket::new)
+                .encoder(ForgeCapDataS2CPacket::toBytes)
+                .consumerMainThread(ForgeCapDataS2CPacket::handle)
+                .add();
     }
 
     public static <MSG> void sendToServer(MSG message) {

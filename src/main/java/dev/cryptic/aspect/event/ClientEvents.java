@@ -1,7 +1,10 @@
 package dev.cryptic.aspect.event;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import dev.cryptic.aspect.Aspect;
-import dev.cryptic.aspect.api.client.SyncedGolemData;
+import dev.cryptic.aspect.api.client.synceddata.SyncedGolemData;
 import dev.cryptic.aspect.api.client.gui.FluxItemUI;
 import dev.cryptic.aspect.api.client.gui.FluxUI;
 import dev.cryptic.aspect.api.client.gui.SoulUI;
@@ -9,15 +12,22 @@ import dev.cryptic.aspect.api.networking.ModMessages;
 //import dev.cryptic.aspects.api.networking.packet.DrinkWaterC2SPacket;
 import dev.cryptic.aspect.api.networking.packet.UseRawFluxC2SPacket;
 import dev.cryptic.aspect.api.util.KeyBinding;
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import team.lodestar.lodestone.handlers.RenderHandler;
+import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry;
+import team.lodestar.lodestone.systems.rendering.VFXBuilders;
 
 public class ClientEvents {
     @Mod.EventBusSubscriber(modid = Aspect.MODID, value = Dist.CLIENT)
@@ -61,12 +71,12 @@ public class ClientEvents {
 //            }
 
 
-            if (minecraft.player != null) {
+            if (player != null) {
                 if (event.phase == TickEvent.Phase.START) {
                     if (SyncedGolemData.playerGolemMap != null) {
                         SyncedGolemData.playerGolemMap.forEach((uuid, golemDataList) -> {
                             golemDataList.forEach(golemData -> {
-                                Aspect.LOGGER.info("Golem UUID: " + golemData.golemUUID() + " Imbued Soul: " + golemData.imbuedSoul());
+                                //Aspect.LOGGER.info("Golem UUID: " + golemData.golemUUID() + " Imbued Soul: " + golemData.imbuedSoul());
                             });
                         });
                     }

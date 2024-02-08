@@ -5,6 +5,7 @@ import dev.cryptic.aspect.Aspect;
 //import dev.cryptic.aspects.api.capabilities.PlayerFluxProvider;
 //import dev.cryptic.aspects.api.networking.packet.ThirstDataSyncS2CPacket;
 import dev.cryptic.aspect.api.networking.ModMessages;
+import dev.cryptic.aspect.api.networking.packet.ForgeCapDataS2CPacket;
 import dev.cryptic.aspect.api.networking.packet.SyncedDataS2CPacket;
 import dev.cryptic.aspect.api.registry.AbilityRegistry;
 import dev.cryptic.aspect.api.registry.AspectRegistry;
@@ -53,7 +54,10 @@ public class ModEvents {
                     ModMessages.sendToPlayer(
                             new SyncedDataS2CPacket(playerFluxMap, playerMaxFluxMap, playerGolemUUIDMap),
                             player);
+                });
 
+                server.getPlayerList().getPlayers().forEach(player -> {
+                    ModMessages.sendToPlayer(new ForgeCapDataS2CPacket(player), player);
                 });
 
             }
@@ -67,11 +71,11 @@ public class ModEvents {
                         int soul = GolemUtil.getImbuedSoul(player, golem);
                         int newSoul = soul + 1;
                         GolemUtil.addGolem(player, golem, newSoul);
-                        player.sendSystemMessage(Component.literal("Golem soul: " + newSoul));
+                        //player.sendSystemMessage(Component.literal("Golem soul: " + newSoul));
                     } else {
                         GolemUtil.addGolem(player, golem, 1);
-                        player.sendSystemMessage(Component.literal("New Golem Registered!"));
-                        player.sendSystemMessage(Component.literal("Golem soul: " + 1));
+                        //player.sendSystemMessage(Component.literal("New Golem Registered!"));
+                        //player.sendSystemMessage(Component.literal("Golem soul: " + 1));
                     }
                 }
             }

@@ -14,7 +14,9 @@ import dev.cryptic.aspect.entity.fluxentity.golem.AbstractGolem;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.LevelData;
 import net.minecraft.world.level.storage.LevelResource;
@@ -27,10 +29,13 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
+import org.slf4j.Logger;
 
 import java.io.File;
 import java.util.UUID;
@@ -72,7 +77,6 @@ public class CapabilityRegistry {
                 FluxCapabilityAttacher.attach(event);
                 AspectCapabilityAttacher.attach(event);
                 SoulCapabilityAttacher.attach(event);
-
             }
         }
 
@@ -143,18 +147,31 @@ public class CapabilityRegistry {
             }
         }
 
+//        @SubscribeEvent
+//        public static void onGolemDeath(LivingDeathEvent event) {
+//            if (event.getEntity() instanceof AbstractGolem golem) {
+//                golem.revive();
+//                UUID ownerUUID = golem.getOwnerUUID();
+//                if (ownerUUID != null) {
+//                    Player player = golem.getServer().getPlayerList().getPlayer(ownerUUID);
+//                    if (player != null) {
+//                        GolemUtil.removeGolem(player, golem);
+//                    } else {
+//                        removeGolemOffline(ownerUUID, golem);
+//                    }
+//                }
+//            }
+//        }
+
         @SubscribeEvent
-        public static void onGolemDeath(LivingDeathEvent event) {
+        public static void onGolemLethalDamage(LivingHurtEvent event) {
             if (event.getEntity() instanceof AbstractGolem golem) {
-                UUID ownerUUID = golem.getOwnerUUID();
-                if (ownerUUID != null) {
-                    Player player = event.getEntity().getServer().getPlayerList().getPlayer(ownerUUID);
-                    if (player != null) {
-                        GolemUtil.removeGolem(player, golem);
-                    } else {
-                        removeGolemOffline(ownerUUID, golem);
-                    }
+                Logger logger = Aspect.LOGGER;
+                logger.info("Test Frog 2");
+                if (golem.getHealth() - event.getAmount() <= 0) {
+                    //event.setCanceled(true);
                 }
+
             }
         }
 

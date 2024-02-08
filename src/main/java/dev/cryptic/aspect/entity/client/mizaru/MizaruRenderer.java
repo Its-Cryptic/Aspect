@@ -2,6 +2,7 @@ package dev.cryptic.aspect.entity.client.mizaru;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
 import dev.cryptic.aspect.Aspect;
 import dev.cryptic.aspect.api.util.GolemUtil;
@@ -53,10 +54,7 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
         UUID ownerUUID = animatable.getOwnerUUID();
         int imbuedSoul = animatable.getImbuedSoul();
         boolean isOwner = clientUUID.equals(ownerUUID);
-//        Aspect.LOGGER.info("Client UUID: " + clientUUID);
-//        Aspect.LOGGER.info("Owner UUID: " + ownerUUID);
-//        Aspect.LOGGER.info(isOwner ? "Client is owner" : "Client is not owner");
-//        Aspect.LOGGER.info("Imbued soul: " + imbuedSoul);
+
         if (clientUUID == ownerUUID) {
             poseStack.scale(1.0f + imbuedSoul / 10.0f, 1.0f + imbuedSoul / 10.0f, 1.0f + imbuedSoul / 10.0f);
         }
@@ -82,15 +80,24 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
 
         poseStack.pushPose();
 
-        // Update the accumulated rotation based on the partialTicks
-        this.accumulatedRotation += 1 * partialTicks; // Adjust this value for speed
-        this.accumulatedRotation %= 360; // Keep the rotation in the range [0, 360)
+        this.accumulatedRotation += 1 * partialTicks;
+        this.accumulatedRotation %= 360;
 
-        // Apply rotation
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(this.accumulatedRotation));
+        Vector3f rotationAxis = new Vector3f(1.0F, 0.0F, 1.0F);
+        rotationAxis = new Vector3f(rotationAxis.z(), rotationAxis.y(), -rotationAxis.x());
+        rotationAxis.normalize();
 
+        Quaternion rotationQuaternion = new Quaternion(rotationAxis, this.accumulatedRotation, true);
+
+        poseStack.mulPose(rotationQuaternion);
         poseStack.translate(0f, 0.001f, 0f);
         builder.renderQuad(textureConsumer, poseStack, positions, 1f);
+
+        // Render again but 180 degrees rotated to fix backface culling now broken :(
+//        Quaternion additionalRotation = new Quaternion(rotationAxis, 180.0f, true);
+//        poseStack.mulPose(additionalRotation);
+//        builder.renderQuad(textureConsumer, poseStack, positions, 1f);
+
         builder.setPosColorLightmapDefaultFormat();
 
         poseStack.popPose();

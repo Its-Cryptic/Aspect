@@ -3,9 +3,8 @@ package dev.cryptic.aspect.api.client.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.cryptic.aspect.Aspect;
-import dev.cryptic.aspect.api.client.SyncedGolemData;
+import dev.cryptic.aspect.api.client.synceddata.SyncedGolemData;
 import dev.cryptic.aspect.api.util.AspectSavedData;
-import dev.cryptic.aspect.misc.SyncedData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.player.LocalPlayer;
@@ -43,8 +42,14 @@ public class SoulUI extends GuiComponent {
         LocalPlayer player = minecraft.player;
         if (player == null) return;
         ArrayList<AspectSavedData.GolemData> golemData = SyncedGolemData.playerGolemMap.get(player.getUUID());
+        Aspect.LOGGER.info("Golem Data: " + golemData);
         int golemCount = golemData.size();
-
+        golemData.forEach(golem -> {
+            int index = golemData.indexOf(golem);
+            Vec2 position = generateIconPositions(golemCount, new Vec2((float) screenWidth / 2, (float) screenHeight / 2)).get(index);
+            drawString(poseStack, minecraft.font, String.valueOf(golem.imbuedSoul()), (int) position.x, (int) position.y, 0xFFFFFFFF);
+            Aspect.LOGGER.info("HIIII");
+        });
 
     }
 

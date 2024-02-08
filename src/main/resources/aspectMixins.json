@@ -5,6 +5,7 @@
     "QuaternionMixin"
   ],
   "client": [
+    "ClientLevelMixin"
   ],
   "server": [
   ]

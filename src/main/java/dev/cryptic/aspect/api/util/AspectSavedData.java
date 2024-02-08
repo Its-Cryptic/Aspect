@@ -68,6 +68,7 @@ public class AspectSavedData extends SavedData {
         AspectSavedData data = get(level);
         if (data != null) {
             ArrayList<GolemData> golemDataList = getGolemData(player);
+            golemDataList.removeIf(existingGolemData -> existingGolemData.golemUUID().equals(golem.getUUID()));
             golemDataList.add(new GolemData(golem.getUUID(), imbuedSoul));
             data.playerGolemMap.put(player.getUUID(), golemDataList);
             data.setDirty();

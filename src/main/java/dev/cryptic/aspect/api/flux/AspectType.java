@@ -18,7 +18,7 @@ public class AspectType {
     public AspectType(int id, String name, AspectColor colors, AspectColor empoweredColors, FluxProperties properties, Supplier<ArrayList<AbstractAbility>> abilities) {
         this.id = id;
         this.name = name;
-        this.langKey = "aspect.aspect." + name.toLowerCase();
+        this.langKey = String.format("aspect.aspect.%s", name.toLowerCase());
         this.colors = colors;
         this.empoweredColors = empoweredColors;
         this.properties = properties;

@@ -1,7 +1,7 @@
 package dev.cryptic.aspect.block.custom;
 
-import dev.cryptic.aspect.block.ModBlockEntities;
-import dev.cryptic.aspect.blockentities.FluxCoreBlockEntity;
+import dev.cryptic.aspect.blockentities.ModBlockEntities;
+import dev.cryptic.aspect.blockentities.fluxcore.FluxCoreBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;

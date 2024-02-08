@@ -3,6 +3,7 @@ package dev.cryptic.aspect.api.client.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.cryptic.aspect.api.client.SyncedClientData;
+import dev.cryptic.aspect.api.client.synceddata.SyncedForgeCapData;
 import dev.cryptic.aspect.misc.SyncedData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
@@ -21,8 +22,8 @@ public class FluxUI extends GuiComponent {
         Player player = minecraft.player;
         if (player == null) return;
 
-        float flux = (float) SyncedClientData.getPlayerFlux(player.getUUID());
-        int maxFlux = SyncedClientData.getPlayerMaxFlux(player.getUUID());
+        float flux = SyncedForgeCapData.getPlayerFlux();
+        int maxFlux = SyncedForgeCapData.getPlayerMaxFlux();
         float fluxPercentage = flux / maxFlux;
         String fluxString = flux + "/" + maxFlux;
 

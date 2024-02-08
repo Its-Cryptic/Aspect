@@ -1,7 +1,7 @@
 package dev.cryptic.aspect.api.networking.packet;
 
 import dev.cryptic.aspect.api.util.FluxUtil;
-import dev.cryptic.aspect.blockentities.FluxCoreBlockEntity;
+import dev.cryptic.aspect.blockentities.fluxcore.FluxCoreBlockEntity;
 import dev.cryptic.aspect.item.custom.AbstractFluxItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -36,8 +36,7 @@ public class UseRawFluxC2SPacket {
             Player player = context.getSender();
             if (player != null) {
                 ItemStack itemStack = player.getMainHandItem(); // Or check offhand as well
-                if (itemStack.getItem() instanceof AbstractFluxItem) {
-                    AbstractFluxItem fluxItem = (AbstractFluxItem) itemStack.getItem();
+                if (itemStack.getItem() instanceof AbstractFluxItem fluxItem) {
                     fluxItem.increaseFlux(itemStack); // Method to increase flux
                     FluxUtil.removeFlux(player, 1); // Remove flux from player
                 } else {
