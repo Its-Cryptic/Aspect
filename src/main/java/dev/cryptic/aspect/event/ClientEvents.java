@@ -87,6 +87,7 @@ public class ClientEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             // Client setup code here
+
         }
     }
 

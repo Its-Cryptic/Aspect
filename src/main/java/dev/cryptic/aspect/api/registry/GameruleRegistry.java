@@ -1,4 +1,4 @@
-package dev.cryptic.aspect.api.gamerule;
+package dev.cryptic.aspect.api.registry;
 
 import dev.cryptic.aspect.api.util.GameruleFactory;
 import net.minecraft.world.level.GameRules;

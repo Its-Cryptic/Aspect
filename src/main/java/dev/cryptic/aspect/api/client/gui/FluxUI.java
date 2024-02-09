@@ -2,6 +2,7 @@ package dev.cryptic.aspect.api.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import dev.cryptic.aspect.api.capabilities.CapabilityRegistry;
 import dev.cryptic.aspect.api.client.SyncedClientData;
 import dev.cryptic.aspect.api.client.synceddata.SyncedForgeCapData;
 import dev.cryptic.aspect.misc.SyncedData;
@@ -24,10 +25,13 @@ public class FluxUI extends GuiComponent {
 
         float flux = SyncedForgeCapData.getPlayerFlux();
         int maxFlux = SyncedForgeCapData.getPlayerMaxFlux();
-        float fluxPercentage = flux / maxFlux;
+        double fluxRegen = SyncedForgeCapData.getPlayerFluxRegen();
+        double lerpedFlux = flux + fluxRegen * partialTicks;
+
+        double lerpedFluxPercentage = lerpedFlux / maxFlux;
         String fluxString = flux + "/" + maxFlux;
-
-
+        String lerpedFluxString = lerpedFlux + "/" + maxFlux;
+        
         int barWidth = 10;
         int barHeight = 100;
         int posX = 15;
@@ -37,8 +41,8 @@ public class FluxUI extends GuiComponent {
         fill(poseStack, posX, posY - 1, posX + barWidth, posY + barHeight + 1, 0xFF555555);
 
         // Flux Bar
-        fill(poseStack, posX+1, posY + barHeight - (int)(fluxPercentage * barHeight), posX + barWidth - 1, posY + barHeight, 0xFF00FF00);
+        fill(poseStack, posX+1, posY + barHeight - (int)(lerpedFluxPercentage * barHeight), posX + barWidth - 1, posY + barHeight, 0xFF00FF00);
 
-        drawString(poseStack, minecraft.font, fluxString, posX + barWidth + 2, posY + barHeight - (int)(fluxPercentage * barHeight) - 5, 0xFFFFFFFF);
+        drawString(poseStack, minecraft.font, fluxString, posX + barWidth + 2, posY + barHeight - (int)(lerpedFluxPercentage * barHeight) - 5, 0xFFFFFFFF);
     }
 }

@@ -1,7 +1,7 @@
 package dev.cryptic.aspect;
 
 import com.mojang.logging.LogUtils;
-import dev.cryptic.aspect.api.gamerule.GameruleRegistry;
+import dev.cryptic.aspect.api.registry.GameruleRegistry;
 import dev.cryptic.aspect.api.networking.ModMessages;
 import dev.cryptic.aspect.api.registry.AbilityRegistry;
 import dev.cryptic.aspect.api.registry.AspectRegistry;

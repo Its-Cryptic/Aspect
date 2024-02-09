@@ -1,6 +1,5 @@
 package dev.cryptic.aspect.compat.kubejs;
 
-import dev.cryptic.aspect.api.flux.AspectTypes;
 import dev.cryptic.aspect.api.util.FluxUtil;
 import dev.cryptic.aspect.block.ModBlocks;
 import dev.cryptic.aspect.entity.ModEntityTypes;

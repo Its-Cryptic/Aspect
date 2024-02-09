@@ -13,6 +13,7 @@ import java.util.function.Supplier;
 public class ForgeCapDataS2CPacket extends AbstractPacket {
     private float playerFlux;
     private int playerMaxFlux;
+    private double playerFluxRegen;
 
     private int aspectID;
 
@@ -21,6 +22,7 @@ public class ForgeCapDataS2CPacket extends AbstractPacket {
     public ForgeCapDataS2CPacket(ServerPlayer player) {
         this.playerFlux = FluxUtil.getCurrentFlux(player);
         this.playerMaxFlux = FluxUtil.getMaxFlux(player);
+        this.playerFluxRegen = FluxUtil.getFluxRegen(player);
 
         this.aspectID = AspectUtil.getAspect(player).getId();
 
@@ -30,6 +32,7 @@ public class ForgeCapDataS2CPacket extends AbstractPacket {
     public ForgeCapDataS2CPacket(FriendlyByteBuf buf) {
         this.playerFlux = buf.readFloat();
         this.playerMaxFlux = buf.readInt();
+        this.playerFluxRegen = buf.readDouble();
 
         this.aspectID = buf.readInt();
 
@@ -41,6 +44,7 @@ public class ForgeCapDataS2CPacket extends AbstractPacket {
     public void toBytes(FriendlyByteBuf buf) {
         buf.writeFloat(playerFlux);
         buf.writeInt(playerMaxFlux);
+        buf.writeDouble(playerFluxRegen);
 
         buf.writeInt(aspectID);
 
@@ -50,7 +54,7 @@ public class ForgeCapDataS2CPacket extends AbstractPacket {
     @Override
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         supplier.get().enqueueWork(() -> {
-            SyncedForgeCapData.set(playerFlux, playerMaxFlux, aspectID, maxSoul);
+            SyncedForgeCapData.set(playerFlux, playerMaxFlux, playerFluxRegen, aspectID, maxSoul);
         });
         return true;
     }

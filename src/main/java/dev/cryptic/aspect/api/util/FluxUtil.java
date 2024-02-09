@@ -2,11 +2,13 @@ package dev.cryptic.aspect.api.util;
 
 import dev.cryptic.aspect.api.capabilities.CapabilityRegistry;
 import dev.cryptic.aspect.api.capabilities.flux.IFluxCapability;
-import dev.cryptic.aspect.api.flux.AspectTypes;
+import dev.cryptic.aspect.api.registry.AttributeRegistry;
 import dev.latvian.mods.kubejs.typings.Info;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.util.LazyOptional;
+
+import java.util.Objects;
 
 public class FluxUtil {
 
@@ -72,5 +74,9 @@ public class FluxUtil {
         getFluxCap(player).ifPresent(fluxCap -> {
             fluxCap.removeMaxFlux(flux);
         });
+    }
+
+    public static double getFluxRegen(ServerPlayer player) {
+        return Objects.requireNonNull(player.getAttribute(AttributeRegistry.FLUX_REGEN.get())).getValue();
     }
 }

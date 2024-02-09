@@ -1,6 +1,5 @@
 package dev.cryptic.aspect.misc;
 
-import dev.cryptic.aspect.api.flux.AspectTypes;
 import dev.cryptic.aspect.entity.fluxentity.golem.AbstractGolem;
 import net.minecraft.world.entity.player.Player;
 
