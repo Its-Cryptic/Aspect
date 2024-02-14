@@ -3,7 +3,7 @@ package dev.cryptic.aspect.block;
 import dev.cryptic.aspect.Aspect;
 import dev.cryptic.aspect.block.custom.FluxCoreBlock;
 import dev.cryptic.aspect.item.ModCreativeModeTab;
-import dev.cryptic.aspect.item.ModItems;
+import dev.cryptic.aspect.item.ItemRegistry;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -19,7 +19,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 
-public class ModBlocks {
+public class BlockRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Aspect.MODID);
 
     public static final RegistryObject<Block> ZIRCON_BLOCK = registerBlock("zircon_block",
@@ -51,7 +51,7 @@ public class ModBlocks {
 
     private static <T extends Block> RegistryObject<Item> registerBlockItem(String name, RegistryObject<T> block, CreativeModeTab tab) {
 
-        return ModItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().tab(tab)));
+        return ItemRegistry.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().tab(tab)));
     }
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);

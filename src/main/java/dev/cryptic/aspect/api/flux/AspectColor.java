@@ -1,13 +1,6 @@
 package dev.cryptic.aspect.api.flux;
 
-public class AspectColor {
-    public int primary;
-    public int secondary;
-    public int tertiary;
+import java.awt.Color;
 
-    public AspectColor(int primary, int secondary, int tertiary) {
-        this.primary = primary;
-        this.secondary = secondary;
-        this.tertiary = tertiary;
-    }
+public record AspectColor(Color primary, Color secondary, Color tertiary) {
 }

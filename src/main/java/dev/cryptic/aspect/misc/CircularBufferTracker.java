@@ -1,5 +1,7 @@
 package dev.cryptic.aspect.misc;
 
+import dev.cryptic.aspect.Aspect;
+
 import java.util.Arrays;
 
 public class CircularBufferTracker<T> {
@@ -38,4 +40,6 @@ public class CircularBufferTracker<T> {
     public String toString() {
         return Arrays.toString(values);
     }
+
+
 }

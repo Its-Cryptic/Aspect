@@ -38,7 +38,7 @@ public class UseRawFluxC2SPacket {
                 ItemStack itemStack = player.getMainHandItem(); // Or check offhand as well
                 if (itemStack.getItem() instanceof AbstractFluxItem fluxItem) {
                     fluxItem.increaseFlux(itemStack); // Method to increase flux
-                    FluxUtil.removeFlux(player, 1); // Remove flux from player
+                    FluxUtil.removeFlux(player, 5); // Remove flux from player
                 } else {
                     ClipContext raytrace = new ClipContext(player.getEyePosition(1.0F), player.getEyePosition(1.0F).add(player.getViewVector(1.0F).scale(3.0D)), ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player);
                     BlockHitResult result = player.level.clip(raytrace);

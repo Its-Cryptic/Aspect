@@ -14,6 +14,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.function.Supplier;
 
@@ -36,8 +37,8 @@ public class AspectRegistry {
     public static final RegistryObject<AspectType> NONE = registerAspect(new AspectType(
             id++,
             "none",
-            new AspectColor(0xFFFFFF, 0xFFFFFF, 0xFFFFFF),
-            new AspectColor(0xFFFFFF, 0xFFFFFF, 0xFFFFFF),
+            new AspectColor(new Color(242, 0, 255), new Color(255, 0, 128), new Color(255, 119, 0)),
+            new AspectColor(new Color(242, 0, 255), new Color(255, 0, 128), new Color(255, 119, 0)),
             new FluxProperties(0, 0),
             null
     ));
@@ -45,8 +46,8 @@ public class AspectRegistry {
     public static final RegistryObject<AspectType> FLAME = registerAspect(new AspectType(
             id++,
             "flame",
-            new AspectColor(0xFF0000, 0xFF0000, 0xFF0000),
-            new AspectColor(0xFF0000, 0xFF0000, 0xFF0000),
+            new AspectColor(new Color(242, 0, 255), new Color(255, 0, 128), new Color(255, 119, 0)),
+            new AspectColor(new Color(242, 0, 255), new Color(255, 0, 128), new Color(255, 119, 0)),
             new FluxProperties(0, 0),
             () -> {
                 ArrayList<AbstractAbility> abilities = new ArrayList<>();
@@ -60,8 +61,8 @@ public class AspectRegistry {
     public static final RegistryObject<AspectType> LIGHTNING = registerAspect(new AspectType(
             id++,
             "lightning",
-            new AspectColor(0xFF0000, 0xFF0000, 0xFF0000),
-            new AspectColor(0xFF0000, 0xFF0000, 0xFF0000),
+            new AspectColor(new Color(242, 0, 255), new Color(255, 0, 128), new Color(255, 119, 0)),
+            new AspectColor(new Color(242, 0, 255), new Color(255, 0, 128), new Color(255, 119, 0)),
             new FluxProperties(0, 0),
             () -> {
                 ArrayList<AbstractAbility> abilities = new ArrayList<>();

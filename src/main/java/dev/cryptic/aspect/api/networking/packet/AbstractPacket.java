@@ -1,6 +1,5 @@
 package dev.cryptic.aspect.api.networking.packet;
 
-import dev.cryptic.aspect.misc.SyncedData;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 

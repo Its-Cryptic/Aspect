@@ -9,21 +9,21 @@ public class ModCreativeModeTab {
     public static final CreativeModeTab TUTORIAL_TAB = new CreativeModeTab("riftrealms") {
         @Override
         public ItemStack makeIcon() {
-            return new ItemStack(ModItems.ZIRCON.get());
+            return new ItemStack(ItemRegistry.ZIRCON.get());
         }
     };
 
     public static final CreativeModeTab ASPECTS = new CreativeModeTab("aspects") {
         @Override
         public ItemStack makeIcon() {
-            return new ItemStack(ModItems.ZIRCON.get());
+            return new ItemStack(ItemRegistry.ZIRCON.get());
         }
     };
 
     public static final CreativeModeTab ASPECTS_TOOLS = new CreativeModeTab("aspects_tools") {
         @Override
         public ItemStack makeIcon() {
-            return new ItemStack(ModItems.ZIRCON.get());
+            return new ItemStack(ItemRegistry.ZIRCON.get());
         }
     };
 
@@ -31,7 +31,7 @@ public class ModCreativeModeTab {
     public static final CreativeModeTab ASPECTS_BLOCKS = new CreativeModeTab("aspects_blocks") {
         @Override
         public ItemStack makeIcon() {
-            return new ItemStack(ModItems.ZIRCON.get());
+            return new ItemStack(ItemRegistry.ZIRCON.get());
         }
 
         @Override

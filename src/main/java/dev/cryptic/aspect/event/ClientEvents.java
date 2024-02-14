@@ -1,33 +1,26 @@
 package dev.cryptic.aspect.event;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
 import dev.cryptic.aspect.Aspect;
-import dev.cryptic.aspect.api.client.synceddata.SyncedGolemData;
 import dev.cryptic.aspect.api.client.gui.FluxItemUI;
 import dev.cryptic.aspect.api.client.gui.FluxUI;
 import dev.cryptic.aspect.api.client.gui.SoulUI;
+import dev.cryptic.aspect.api.client.shader.MagmaShaderRenderer;
+import dev.cryptic.aspect.api.client.shader.ShaderHandler;
+import dev.cryptic.aspect.api.client.shader.post.BerserkRenderer;
 import dev.cryptic.aspect.api.networking.ModMessages;
 //import dev.cryptic.aspects.api.networking.packet.DrinkWaterC2SPacket;
 import dev.cryptic.aspect.api.networking.packet.UseRawFluxC2SPacket;
 import dev.cryptic.aspect.api.util.KeyBinding;
-import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import team.lodestar.lodestone.handlers.RenderHandler;
-import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry;
-import team.lodestar.lodestone.systems.rendering.VFXBuilders;
+import team.lodestar.lodestone.systems.easing.Easing;
 
 public class ClientEvents {
     @Mod.EventBusSubscriber(modid = Aspect.MODID, value = Dist.CLIENT)
@@ -58,6 +51,10 @@ public class ClientEvents {
                     if (KeyBinding.USE_RAW_FLUX_KEY.isDown()) {
                         ModMessages.sendToServer(new UseRawFluxC2SPacket());
                     }
+                    if (KeyBinding.USE_RAW_FLUX_KEY.consumeClick()) {
+                        Aspect.LOGGER.info("Raw Flux Key Pressed!");
+                        BerserkRenderer.getInstance().start(100, Easing.EXPO_OUT);
+                    }
                 }
             }
             // Sends packet when double tapped within 5 ticks
@@ -71,17 +68,17 @@ public class ClientEvents {
 //            }
 
 
-            if (player != null) {
-                if (event.phase == TickEvent.Phase.START) {
-                    if (SyncedGolemData.playerGolemMap != null) {
-                        SyncedGolemData.playerGolemMap.forEach((uuid, golemDataList) -> {
-                            golemDataList.forEach(golemData -> {
-                                //Aspect.LOGGER.info("Golem UUID: " + golemData.golemUUID() + " Imbued Soul: " + golemData.imbuedSoul());
-                            });
-                        });
-                    }
-                }
-            }
+//            if (player != null) {
+//                if (event.phase == TickEvent.Phase.START) {
+//                    if (SyncedGolemData.playerGolemMap != null) {
+//                        SyncedGolemData.playerGolemMap.forEach((uuid, golemDataList) -> {
+//                            golemDataList.forEach(golemData -> {
+//                                //Aspect.LOGGER.info("Golem UUID: " + golemData.golemUUID() + " Imbued Soul: " + golemData.imbuedSoul());
+//                            });
+//                        });
+//                    }
+//                }
+//            }
         }
 
         @SubscribeEvent
@@ -106,7 +103,12 @@ public class ClientEvents {
             event.registerAboveAll("flux_item_ui", FluxItemUI.OVERLAY);
             event.registerAboveAll("flux_ui", FluxUI.OVERLAY);
             event.registerAboveAll("soul_ui", SoulUI.OVERLAY);
+
+            event.registerAboveAll("touch_of_darkness", (gui, poseStack, partialTick, width, height) ->
+                    ShaderHandler.ClientOnly.renderDarknessVignette(poseStack));
         }
+
+
 
     }
 }

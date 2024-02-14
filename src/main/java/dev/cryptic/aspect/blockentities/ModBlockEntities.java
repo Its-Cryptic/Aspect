@@ -1,7 +1,7 @@
 package dev.cryptic.aspect.blockentities;
 
 import dev.cryptic.aspect.Aspect;
-import dev.cryptic.aspect.block.ModBlocks;
+import dev.cryptic.aspect.block.BlockRegistry;
 import dev.cryptic.aspect.blockentities.fluxcore.FluxCoreBlockEntity;
 import dev.cryptic.aspect.blockentities.fluxcore.FluxCoreRenderer;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -18,7 +18,7 @@ public class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Aspect.MODID);
 
     public static final RegistryObject<BlockEntityType<FluxCoreBlockEntity>> FLUX_CORE = BLOCK_ENTITIES.register("flux_core",
-            () -> BlockEntityType.Builder.of(FluxCoreBlockEntity::new, ModBlocks.FLUX_CORE_BLOCK.get()).build(null));
+            () -> BlockEntityType.Builder.of(FluxCoreBlockEntity::new, BlockRegistry.FLUX_CORE_BLOCK.get()).build(null));
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);
     }

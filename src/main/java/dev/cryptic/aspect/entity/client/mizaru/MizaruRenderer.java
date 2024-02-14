@@ -1,10 +1,13 @@
 package dev.cryptic.aspect.entity.client.mizaru;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
 import dev.cryptic.aspect.Aspect;
+import dev.cryptic.aspect.api.client.shader.AspectRenderType;
+import dev.cryptic.aspect.api.flux.AspectType;
 import dev.cryptic.aspect.api.util.GolemUtil;
 import dev.cryptic.aspect.entity.fluxentity.golem.AbstractGolem;
 import dev.cryptic.aspect.entity.fluxentity.golem.threewisemonkeys.Mizaru;
@@ -43,6 +46,7 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
 
     @Override
     public RenderType getRenderType(Mizaru animatable, float partialTick, PoseStack poseStack, @Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, int packedLight, ResourceLocation texture) {
+        if (isLost(animatable)) return AspectRenderType.aspectTest();
         return super.getRenderType(animatable, partialTick, poseStack, bufferSource, buffer, packedLight, texture);
     }
 
@@ -101,5 +105,9 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
         builder.setPosColorLightmapDefaultFormat();
 
         poseStack.popPose();
+    }
+
+    private boolean isLost(Mizaru animatable) {
+        return true;
     }
 }

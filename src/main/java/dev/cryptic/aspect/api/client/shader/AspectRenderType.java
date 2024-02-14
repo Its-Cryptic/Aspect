@@ -22,7 +22,20 @@ public class AspectRenderType extends RenderType {
                             .add(new ResourceLocation(Aspect.MODID, "textures/vfx/9.png"), false, false)
                             .build())
                     .createCompositeState(false));
+
+    private static final RenderType LOST_SOUL = create("lost_soul", DefaultVertexFormat.POSITION, VertexFormat.Mode.QUADS, 256, false, false,
+            RenderType.CompositeState.builder()
+                    .setShaderState(RENDERTYPE_END_GATEWAY_SHADER)
+                    .setTextureState(RenderStateShard.MultiTextureStateShard.builder()
+                            .add(new ResourceLocation(Aspect.MODID, "textures/vfx/uv_test.png"), false, false)
+                            .add(new ResourceLocation(Aspect.MODID, "textures/vfx/9.png"), false, false)
+                            .build())
+                    .createCompositeState(false));
     public static RenderType aspectTest() {
         return ASPECT_TEST;
+    }
+
+    public static RenderType lostSoul() {
+        return LOST_SOUL;
     }
 }

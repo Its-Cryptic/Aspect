@@ -43,12 +43,6 @@ public class ModMessages {
                 .consumerMainThread(UseRawFluxC2SPacket::handle)
                 .add();
 
-        net.messageBuilder(SyncedDataS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
-                .decoder(SyncedDataS2CPacket::new)
-                .encoder(SyncedDataS2CPacket::toBytes)
-                .consumerMainThread(SyncedDataS2CPacket::handle)
-                .add();
-
         net.messageBuilder(GolemDataS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(GolemDataS2CPacket::new)
                 .encoder(GolemDataS2CPacket::toBytes)

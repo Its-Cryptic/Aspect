@@ -42,7 +42,7 @@ import java.util.UUID;
 
 public class CapabilityRegistry {
 
-    public static final Integer UPDATE_INTERVAL = 5;
+    public static final Integer UPDATE_INTERVAL = 1;
 
     public static final Capability<IFluxCapability> FLUX_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
     public static final Capability<IAspectCapability> ASPECT_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});

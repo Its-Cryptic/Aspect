@@ -1,0 +1,24 @@
+{
+  "targets": [
+    "a",
+    "b"
+  ],
+  "passes": [
+    {
+      "name": "aspect:blue_tint",
+      "intarget": "minecraft:main",
+      "outtarget": "a",
+      "uniforms": [
+        {
+          "name": "Color",
+          "values": [ 0.0, 0.0, 1.0 ]
+        }
+      ]
+    },
+    {
+      "name": "blit",
+      "intarget": "a",
+      "outtarget": "minecraft:main"
+    }
+  ]
+}
