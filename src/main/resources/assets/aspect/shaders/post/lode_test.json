@@ -1,23 +1,25 @@
 {
   "targets": [
-    "a",
-    "b"
+    "final",
+    "depthMain"
   ],
   "passes": [
     {
       "name": "aspect:blue_tint",
       "intarget": "minecraft:main",
-      "outtarget": "a",
-      "uniforms": [
+      "outtarget": "final",
+      "auxtargets": [
         {
-          "name": "Color",
-          "values": [ 0.0, 0.0, 1.0 ]
+          "name": "MainDepthSampler",
+          "id": "depthMain:depth"
         }
+      ],
+      "uniforms": [
       ]
     },
     {
       "name": "blit",
-      "intarget": "a",
+      "intarget": "final",
       "outtarget": "minecraft:main"
     }
   ]

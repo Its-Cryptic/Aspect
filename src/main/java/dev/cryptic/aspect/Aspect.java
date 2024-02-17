@@ -2,7 +2,8 @@ package dev.cryptic.aspect;
 
 import com.mojang.logging.LogUtils;
 import dev.cryptic.aspect.api.client.shader.AspectCoreShaders;
-import dev.cryptic.aspect.api.client.shader.lodestone.post.MyLodestonePostProcessor;
+import dev.cryptic.aspect.api.client.shader.lodestone.post.TestMultiInstancePostProcessor;
+import dev.cryptic.aspect.api.client.shader.lodestone.post.TestPostProcessor;
 import dev.cryptic.aspect.api.client.shader.post.AspectPostShaders;
 import dev.cryptic.aspect.api.registry.GameruleRegistry;
 import dev.cryptic.aspect.api.networking.ModMessages;
@@ -80,10 +81,10 @@ public class Aspect {
             EntityRenderers.register(ModEntityTypes.MIZARU.get(), MizaruRenderer::new);
             EntityRenderers.register(ModEntityTypes.FIRE_BLAST.get(), FireBlastRenderer::new);
 
-            AspectCoreShaders.getInstance().init();
             AspectPostShaders.getInstance().init();
 
-            PostProcessHandler.addInstance(new MyLodestonePostProcessor());
+            PostProcessHandler.addInstance(new TestPostProcessor());
+            PostProcessHandler.addInstance(TestMultiInstancePostProcessor.INSTANCE);
         }
     }
 

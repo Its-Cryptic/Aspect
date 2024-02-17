@@ -5,7 +5,7 @@ import dev.cryptic.aspect.Aspect;
 import net.minecraft.resources.ResourceLocation;
 import team.lodestar.lodestone.systems.postprocess.PostProcessor;
 
-public class MyLodestonePostProcessor extends PostProcessor {
+public class TestPostProcessor extends PostProcessor {
     @Override
     public ResourceLocation getPostChainLocation() {
         return Aspect.resourceLocation("lode_test");
