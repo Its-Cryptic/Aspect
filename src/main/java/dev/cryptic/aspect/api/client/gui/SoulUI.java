@@ -41,6 +41,7 @@ public class SoulUI extends GuiComponent {
     public static void renderGolemIcons(ForgeGui gui, PoseStack poseStack, float partialTicks, int screenWidth, int screenHeight) {
         LocalPlayer player = minecraft.player;
         if (player == null) return;
+        if (SyncedGolemData.playerGolemMap == null) return;
         ArrayList<AspectSavedData.GolemData> golemData = SyncedGolemData.playerGolemMap.get(player.getUUID());
         Aspect.LOGGER.info("Golem Data: " + golemData);
         int golemCount = golemData.size();

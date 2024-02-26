@@ -37,7 +37,7 @@ public class RenderClientEvents {
     public static void playerQuadRender(RenderLevelStageEvent event) {
         Minecraft minecraft = Minecraft.getInstance();
         LocalPlayer player = minecraft.player;
-        if (player != null) {
+        if (player == null) {
             Camera camera = event.getCamera();
             PoseStack poseStack = event.getPoseStack();
             float partialTick = event.getPartialTick();
@@ -75,8 +75,7 @@ public class RenderClientEvents {
             Camera camera = event.getCamera();
             PoseStack poseStack = event.getPoseStack();
             float partialTick = event.getPartialTick();
-            int renderTick = event.getRenderTick();
-            Vec3 renderPos = new Vec3(0, 0,0);
+            Vec3 renderPos = new Vec3(0, 100,0);
             Vec3 relativePos = renderPos.subtract(camera.getPosition());
 
             poseStack.pushPose();

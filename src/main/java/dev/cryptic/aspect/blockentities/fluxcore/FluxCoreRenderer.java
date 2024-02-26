@@ -63,8 +63,6 @@ public class FluxCoreRenderer extends GeoBlockRenderer<FluxCoreBlockEntity> {
         poseStack.pushPose();
         poseStack.translate(-0.5, 2, -0.5);
         Matrix4f matrix4f = poseStack.last().pose();
-        float f = this.getOffsetDown();
-        float f1 = this.getOffsetUp();
 
         this.renderFace(animatable, matrix4f, vertexConsumer, 0.0F, 1.0F, 0.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, Direction.SOUTH);
         this.renderFace(animatable, matrix4f, vertexConsumer, 0.0F, 1.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, Direction.NORTH);
@@ -75,19 +73,11 @@ public class FluxCoreRenderer extends GeoBlockRenderer<FluxCoreBlockEntity> {
         poseStack.popPose();
     }
 
-    private void renderFace(FluxCoreBlockEntity p_173695_, Matrix4f matrix4f, VertexConsumer buffer, float p_173698_, float p_173699_, float p_173700_, float p_173701_, float p_173702_, float p_173703_, float p_173704_, float p_173705_, Direction direction) {
-        buffer.vertex(matrix4f, p_173698_, p_173700_, p_173702_).endVertex();
-        buffer.vertex(matrix4f, p_173699_, p_173700_, p_173703_).endVertex();
-        buffer.vertex(matrix4f, p_173699_, p_173701_, p_173704_).endVertex();
-        buffer.vertex(matrix4f, p_173698_, p_173701_, p_173705_).endVertex();
-    }
-
-    protected float getOffsetUp() {
-        return 0.75F;
-    }
-
-    protected float getOffsetDown() {
-        return 0.375F;
+    private void renderFace(FluxCoreBlockEntity entity, Matrix4f matrix4f, VertexConsumer buffer, float p1, float p2, float p3, float p4, float p5, float p6, float p7, float p8, Direction direction) {
+        buffer.vertex(matrix4f, p1, p3, p5).endVertex();
+        buffer.vertex(matrix4f, p2, p3, p6).endVertex();
+        buffer.vertex(matrix4f, p2, p4, p7).endVertex();
+        buffer.vertex(matrix4f, p1, p4, p8).endVertex();
     }
 
     protected RenderType renderType() {

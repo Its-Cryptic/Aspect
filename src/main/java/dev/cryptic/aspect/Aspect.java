@@ -2,6 +2,7 @@ package dev.cryptic.aspect;
 
 import com.mojang.logging.LogUtils;
 import dev.cryptic.aspect.api.client.shader.AspectCoreShaders;
+import dev.cryptic.aspect.api.client.shader.lodestone.post.SobelPostProcessor;
 import dev.cryptic.aspect.api.client.shader.lodestone.post.TestMultiInstancePostProcessor;
 import dev.cryptic.aspect.api.client.shader.lodestone.post.TestPostProcessor;
 import dev.cryptic.aspect.api.client.shader.post.AspectPostShaders;
@@ -83,7 +84,8 @@ public class Aspect {
 
             AspectPostShaders.getInstance().init();
 
-            PostProcessHandler.addInstance(new TestPostProcessor());
+            //PostProcessHandler.addInstance(new TestPostProcessor());
+            PostProcessHandler.addInstance(SobelPostProcessor.getInstance());
             PostProcessHandler.addInstance(TestMultiInstancePostProcessor.INSTANCE);
         }
     }
