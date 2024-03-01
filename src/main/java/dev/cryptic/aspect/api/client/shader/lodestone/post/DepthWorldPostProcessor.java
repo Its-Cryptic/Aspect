@@ -5,17 +5,11 @@ import dev.cryptic.aspect.Aspect;
 import net.minecraft.resources.ResourceLocation;
 import team.lodestar.lodestone.systems.postprocess.PostProcessor;
 
-public class SobelPostProcessor extends PostProcessor {
-    public static final SobelPostProcessor INSTANCE = new SobelPostProcessor();
-    static {
-        INSTANCE.setActive(false);
-    }
-    public static SobelPostProcessor getInstance() {
-        return INSTANCE;
-    }
+public class DepthWorldPostProcessor extends PostProcessor {
+    public static final DepthWorldPostProcessor INSTANCE = new DepthWorldPostProcessor();
     @Override
     public ResourceLocation getPostChainLocation() {
-        return Aspect.resourceLocation("sobel");
+        return Aspect.resourceLocation("depth_world");
     }
 
     @Override
@@ -27,6 +21,4 @@ public class SobelPostProcessor extends PostProcessor {
     public void afterProcess() {
 
     }
-
-
 }

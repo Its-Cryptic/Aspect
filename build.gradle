@@ -154,6 +154,23 @@ repositories {
         }
     }
 
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        forRepositories(fg.repository) // Only add this if you're using ForgeGradle, otherwise remove this line
+        filter {
+            includeGroup "maven.modrinth"
+        }
+    }
+
+    flatDir {
+        dirs 'libs'
+    }
+
 }
 
 dependencies {
@@ -192,6 +209,13 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:probejs-585406:4744799")
     runtimeOnly fg.deobf("curse.maven:ftb-library-forge-404465:4661834")
 
+    //implementation files('libs/encryptedapi-1.19.2-0.0.3.jar')
+    //implementation 'dev.cryptic.encryptedapi:encryptedapi-1.19.2-0.0.3'
+    implementation fg.deobf("curse.maven:encrypted-api-980064:5146363")
+
+    //implementation "maven.modrinth:architectury-api:6.6.92+forge"
+    //implementation "maven.modrinth:encrypted-api:1.19.2-0.0.2"
+
     implementation 'org.spongepowered:mixin:0.8.2'
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
@@ -223,11 +247,11 @@ jar {
 // This is the preferred method to reobfuscate your jar file
 jar.finalizedBy('reobfJar')
 // However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
-// publish.dependsOn('reobfJar')
+//publish.dependsOn('reobfJar')
 
 publishing {
     publications {
-        mavenJava(MavenPublication) {
+        mavenJava(MavenPublication)  {
             artifact jar
         }
     }

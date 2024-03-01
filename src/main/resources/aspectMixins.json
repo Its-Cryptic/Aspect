@@ -6,7 +6,8 @@
   ],
   "client": [
     "ClientLevelMixin",
-    "LevelRendererMixin"
+    "LevelRendererMixin",
+    "ItemInHandRendererMixin"
   ],
   "server": [
   ]

@@ -23,6 +23,14 @@ public class AspectRenderType extends RenderType {
                             .build())
                     .createCompositeState(false));
 
+//    private static final RenderType TEXTURE_TEST = create("textur_test", DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256, false, false,
+//            RenderType.CompositeState.builder()
+//                    .setShaderState(POSITION_COLOR_TEX_LIGHTMAP_SHADER)
+//                    .setTextureState(RenderStateShard.MultiTextureStateShard.builder()
+//                            .add(new ResourceLocation(Aspect.MODID, "textures/vfx/uv_test.png"), false, false)
+//                            .build())
+//                    .createCompositeState(false));
+
     private static final RenderType LOST_SOUL = create("lost_soul", DefaultVertexFormat.POSITION, VertexFormat.Mode.QUADS, 256, false, false,
             RenderType.CompositeState.builder()
                     .setShaderState(RENDERTYPE_END_GATEWAY_SHADER)

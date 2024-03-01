@@ -1,10 +1,9 @@
 package dev.cryptic.aspect;
 
 import com.mojang.logging.LogUtils;
-import dev.cryptic.aspect.api.client.shader.AspectCoreShaders;
+import dev.cryptic.aspect.api.client.shader.lodestone.post.DepthWorldPostProcessor;
 import dev.cryptic.aspect.api.client.shader.lodestone.post.SobelPostProcessor;
 import dev.cryptic.aspect.api.client.shader.lodestone.post.TestMultiInstancePostProcessor;
-import dev.cryptic.aspect.api.client.shader.lodestone.post.TestPostProcessor;
 import dev.cryptic.aspect.api.client.shader.post.AspectPostShaders;
 import dev.cryptic.aspect.api.registry.GameruleRegistry;
 import dev.cryptic.aspect.api.networking.ModMessages;
@@ -18,7 +17,12 @@ import dev.cryptic.aspect.entity.ModEntityTypes;
 import dev.cryptic.aspect.entity.ability.flame.fireblast.FireBlastRenderer;
 import dev.cryptic.aspect.entity.client.mizaru.MizaruRenderer;
 import dev.cryptic.aspect.item.ItemRegistry;
+//import dev.cryptic.aspect.misc.obj.MonkeyModel;
+import dev.cryptic.aspect.misc.obj.IcoSphereModel;
+import dev.cryptic.aspect.misc.obj.MonkeyModel;
 import dev.cryptic.aspect.setup.ModSetup;
+//import dev.cryptic.encryptedapi.registries.ObjModelRegistry;
+import dev.cryptic.encryptedapi.registries.ObjModelRegistry;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -43,6 +47,9 @@ public class Aspect {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public Aspect() {
+        ObjModelRegistry.registerModel(MonkeyModel.INSTANCE);
+        ObjModelRegistry.registerModel(IcoSphereModel.INSTANCE);
+
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Register the commonSetup method for modloading
@@ -86,6 +93,7 @@ public class Aspect {
 
             //PostProcessHandler.addInstance(new TestPostProcessor());
             PostProcessHandler.addInstance(SobelPostProcessor.getInstance());
+            PostProcessHandler.addInstance(DepthWorldPostProcessor.INSTANCE);
             PostProcessHandler.addInstance(TestMultiInstancePostProcessor.INSTANCE);
         }
     }

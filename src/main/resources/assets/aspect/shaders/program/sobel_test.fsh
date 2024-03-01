@@ -62,4 +62,5 @@ void main() {
 
     // Mix the sobel onto the diffuse by the alpha value of the sobel. Basically will overlay the sobel onto the diffuse.
     fragColor = mix(diffuse, sobelMix, sobelMix.a);
+    //fragColor = texture(MainDepthSampler, texCoord);
 }

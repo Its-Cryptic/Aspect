@@ -46,7 +46,7 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
 
     @Override
     public RenderType getRenderType(Mizaru animatable, float partialTick, PoseStack poseStack, @Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, int packedLight, ResourceLocation texture) {
-        if (isLost(animatable)) return AspectRenderType.aspectTest();
+        if (!isLost(animatable)) return AspectRenderType.aspectTest();
         return super.getRenderType(animatable, partialTick, poseStack, bufferSource, buffer, packedLight, texture);
     }
 
@@ -65,7 +65,8 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
 
 
 
-        super.render(model, animatable, partialTick, type, poseStack, bufferSource, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        // Max packed light is 255
+        super.render(model, animatable, partialTick, type, poseStack, bufferSource, buffer, 255, packedOverlay, red, green, blue, alpha);
         this.renderQuad(poseStack, partialTick);
     }
 

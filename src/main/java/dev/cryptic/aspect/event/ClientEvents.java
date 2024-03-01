@@ -6,6 +6,7 @@ import dev.cryptic.aspect.api.client.gui.FluxUI;
 import dev.cryptic.aspect.api.client.gui.SoulUI;
 import dev.cryptic.aspect.api.client.shader.MagmaShaderRenderer;
 import dev.cryptic.aspect.api.client.shader.ShaderHandler;
+import dev.cryptic.aspect.api.client.shader.lodestone.post.DepthWorldPostProcessor;
 import dev.cryptic.aspect.api.client.shader.post.BerserkRenderer;
 import dev.cryptic.aspect.api.networking.ModMessages;
 //import dev.cryptic.aspects.api.networking.packet.DrinkWaterC2SPacket;
@@ -53,7 +54,12 @@ public class ClientEvents {
                     }
                     if (KeyBinding.USE_RAW_FLUX_KEY.consumeClick()) {
                         Aspect.LOGGER.info("Raw Flux Key Pressed!");
-                        BerserkRenderer.getInstance().start(100, Easing.EXPO_OUT);
+                        //BerserkRenderer.getInstance().start(100, Easing.EXPO_OUT);
+                        if (DepthWorldPostProcessor.INSTANCE.isActive()) {
+                            DepthWorldPostProcessor.INSTANCE.setActive(false);
+                        } else {
+                            DepthWorldPostProcessor.INSTANCE.setActive(true);
+                        }
                     }
                 }
             }

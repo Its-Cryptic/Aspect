@@ -60,27 +60,37 @@ public class RenderClientEvents {
             poseStack.pushPose();
             poseStack.translate(relativePos.x, relativePos.y, relativePos.z);
             poseStack.translate(pathPos.x, pathPos.y, pathPos.z);
-
-            renderQuad(poseStack, partialTick, 1);
+            //renderQuad(poseStack, partialTick, 1);
             poseStack.popPose();
         }
     }
 
     @SubscribeEvent
     public static void onLevelRender(RenderLevelStageEvent event) {
-        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_CUTOUT_BLOCKS) return;
+        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_WEATHER) return;
+        event.getProjectionMatrix();
         Minecraft minecraft = Minecraft.getInstance();
         LocalPlayer player = minecraft.player;
         if (player != null) {
             Camera camera = event.getCamera();
             PoseStack poseStack = event.getPoseStack();
             float partialTick = event.getPartialTick();
-            Vec3 renderPos = new Vec3(0, 100,0);
+            Vec3 renderPos = new Vec3(0, 10,0);
             Vec3 relativePos = renderPos.subtract(camera.getPosition());
+            Vec3 cameraPos = camera.getPosition();
+            Vec3 vecToPlayer = cameraPos.subtract(renderPos).normalize();
+            Vec3 defaultForward = new Vec3(0, 1, 0);
+            Vec3 rotationAxis = defaultForward.cross(vecToPlayer).normalize();
+            Vector3f rotationAxisF = new Vector3f((float) rotationAxis.x, (float) rotationAxis.y, (float) rotationAxis.z);
+
+            double angle = Math.acos(defaultForward.dot(vecToPlayer));
+            Quaternion rotationQuaternion = new Quaternion(rotationAxisF, (float) angle, false);
 
             poseStack.pushPose();
             poseStack.translate(relativePos.x, relativePos.y, relativePos.z);
-            renderQuad(poseStack, partialTick, 1);
+            poseStack.mulPose(rotationQuaternion);
+            poseStack.mulPose(Vector3f.XN.rotationDegrees(90));
+            //renderQuad(poseStack, partialTick, 1);
             poseStack.popPose();
         }
     }
