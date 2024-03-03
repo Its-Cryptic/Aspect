@@ -18,4 +18,8 @@ void main() {
     float mainDepth = texture(MainDepthSampler, texCoord).r;
     float depth = linearizeDepth(mainDepth);
     fragColor = vec4(depth, depth, depth, 1.0);
+
+//    vec4 original = texture(DiffuseSampler, texCoord);
+//    vec4 outColor = original * vec4(1.0, 0.0, 0.0, 1.0);
+//    fragColor = outColor;
 }

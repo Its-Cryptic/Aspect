@@ -2,9 +2,9 @@ package dev.cryptic.aspect.blockentities.fluxcore;
 
 import dev.cryptic.aspect.Aspect;
 import net.minecraft.resources.ResourceLocation;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class FluxCoreModel extends AnimatedGeoModel<FluxCoreBlockEntity> {
+public class FluxCoreModel extends GeoModel<FluxCoreBlockEntity> {
     @Override
     public ResourceLocation getModelResource(FluxCoreBlockEntity object) {
         return new ResourceLocation(Aspect.MODID, "geo/flux_core.geo.json");

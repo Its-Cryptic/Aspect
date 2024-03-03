@@ -11,11 +11,13 @@ import dev.cryptic.aspect.api.registry.AbilityRegistry;
 import dev.cryptic.aspect.api.registry.AspectRegistry;
 import dev.cryptic.aspect.blockentities.ModBlockEntities;
 import dev.cryptic.aspect.block.BlockRegistry;
+import dev.cryptic.aspect.blockentities.fluxcore.FluxCoreRenderer;
 import dev.cryptic.aspect.config.AspectClientConfig;
 import dev.cryptic.aspect.config.AspectCommonConfig;
 import dev.cryptic.aspect.entity.ModEntityTypes;
 import dev.cryptic.aspect.entity.ability.flame.fireblast.FireBlastRenderer;
 import dev.cryptic.aspect.entity.client.mizaru.MizaruRenderer;
+import dev.cryptic.aspect.item.CreativeTabRegistry;
 import dev.cryptic.aspect.item.ItemRegistry;
 //import dev.cryptic.aspect.misc.obj.MonkeyModel;
 import dev.cryptic.aspect.misc.obj.IcoSphereModel;
@@ -23,6 +25,7 @@ import dev.cryptic.aspect.misc.obj.MonkeyModel;
 import dev.cryptic.aspect.setup.ModSetup;
 //import dev.cryptic.encryptedapi.registries.ObjModelRegistry;
 import dev.cryptic.encryptedapi.registries.ObjModelRegistry;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -37,6 +40,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
+import software.bernie.geckolib.GeckoLib;
 import team.lodestar.lodestone.systems.postprocess.PostProcessHandler;
 
 
@@ -59,6 +63,7 @@ public class Aspect {
         ModSetup.registers(modEventBus);
         ItemRegistry.register(modEventBus);
         BlockRegistry.register(modEventBus);
+        CreativeTabRegistry.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModEntityTypes.register(modEventBus);
 
@@ -67,6 +72,8 @@ public class Aspect {
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AspectCommonConfig.SPEC, "aspect-common.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AspectClientConfig.SPEC, "aspect-client.toml");
+
+        GeckoLib.initialize();
 
         MinecraftForge.EVENT_BUS.register(this);
     }
@@ -88,6 +95,8 @@ public class Aspect {
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntityTypes.MIZARU.get(), MizaruRenderer::new);
             EntityRenderers.register(ModEntityTypes.FIRE_BLAST.get(), FireBlastRenderer::new);
+
+            BlockEntityRenderers.register(ModBlockEntities.FLUX_CORE.get(), FluxCoreRenderer::new);
 
             AspectPostShaders.getInstance().init();
 

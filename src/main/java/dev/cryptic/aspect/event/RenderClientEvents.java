@@ -2,8 +2,6 @@ package dev.cryptic.aspect.event;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
 import dev.cryptic.aspect.Aspect;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -16,6 +14,7 @@ import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.joml.Vector3f;
 import team.lodestar.lodestone.handlers.RenderHandler;
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry;
 import team.lodestar.lodestone.systems.rendering.VFXBuilders;
@@ -84,12 +83,12 @@ public class RenderClientEvents {
             Vector3f rotationAxisF = new Vector3f((float) rotationAxis.x, (float) rotationAxis.y, (float) rotationAxis.z);
 
             double angle = Math.acos(defaultForward.dot(vecToPlayer));
-            Quaternion rotationQuaternion = new Quaternion(rotationAxisF, (float) angle, false);
+            //Quaternion rotationQuaternion = new Quaternion(rotationAxisF, (float) angle, false);
 
             poseStack.pushPose();
             poseStack.translate(relativePos.x, relativePos.y, relativePos.z);
-            poseStack.mulPose(rotationQuaternion);
-            poseStack.mulPose(Vector3f.XN.rotationDegrees(90));
+            //poseStack.mulPose(rotationQuaternion);
+            //poseStack.mulPose(Vector3f.XN.rotationDegrees(90));
             //renderQuad(poseStack, partialTick, 1);
             poseStack.popPose();
         }

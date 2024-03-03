@@ -3,23 +3,27 @@ package dev.cryptic.aspect.api.client.gui;
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.cryptic.aspect.item.custom.AbstractFluxItem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Renderable;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 
-public class FluxItemUI extends GuiComponent {
+public class FluxItemUI {
     public static final IGuiOverlay OVERLAY = FluxItemUI::renderOverlay;
     private static final Minecraft minecraft = Minecraft.getInstance();
 
-    public static void renderOverlay(ForgeGui gui, PoseStack poseStack, float partialTicks, int screenWidth, int screenHeight) {
+    public static void renderOverlay(ForgeGui gui, GuiGraphics guiGraphics, float partialTicks, int screenWidth, int screenHeight) {
         if (!shouldDisplayBar()) {
             return;
         }
 
         Player player = minecraft.player;
         if (player == null) return;
+
+        PoseStack poseStack = new PoseStack();
 
         ItemStack fluxItemStack = player.getMainHandItem().getItem() instanceof AbstractFluxItem ? player.getMainHandItem() : player.getOffhandItem();
         AbstractFluxItem fluxItem = (AbstractFluxItem) fluxItemStack.getItem();
@@ -35,17 +39,17 @@ public class FluxItemUI extends GuiComponent {
         int filledWidth = (int)((currentFlux / (float) fluxItem.MAX_FLUX) * barWidth);
 
         // Background Bar
-        fill(poseStack, posX, posY, posX + barWidth, posY + barHeight, 0xFF555555);
+        guiGraphics.fill(posX, posY, posX + barWidth, posY + barHeight, 0xFF555555);
 
         // Flux Bar
-        fill(poseStack, posX, posY, posX + filledWidth, posY + barHeight, 0xFF00FF00);
+        guiGraphics.fill(posX, posY, posX + filledWidth, posY + barHeight, 0xFF00FF00);
 
         // Threshold Markers
         int thresholdMinX = posX + (int)((fluxItem.THRESHOLD_MIN_FLUX / (float)fluxItem.MAX_FLUX) * barWidth);
         int safeMaxX = posX + (int)((fluxItem.SAFE_MAX_FLUX / (float)fluxItem.MAX_FLUX) * barWidth);
 
-        fill(poseStack, thresholdMinX, posY, thresholdMinX + 1, posY + barHeight, 0xFFFFFF00);
-        fill(poseStack, safeMaxX, posY, safeMaxX + 1, posY + barHeight, 0xFFFF0000);
+        guiGraphics.fill(thresholdMinX, posY, thresholdMinX + 1, posY + barHeight, 0xFFFFFF00);
+        guiGraphics.fill(safeMaxX, posY, safeMaxX + 1, posY + barHeight, 0xFFFF0000);
     }
 
     public static boolean shouldDisplayBar() {
@@ -63,4 +67,5 @@ public class FluxItemUI extends GuiComponent {
     private static boolean isFluxItem(ItemStack itemStack) {
         return itemStack.getItem() instanceof AbstractFluxItem;
     }
+
 }

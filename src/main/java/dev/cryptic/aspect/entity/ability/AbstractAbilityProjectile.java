@@ -49,10 +49,10 @@ public abstract class AbstractAbilityProjectile extends Projectile {
             return;
         }
 
-        HitResult hitResult = ProjectileUtil.getHitResult(this, this::canHitEntity);
-        if (hitResult.getType() != HitResult.Type.MISS && !ForgeEventFactory.onProjectileImpact(this, hitResult)) {
-            onHit(hitResult);
-        }
+//        HitResult hitResult = ProjectileUtil.getHitResult(this, this::canHitEntity);
+//        if (hitResult.getType() != HitResult.Type.MISS && !ForgeEventFactory.onProjectileImpact(this, hitResult)) {
+//            onHit(hitResult);
+//        }
 
         setPos(position().add(getDeltaMovement()));
         ProjectileUtil.rotateTowardsMovement(this, 1.0F);
@@ -67,9 +67,9 @@ public abstract class AbstractAbilityProjectile extends Projectile {
         super.onHit(hitResult);
         Vec3 pos = new Vec3(xOld, yOld, zOld);
 
-        Chicken chicken = new Chicken(EntityType.CHICKEN, level);
+        Chicken chicken = new Chicken(EntityType.CHICKEN, level());
         chicken.setPos(pos);
-        level.addFreshEntity(chicken);
+        level().addFreshEntity(chicken);
     }
 
     @Override

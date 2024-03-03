@@ -1,8 +1,8 @@
 package dev.cryptic.aspect.api.client.shader.lodestone.post;
 
-import com.mojang.math.Vector3f;
 import net.minecraft.client.Camera;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Vector3f;
 import team.lodestar.lodestone.systems.postprocess.DynamicShaderFxInstance;
 
 import java.util.function.BiConsumer;

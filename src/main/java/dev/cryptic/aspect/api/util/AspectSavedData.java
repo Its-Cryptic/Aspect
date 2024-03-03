@@ -44,7 +44,7 @@ public class AspectSavedData extends SavedData {
     }
 
     public ArrayList<GolemData> getGolemData(Player player) {
-        AspectSavedData data = get(player.level);
+        AspectSavedData data = get(player.level());
         if (data != null) {
             return data.playerGolemMap.getOrDefault(player.getUUID(), new ArrayList<>());
         }
@@ -52,7 +52,7 @@ public class AspectSavedData extends SavedData {
     }
 
     public GolemData getGolemData(Player player, AbstractGolem golem) {
-        AspectSavedData data = get(player.level);
+        AspectSavedData data = get(player.level());
         if (data != null) {
             ArrayList<GolemData> golemDataList = data.playerGolemMap.getOrDefault(player.getUUID(), new ArrayList<>());
             for (GolemData golemData : golemDataList) {

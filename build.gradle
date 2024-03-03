@@ -1,32 +1,30 @@
 buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
-        maven { url = 'https://maven.parchmentmc.org' }
-        maven {
-            url = 'https://repo.spongepowered.org/repository/maven-public/'
-            content { includeGroup "org.spongepowered" }
-        }
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: "${forgegradleVersion}", changing: false
-        classpath "org.spongepowered:mixingradle:${mixingradleVersion}"
-        classpath "org.parchmentmc:librarian:${librarianVersion}"
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
 
 plugins {
-    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'eclipse'
+    id 'idea'
+    id 'maven-publish'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
 }
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
-apply plugin: 'org.spongepowered.mixin'
-apply plugin: 'org.parchmentmc.librarian.forgegradle'
 
-version = '1.19.2-1.0.0'
-group = 'dev.cryptic.aspect' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'aspect'
+apply plugin: 'org.spongepowered.mixin'
+
+version = "${minecraftVersion}-${modVersion}"
+group = "dev.cryptic.${mod_id}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+
+base {
+    archivesName = "${mod_id}"
+}
 
 configurations {
     library
@@ -39,74 +37,48 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 minecraft {
-    mappings channel: 'official', version: '1.19.2'
+    mappings channel: 'official', version: minecraftVersion
 
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg') // Currently, this location cannot be changed from the default.
 
     runs {
-        client {
+        configureEach {
             workingDirectory project.file('run')
 
             property 'forge.logging.markers', 'REGISTRIES'
 
             property 'forge.logging.console.level', 'debug'
 
-            property 'forge.enabledGameTestNamespaces', 'aspect'
-
             mods {
-                aspect {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
+        }
+
+        client {
+            // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
+            property 'forge.enabledGameTestNamespaces', mod_id
         }
 
         server {
-            workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'REGISTRIES'
-
-            property 'forge.logging.console.level', 'debug'
-
-            property 'forge.enabledGameTestNamespaces', 'aspect'
-
-            mods {
-                aspect {
-                    source sourceSets.main
-                }
-            }
+            property 'forge.enabledGameTestNamespaces', mod_id
+            args '--nogui'
         }
 
+        // This run config launches GameTestServer and runs all registered gametests, then exits.
+        // By default, the server will crash when no gametests are provided.
+        // The gametest system is also enabled by default for other run configs under the /test command.
         gameTestServer {
-            workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'REGISTRIES'
-
-            property 'forge.logging.console.level', 'debug'
-
-            property 'forge.enabledGameTestNamespaces', 'aspect'
-
-            mods {
-                aspect {
-                    source sourceSets.main
-                }
-            }
+            property 'forge.enabledGameTestNamespaces', mod_id
         }
 
         data {
-            workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'REGISTRIES'
-
-            property 'forge.logging.console.level', 'debug'
+            // example of overriding the workingDirectory set in configureEach above
+            workingDirectory project.file('run-data')
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', 'aspect', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-
-            mods {
-                aspect {
-                    source sourceSets.main
-                }
-            }
+            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
         }
     }
 }
@@ -116,8 +88,11 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 repositories {
     mavenCentral()
     maven {
-        name 'Curios maven'
-        url = "https://maven.theillusivec4.top/"
+        name = "Curios maven"
+        url "https://maven.theillusivec4.top"
+        content {
+            includeGroupByRegex "top\\.theillusivec4.*"
+        }
     }
 
     maven {
@@ -136,7 +111,14 @@ repositories {
             includeGroup "curse.maven"
         }
     }
-    maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
+    maven {
+        name = 'GeckoLib'
+        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+        content {
+            includeGroupByRegex("software\\.bernie.*")
+            includeGroup("com.eliotlash.mclib")
+        }
+    }
 
     maven {
         // Shedaniel's maven (Architectury API)
@@ -174,7 +156,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.19.2-43.2.19'
+    minecraft "net.minecraftforge:forge:${minecraftVersion}-${forgeVersion}"
 
     // Use this to make sure it functions in the intellij environment
     if (System.getProperty("idea.sync.active") != "true") {
@@ -182,19 +164,21 @@ dependencies {
     }
 
     // JEI Dependency
-    compileOnly fg.deobf("mezz.jei:jei-1.19.2-common-api:${jeiVersion}")
-    compileOnly fg.deobf("mezz.jei:jei-1.19.2-forge-api:${jeiVersion}")
-    runtimeOnly fg.deobf("mezz.jei:jei-1.19.2-forge:${jeiVersion}")
+    compileOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-common-api:${jeiVersion}")
+    compileOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-forge-api:${jeiVersion}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-forge:${jeiVersion}")
 
     // Curios Dependency
-    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.19.2-${curiosVersion}:api")
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.19.2-${curiosVersion}")
+    //compileOnly(fg.deobf("top.theillusivec4.curios:curios-forge:${curiosVersion}:api"))
+    //runtimeOnly(fg.deobf("top.theillusivec4.curios:curios-forge:${curiosVersion}"))
+    //if(project.hasProperty('curiosVersion'))        implementation fg.deobf("top.theillusivec4.curios:curios-forge:${curiosVersion}")
+    //implementation "maven.modrinth:curios:${curiosVersion}"
 
     // Lodestone Dependency
     implementation fg.deobf("team.lodestar.lodestone:lodestone:${minecraftVersion}-${lodestoneVersion}")
 
     // GeckoLib Dependency
-    shade fg.deobf("software.bernie.geckolib:geckolib-forge-1.19:${geckoVersion}")
+    implementation fg.deobf("software.bernie.geckolib:geckolib-forge-${minecraftVersion}:${geckoVersion}")
 
     // Patchouli Dependency
     //implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouliVersion}")
@@ -206,15 +190,15 @@ dependencies {
     implementation fg.deobf("dev.latvian.mods:rhino-forge:${rhinoVersion}")
     implementation fg.deobf("dev.architectury:architectury-forge:${architecturyVersion}")
 
-    runtimeOnly fg.deobf("curse.maven:probejs-585406:4744799")
-    runtimeOnly fg.deobf("curse.maven:ftb-library-forge-404465:4661834")
+    //runtimeOnly fg.deobf("curse.maven:probejs-585406:4744799")
+    //runtimeOnly fg.deobf("curse.maven:ftb-library-forge-404465:4661834")
 
-    //implementation files('libs/encryptedapi-1.19.2-0.0.3.jar')
-    //implementation 'dev.cryptic.encryptedapi:encryptedapi-1.19.2-0.0.3'
-    implementation fg.deobf("curse.maven:encrypted-api-980064:5146363")
+    //implementation files('libs/encryptedapi-1.20.1-0.0.3.jar')
+    //implementation 'dev.cryptic.encryptedapi:encryptedapi-1.20.1-0.0.3'
+    implementation fg.deobf("curse.maven:encrypted-api-980064:5147973")
 
     //implementation "maven.modrinth:architectury-api:6.6.92+forge"
-    //implementation "maven.modrinth:encrypted-api:1.19.2-0.0.2"
+    //implementation "maven.modrinth:encrypted-api:1.20.1-0.0.2"
 
     implementation 'org.spongepowered:mixin:0.8.2'
 
@@ -228,30 +212,52 @@ dependencies {
 
 }
 
-// Example for how to get properties into the manifest for reading at runtime.
-jar {
-    manifest {
-        attributes([
-                "Specification-Title"     : "aspect",
-                "Specification-Vendor"    : "Its Cryptic",
-                "Specification-Version"   : "1", // We are version 1 of ourselves
-                "Implementation-Title"    : project.name,
-                "Implementation-Version"  : project.jar.archiveVersion,
-                "Implementation-Vendor"   : "Its Cryptic",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-        ])
+// This block of code expands all declared replace properties in the specified resource targets.
+// A missing property will result in an error. Properties are expanded using ${} Groovy notation.
+// When "copyIdeResources" is enabled, this will also run before the game launches in IDE environments.
+// See https://docs.gradle.org/current/dsl/org.gradle.language.jvm.tasks.ProcessResources.html
+tasks.named('processResources', ProcessResources).configure {
+    var replaceProperties = [
+            minecraft_version: minecraftVersion, minecraft_version_range: minecraftVersionRange,
+            forge_version: forgeVersion, forge_version_range: forgeVersionRange,
+            loader_version_range: loaderVersionRange,
+            mod_id: mod_id, mod_name: modName, mod_license: mod_license, mod_version: modVersion,
+            mod_authors: mod_author, mod_description: mod_description,
+    ]
+    inputs.properties replaceProperties
+
+    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+        expand replaceProperties + [project: project]
     }
 }
 
-// Example configuration to allow publishing using the maven-publish plugin
-// This is the preferred method to reobfuscate your jar file
-jar.finalizedBy('reobfJar')
-// However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
-//publish.dependsOn('reobfJar')
+// Example for how to get properties into the manifest for reading at runtime.
+tasks.named('jar', Jar).configure {
+    manifest {
+        attributes([
+                'Specification-Title'     : mod_id,
+                'Specification-Vendor'    : "${mod_author}",
+                'Specification-Version'   : '1', // We are version 1 of ourselves
+                'Implementation-Title'    : project.name,
+                'Implementation-Version'  : project.jar.archiveVersion,
+                'Implementation-Vendor'   : "${mod_author}",
+                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
 
+    // This is the preferred method to reobfuscate your jar file
+    finalizedBy 'reobfJar'
+}
+
+// However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing:
+// tasks.named('publish').configure {
+//     dependsOn 'reobfJar'
+// }
+
+// Example configuration to allow publishing using the maven-publish plugin
 publishing {
     publications {
-        mavenJava(MavenPublication)  {
+        register('mavenJava', MavenPublication) {
             artifact jar
         }
     }

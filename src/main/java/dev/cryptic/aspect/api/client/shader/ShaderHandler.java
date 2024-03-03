@@ -3,8 +3,7 @@ package dev.cryptic.aspect.api.client.shader;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+
 import dev.cryptic.aspect.api.client.synceddata.SyncedForgeCapData;
 import dev.cryptic.aspect.api.flux.AspectColor;
 import dev.cryptic.aspect.api.flux.AspectType;

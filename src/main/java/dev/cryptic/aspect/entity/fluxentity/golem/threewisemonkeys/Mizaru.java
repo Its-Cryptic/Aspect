@@ -18,18 +18,19 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import software.bernie.geckolib3.core.AnimationState;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class Mizaru extends AbstractGolem {
+    //protected static final RawAnimation FLY_ANIM = RawAnimation.begin().thenLoop("move.fly");
+
+    private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
     private final ServerBossEvent bossEvent = (ServerBossEvent)(new ServerBossEvent(
             this.getDisplayName(), ServerBossEvent.BossBarColor.GREEN, ServerBossEvent.BossBarOverlay.NOTCHED_6))
             .setDarkenScreen(true)
@@ -38,8 +39,6 @@ public class Mizaru extends AbstractGolem {
     public static final EntityDataAccessor<Integer> PHASE = SynchedEntityData.defineId(Mizaru.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Boolean> IS_KICKING = SynchedEntityData.defineId(Mizaru.class, EntityDataSerializers.BOOLEAN);
 
-
-    private AnimationFactory factory = GeckoLibUtil.createFactory(this);
     public Mizaru(EntityType<? extends Mizaru> type, Level level) {
         super(type, level);
         setPersistenceRequired();
@@ -71,38 +70,6 @@ public class Mizaru extends AbstractGolem {
 //        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Creeper.class, true));
     }
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.chomper.walk", ILoopType.EDefaultLoopTypes.LOOP));
-            return PlayState.CONTINUE;
-        }
-
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.chomper.idle", ILoopType.EDefaultLoopTypes.LOOP));
-        return PlayState.CONTINUE;
-    }
-
-    private PlayState attackPredicate(AnimationEvent event) {
-        if (this.swinging && event.getController().getAnimationState().equals(AnimationState.Stopped)) {
-            event.getController().markNeedsReload();
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.chomper.attack", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
-            this.swinging = false;
-        }
-
-        return PlayState.CONTINUE;
-    }
-
-    @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController(this,"controller", 0, this::predicate));
-
-        data.addAnimationController(new AnimationController(this,"attackController", 0, this::attackPredicate));
-    }
-
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
-    }
 
     protected void playStepSound(BlockPos Pos, BlockState blockIn) {
         this.playSound(SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, 0.15F, 1.0F);
@@ -127,5 +94,21 @@ public class Mizaru extends AbstractGolem {
 
     public boolean canKick() {
         return true;
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        //controllers.add(new AnimationController<>(this, "Flying", 20, this::flyAnimController));
+    }
+
+    protected <E extends Mizaru> PlayState flyAnimController(final AnimationState<E> event) {
+        //if (event.isMoving()) return event.setAndContinue(FLY_ANIM);
+
+        return PlayState.STOP;
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return this.geoCache;
     }
 }

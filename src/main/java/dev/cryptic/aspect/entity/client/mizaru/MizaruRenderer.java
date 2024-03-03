@@ -3,14 +3,14 @@ package dev.cryptic.aspect.entity.client.mizaru;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import dev.cryptic.aspect.Aspect;
 import dev.cryptic.aspect.api.client.shader.AspectRenderType;
 import dev.cryptic.aspect.api.flux.AspectType;
 import dev.cryptic.aspect.api.util.GolemUtil;
 import dev.cryptic.aspect.entity.fluxentity.golem.AbstractGolem;
 import dev.cryptic.aspect.entity.fluxentity.golem.threewisemonkeys.Mizaru;
+import dev.cryptic.aspect.misc.obj.IcoSphereModel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -20,9 +20,11 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 import org.slf4j.Logger;
-import software.bernie.geckolib3.geo.render.built.GeoModel;
-import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+import software.bernie.geckolib.model.GeoModel;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
 import team.lodestar.lodestone.handlers.RenderHandler;
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry;
 import team.lodestar.lodestone.systems.rendering.VFXBuilders;
@@ -38,6 +40,7 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
     }
 
     private static final ResourceLocation UV_TEST = new ResourceLocation(Aspect.MODID, "textures/vfx/uv_test.png");
+    private static final ResourceLocation EMOJI = new ResourceLocation(Aspect.MODID, "textures/vfx/wh.png");
 
     @Override
     public ResourceLocation getTextureLocation(Mizaru instance) {
@@ -45,18 +48,19 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
     }
 
     @Override
-    public RenderType getRenderType(Mizaru animatable, float partialTick, PoseStack poseStack, @Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, int packedLight, ResourceLocation texture) {
+    public RenderType getRenderType(Mizaru animatable, ResourceLocation texture, @Nullable MultiBufferSource bufferSource, float partialTick) {
         if (!isLost(animatable)) return AspectRenderType.aspectTest();
-        return super.getRenderType(animatable, partialTick, poseStack, bufferSource, buffer, packedLight, texture);
+        return super.getRenderType(animatable, texture, bufferSource, partialTick);
     }
 
     @Override
-    public void render(GeoModel model, Mizaru animatable, float partialTick, RenderType type, PoseStack poseStack, @Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void render(Mizaru entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+        if (entity == null) return;
         LocalPlayer clientPlayer = Minecraft.getInstance().player;
         UUID clientUUID = clientPlayer.getUUID();
-        UUID golemUUID = animatable.getUUID();
-        UUID ownerUUID = animatable.getOwnerUUID();
-        int imbuedSoul = animatable.getImbuedSoul();
+        UUID golemUUID = entity.getUUID();
+        UUID ownerUUID = entity.getOwnerUUID();
+        int imbuedSoul = entity.getImbuedSoul();
         boolean isOwner = clientUUID.equals(ownerUUID);
 
         if (clientUUID == ownerUUID) {
@@ -66,8 +70,15 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
 
 
         // Max packed light is 255
-        super.render(model, animatable, partialTick, type, poseStack, bufferSource, buffer, 255, packedOverlay, red, green, blue, alpha);
-        this.renderQuad(poseStack, partialTick);
+        //this.renderQuad(poseStack, partialTick);
+        VertexConsumer vertexConsumer = bufferSource.getBuffer(LodestoneRenderTypeRegistry.TEXTURE.applyAndCache(EMOJI));
+        //this.renderIsoSphere(poseStack, entity.level().getGameTime() + partialTick, vertexConsumer);
+        poseStack.pushPose();
+        poseStack.translate(0.0, 3, 0.0);
+        poseStack.scale(0.5f, 0.5f, 0.5f);
+        IcoSphereModel.INSTANCE.renderModel(poseStack, vertexConsumer, 255, false);
+        poseStack.popPose();
+        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 
     @Override
@@ -92,7 +103,8 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
         rotationAxis = new Vector3f(rotationAxis.z(), rotationAxis.y(), -rotationAxis.x());
         rotationAxis.normalize();
 
-        Quaternion rotationQuaternion = new Quaternion(rotationAxis, this.accumulatedRotation, true);
+        Quaternionf rotationQuaternion = new Quaternionf();
+        rotationQuaternion.rotateAxis((float) Math.toRadians(accumulatedRotation), rotationAxis.x(), rotationAxis.y(), rotationAxis.z());
 
         poseStack.mulPose(rotationQuaternion);
         poseStack.translate(0f, 0.001f, 0f);
@@ -105,6 +117,26 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
 
         builder.setPosColorLightmapDefaultFormat();
 
+        poseStack.popPose();
+    }
+
+    public void renderIsoSphere(PoseStack poseStack, float time, VertexConsumer vertexConsumer) {
+        Vec3 renderPos = new Vec3(0.0, 2.5, 0.0);
+        float scale1 = 0.5f;
+        poseStack.pushPose();
+        poseStack.translate(renderPos.x, renderPos.y, renderPos.z);
+        poseStack.scale(scale1, scale1, scale1);
+        poseStack.mulPose(Axis.YP.rotationDegrees(time * 2.0f));
+
+        IcoSphereModel.INSTANCE.faces.forEach(face -> {
+            poseStack.pushPose();
+            Vector3f normal = face.normal();
+            //Vector3f orginToFaceCenter = Vector3f.ZERO.copy().add(face.getCenter());
+            double scale = (1-Math.cos(time*0.1))*0.4;
+            poseStack.translate(normal.x() * scale, normal.y() * scale, normal.z() * scale);
+            face.renderTriangle(poseStack, vertexConsumer, 255, false);
+            poseStack.popPose();
+        });
         poseStack.popPose();
     }
 

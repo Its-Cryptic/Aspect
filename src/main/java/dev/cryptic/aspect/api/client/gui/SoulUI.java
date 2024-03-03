@@ -6,7 +6,7 @@ import dev.cryptic.aspect.Aspect;
 import dev.cryptic.aspect.api.client.synceddata.SyncedGolemData;
 import dev.cryptic.aspect.api.util.AspectSavedData;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -17,12 +17,12 @@ import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 
 import java.util.ArrayList;
 
-public class SoulUI extends GuiComponent {
+public class SoulUI {
     public static final IGuiOverlay OVERLAY = SoulUI::renderOverlay;
     private static final Minecraft minecraft = Minecraft.getInstance();
     private static final ResourceLocation SOUL_MAIN = new ResourceLocation(Aspect.MODID, "textures/gui/notballin.png");
 
-    public static void renderOverlay(ForgeGui gui, PoseStack poseStack, float partialTicks, int screenWidth, int screenHeight) {
+    public static void renderOverlay(ForgeGui gui, GuiGraphics guiGraphics, float partialTicks, int screenWidth, int screenHeight) {
         LocalPlayer player = minecraft.player;
         if (player == null) return;
         if (!shouldRender(player)) return;
@@ -32,13 +32,13 @@ public class SoulUI extends GuiComponent {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, SOUL_MAIN);
-        blit(poseStack, (int) center.x - 9, screenHeight - 49, 0, 0, 18, 18, 18, 18);
+        //guiGraphics.blit(guiGraphics.pose(), (int) center.x - 9, screenHeight - 49, 0, 0, 18, 18, 18, 18);
 
         // Draw golem icons
-        renderGolemIcons(gui, poseStack, partialTicks, screenWidth, screenHeight);
+        renderGolemIcons(gui, guiGraphics, partialTicks, screenWidth, screenHeight);
     }
 
-    public static void renderGolemIcons(ForgeGui gui, PoseStack poseStack, float partialTicks, int screenWidth, int screenHeight) {
+    public static void renderGolemIcons(ForgeGui gui, GuiGraphics guiGraphics, float partialTicks, int screenWidth, int screenHeight) {
         LocalPlayer player = minecraft.player;
         if (player == null) return;
         if (SyncedGolemData.playerGolemMap == null) return;
@@ -48,7 +48,7 @@ public class SoulUI extends GuiComponent {
         golemData.forEach(golem -> {
             int index = golemData.indexOf(golem);
             Vec2 position = generateIconPositions(golemCount, new Vec2((float) screenWidth / 2, (float) screenHeight / 2)).get(index);
-            drawString(poseStack, minecraft.font, String.valueOf(golem.imbuedSoul()), (int) position.x, (int) position.y, 0xFFFFFFFF);
+            guiGraphics.drawString(minecraft.font, String.valueOf(golem.imbuedSoul()), (int) position.x, (int) position.y, 0xFFFFFFFF);
             Aspect.LOGGER.info("HIIII");
         });
 

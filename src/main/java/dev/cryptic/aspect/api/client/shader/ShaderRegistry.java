@@ -3,7 +3,7 @@ package dev.cryptic.aspect.api.client.shader;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import dev.cryptic.aspect.Aspect;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.server.packs.resources.ResourceProvider;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterShadersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -24,8 +24,8 @@ public class ShaderRegistry {
 
     @SubscribeEvent
     public static void shaderRegistry(RegisterShadersEvent event) throws IOException {
-        ResourceManager resourceManager = event.getResourceManager();
+        ResourceProvider resourceProvider = event.getResourceProvider();
 
-        registerShader(event, TOUCH_OF_DARKNESS.createInstance(resourceManager));
+        registerShader(event, TOUCH_OF_DARKNESS.createInstance(resourceProvider));
     }
 }

@@ -1,9 +1,9 @@
 package dev.cryptic.aspect.api.client.shader.lodestone.post;
 
-import com.mojang.math.Vector3f;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import org.joml.Vector3f;
 
 public class TestMultiInstancePostRenderer {
 

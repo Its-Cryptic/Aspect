@@ -47,14 +47,14 @@ public class MonkeySpawnItem extends ForgeSpawnEggItem {
 
     @Override
     public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
-        if (!player.level.isClientSide && entity instanceof IronGolem) {
+        if (!player.level().isClientSide && entity instanceof IronGolem) {
             EntityType<? extends Mob> mobType = this.entityTypeSupplier.get();
 
             // Create and spawn your custom entity
-            Mob customEntity = mobType.create(player.level);
+            Mob customEntity = mobType.create(player.level());
             if (customEntity != null) {
                 customEntity.moveTo(entity.getX(), entity.getY(), entity.getZ(), entity.getYRot(), entity.getXRot());
-                player.level.addFreshEntity(customEntity);
+                player.level().addFreshEntity(customEntity);
             }
 
             // Remove the Iron Golem

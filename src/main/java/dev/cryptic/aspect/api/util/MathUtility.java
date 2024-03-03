@@ -1,6 +1,5 @@
 package dev.cryptic.aspect.api.util;
 
-import com.mojang.math.Quaternion;
 import net.minecraft.util.Mth;
 
 public class MathUtility {
@@ -52,15 +51,5 @@ public class MathUtility {
             return 0.0f;
         }
         return Mth.PI;
-    }
-
-    public static String slerp() {
-        Quaternion quaternion = new Quaternion(0.0f,0.0f,0.0f,1.0f);
-        Quaternion quaternion1 = new Quaternion(0.0f,0.5f,0.5f,1.0f);
-        quaternion.normalize();
-        quaternion1.normalize();
-
-        quaternion.slerp(quaternion1, 0.5f);
-        return quaternion.toString();
     }
 }

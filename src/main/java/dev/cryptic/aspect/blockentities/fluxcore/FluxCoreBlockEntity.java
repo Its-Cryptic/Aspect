@@ -3,29 +3,31 @@ package dev.cryptic.aspect.blockentities.fluxcore;
 import dev.cryptic.aspect.blockentities.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoBlockEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
+import software.bernie.geckolib.util.RenderUtils;
 
-public class FluxCoreBlockEntity extends BlockEntity implements IAnimatable {
-
+public class FluxCoreBlockEntity extends BlockEntity implements GeoBlockEntity {
+    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private static int MAX_FLUX = 100;
     private int flux;
-    private AnimationFactory factory = GeckoLibUtil.createFactory(this);
+
     public FluxCoreBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.FLUX_CORE.get(), pos, state);
     }
 
     public void tick() {
 
-    }
-
-    public boolean isCharging() {
-        // if player is using the charge keybind on a block then return true
-        return true;
     }
 
     public void increaseFlux(int flux) {
@@ -36,18 +38,21 @@ public class FluxCoreBlockEntity extends BlockEntity implements IAnimatable {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag nbt) {
-        super.saveAdditional(nbt);
-        nbt.putInt("Flux", this.flux);
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>(this, "controller", 0, this::predicate));
+    }
+
+    private PlayState predicate(AnimationState<FluxCoreBlockEntity> tAnimationState) {
+        tAnimationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+        return PlayState.CONTINUE;
+    }
+    @Override
+    public double getTick(Object blockEntity) {
+        return RenderUtils.getCurrentTick();
     }
 
     @Override
-    public void registerControllers(AnimationData data) {
-
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
     }
 }

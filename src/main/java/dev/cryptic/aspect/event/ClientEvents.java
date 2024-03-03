@@ -4,10 +4,8 @@ import dev.cryptic.aspect.Aspect;
 import dev.cryptic.aspect.api.client.gui.FluxItemUI;
 import dev.cryptic.aspect.api.client.gui.FluxUI;
 import dev.cryptic.aspect.api.client.gui.SoulUI;
-import dev.cryptic.aspect.api.client.shader.MagmaShaderRenderer;
 import dev.cryptic.aspect.api.client.shader.ShaderHandler;
 import dev.cryptic.aspect.api.client.shader.lodestone.post.DepthWorldPostProcessor;
-import dev.cryptic.aspect.api.client.shader.post.BerserkRenderer;
 import dev.cryptic.aspect.api.networking.ModMessages;
 //import dev.cryptic.aspects.api.networking.packet.DrinkWaterC2SPacket;
 import dev.cryptic.aspect.api.networking.packet.UseRawFluxC2SPacket;
@@ -21,7 +19,6 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import team.lodestar.lodestone.systems.easing.Easing;
 
 public class ClientEvents {
     @Mod.EventBusSubscriber(modid = Aspect.MODID, value = Dist.CLIENT)
@@ -110,8 +107,8 @@ public class ClientEvents {
             event.registerAboveAll("flux_ui", FluxUI.OVERLAY);
             event.registerAboveAll("soul_ui", SoulUI.OVERLAY);
 
-            event.registerAboveAll("touch_of_darkness", (gui, poseStack, partialTick, width, height) ->
-                    ShaderHandler.ClientOnly.renderDarknessVignette(poseStack));
+            event.registerAboveAll("touch_of_darkness", (gui, guiGraphics, partialTick, width, height) ->
+                    ShaderHandler.ClientOnly.renderDarknessVignette(guiGraphics.pose()));
         }
 
 

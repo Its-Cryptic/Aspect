@@ -41,9 +41,9 @@ public class UseRawFluxC2SPacket {
                     FluxUtil.removeFlux(player, 5); // Remove flux from player
                 } else {
                     ClipContext raytrace = new ClipContext(player.getEyePosition(1.0F), player.getEyePosition(1.0F).add(player.getViewVector(1.0F).scale(3.0D)), ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player);
-                    BlockHitResult result = player.level.clip(raytrace);
+                    BlockHitResult result = player.level().clip(raytrace);
                     BlockPos blockPos = result.getBlockPos();
-                    BlockEntity blockEntity = player.level.getBlockEntity(blockPos);
+                    BlockEntity blockEntity = player.level().getBlockEntity(blockPos);
                     if (result.getType() == BlockHitResult.Type.BLOCK) {
                         // Check if the block is an instance of FluxCoreBlockEntity
                         if (blockEntity instanceof FluxCoreBlockEntity) {
@@ -51,9 +51,9 @@ public class UseRawFluxC2SPacket {
                             fluxBlockEntity.increaseFlux(1); // Increase flux
 
                             BlockPos blockPosAbove = result.getBlockPos().above(); // Position above the block
-                            Cow cow = new Cow(EntityType.COW, player.level);
+                            Cow cow = new Cow(EntityType.COW, player.level());
                             cow.moveTo(blockPosAbove.getX() + 0.5, blockPosAbove.getY(), blockPosAbove.getZ() + 0.5, 0, 0);
-                            player.level.addFreshEntity(cow);
+                            player.level().addFreshEntity(cow);
                         }
                     }
                 }

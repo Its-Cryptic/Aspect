@@ -49,8 +49,8 @@ public class GolemUtil {
 
         // Adds golem to SavedData
         //GolemManager.INSTANCE.addGolem((ServerPlayer) player, golem, imbuedSoul);
-        AspectSavedData savedData = AspectSavedData.get(player.level);
-        if (savedData != null) savedData.addGolem((ServerLevel) player.level, player, golem, imbuedSoul);
+        AspectSavedData savedData = AspectSavedData.get(player.level());
+        if (savedData != null) savedData.addGolem((ServerLevel) player.level(), player, golem, imbuedSoul);
     }
 
     public static void removeGolem(Player player, AbstractGolem golem) {

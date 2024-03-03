@@ -5,6 +5,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -28,9 +29,9 @@ public class ExampleC2SPacket {
         context.enqueueWork(() -> {
             // HERE WE ARE ON THE SERVER!
             ServerPlayer player = context.getSender();
-            ServerLevel level = player.getLevel();
+            ServerLevel level = (ServerLevel) player.level();
 
-            EntityType.COW.spawn(level, null, null, player.blockPosition(),
+            EntityType.COW.spawn(level, (ItemStack) null, null, player.blockPosition(),
                     MobSpawnType.COMMAND, true, false);
 
 

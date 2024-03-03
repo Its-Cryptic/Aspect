@@ -3,9 +3,9 @@ package dev.cryptic.aspect.entity.client.mizaru;
 import dev.cryptic.aspect.Aspect;
 import net.minecraft.resources.ResourceLocation;
 import dev.cryptic.aspect.entity.fluxentity.golem.threewisemonkeys.Mizaru;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class MizaruModel extends AnimatedGeoModel<Mizaru> {
+public class MizaruModel extends GeoModel<Mizaru> {
     @Override
     public ResourceLocation getModelResource(Mizaru object) {
         return new ResourceLocation(Aspect.MODID, "geo/chomper.geo.json");

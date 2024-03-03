@@ -36,16 +36,16 @@ public class FireBlastProjectile extends AbstractAbilityProjectile {
 
     }
 
-    @Override
-    protected void onHitEntity(EntityHitResult hitResult) {
-        if (hitResult.getEntity() instanceof LivingEntity entity) {
-            entity.hurt(DamageSources.ASPECT_FLAME, 5f);
-        }
-    }
+//    @Override
+//    protected void onHitEntity(EntityHitResult hitResult) {
+//        if (hitResult.getEntity() instanceof LivingEntity entity) {
+//            entity.hurt(DamageSources.ASPECT_FLAME, 5f);
+//        }
+//    }
 
     @Override
     protected void onHit(HitResult hitResult) {
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             this.playSound(SoundEvents.FIRECHARGE_USE, 1f, 1f);
         }
 

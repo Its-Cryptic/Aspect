@@ -69,7 +69,7 @@ public abstract class AbstractGolem extends AbstractFluxEntity implements Ownabl
     public LivingEntity getOwner() {
         try {
             UUID uuid = this.getOwnerUUID();
-            return uuid == null ? null : this.level.getPlayerByUUID(uuid);
+            return uuid == null ? null : this.level().getPlayerByUUID(uuid);
         } catch (IllegalArgumentException illegalargumentexception) {
             return null;
         }
