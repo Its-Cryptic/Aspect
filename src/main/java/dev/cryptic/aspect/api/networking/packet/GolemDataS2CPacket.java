@@ -1,7 +1,6 @@
 package dev.cryptic.aspect.api.networking.packet;
 
-import dev.cryptic.aspect.Aspect;
-import dev.cryptic.aspect.api.client.synceddata.SyncedGolemData;
+import dev.cryptic.aspect.client.synceddata.SyncedGolemData;
 import dev.cryptic.aspect.api.util.AspectSavedData;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;

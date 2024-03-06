@@ -2,18 +2,11 @@ package dev.cryptic.aspect.api.util;
 
 import dev.cryptic.aspect.api.capabilities.CapabilityRegistry;
 import dev.cryptic.aspect.api.capabilities.golem.ISoulCapability;
-import dev.cryptic.aspect.api.client.SyncedClientData;
-import dev.cryptic.aspect.entity.fluxentity.golem.AbstractGolem;
-import dev.latvian.mods.kubejs.typings.Info;
+import dev.cryptic.aspect.common.entity.fluxentity.golem.AbstractGolem;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fml.loading.FMLEnvironment;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 public class GolemUtil {
     public static LazyOptional<ISoulCapability> getGolemCap(Player player) {

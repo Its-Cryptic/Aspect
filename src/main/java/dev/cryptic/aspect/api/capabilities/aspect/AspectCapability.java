@@ -1,15 +1,10 @@
 package dev.cryptic.aspect.api.capabilities.aspect;
 
-import dev.cryptic.aspect.api.flux.AspectType;
+import dev.cryptic.aspect.api.aspect.AspectType;
 import dev.cryptic.aspect.api.registry.AspectRegistry;
-import dev.cryptic.aspect.config.AspectCommonConfig;
-import dev.cryptic.aspect.entity.fluxentity.golem.AbstractGolem;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.*;
 
 public class AspectCapability implements IAspectCapability {
 

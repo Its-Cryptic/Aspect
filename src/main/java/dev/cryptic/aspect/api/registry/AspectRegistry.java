@@ -1,10 +1,9 @@
 package dev.cryptic.aspect.api.registry;
 
 import dev.cryptic.aspect.Aspect;
-import dev.cryptic.aspect.api.flux.AspectColor;
-import dev.cryptic.aspect.api.flux.AspectType;
-import dev.cryptic.aspect.api.flux.FluxProperties;
-import dev.cryptic.aspect.aspect.abilities.AbstractAbility;
+import dev.cryptic.aspect.api.aspect.AspectColor;
+import dev.cryptic.aspect.api.aspect.AspectType;
+import dev.cryptic.aspect.api.aspect.abilities.AbstractAbility;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -39,7 +38,6 @@ public class AspectRegistry {
             "none",
             new AspectColor(new Color(242, 0, 255), new Color(255, 0, 128), new Color(255, 119, 0)),
             new AspectColor(new Color(242, 0, 255), new Color(255, 0, 128), new Color(255, 119, 0)),
-            new FluxProperties(0, 0),
             null
     ));
 
@@ -48,7 +46,6 @@ public class AspectRegistry {
             "flame",
             new AspectColor(new Color(242, 0, 255), new Color(255, 0, 128), new Color(255, 119, 0)),
             new AspectColor(new Color(242, 0, 255), new Color(255, 0, 128), new Color(255, 119, 0)),
-            new FluxProperties(0, 0),
             () -> {
                 ArrayList<AbstractAbility> abilities = new ArrayList<>();
                 abilities.add(AbilityRegistry.FIREBALL_ABILITY.get());
@@ -63,7 +60,6 @@ public class AspectRegistry {
             "lightning",
             new AspectColor(new Color(242, 0, 255), new Color(255, 0, 128), new Color(255, 119, 0)),
             new AspectColor(new Color(242, 0, 255), new Color(255, 0, 128), new Color(255, 119, 0)),
-            new FluxProperties(0, 0),
             () -> {
                 ArrayList<AbstractAbility> abilities = new ArrayList<>();
                 abilities.add(AbilityRegistry.SHOCK_ABILITY.get());

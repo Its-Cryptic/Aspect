@@ -1,8 +1,8 @@
 package dev.cryptic.aspect.api.networking.packet;
 
 import dev.cryptic.aspect.api.util.FluxUtil;
-import dev.cryptic.aspect.blockentities.fluxcore.FluxCoreBlockEntity;
-import dev.cryptic.aspect.item.custom.AbstractFluxItem;
+import dev.cryptic.aspect.common.blockentities.fluxcore.FluxCoreBlockEntity;
+import dev.cryptic.aspect.common.item.custom.AbstractFluxItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.EntityType;

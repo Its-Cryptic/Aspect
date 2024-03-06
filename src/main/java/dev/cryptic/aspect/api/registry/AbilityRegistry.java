@@ -1,10 +1,10 @@
 package dev.cryptic.aspect.api.registry;
 
 import dev.cryptic.aspect.Aspect;
-import dev.cryptic.aspect.aspect.abilities.AbstractAbility;
-import dev.cryptic.aspect.aspect.abilities.flame.FireballAbility;
-import dev.cryptic.aspect.aspect.abilities.flame.FlameWhipAbility;
-import dev.cryptic.aspect.aspect.abilities.lightning.ShockAbility;
+import dev.cryptic.aspect.api.aspect.abilities.AbstractAbility;
+import dev.cryptic.aspect.api.aspect.abilities.flame.FireballAbility;
+import dev.cryptic.aspect.api.aspect.abilities.flame.FlameWhipAbility;
+import dev.cryptic.aspect.api.aspect.abilities.lightning.ShockAbility;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;

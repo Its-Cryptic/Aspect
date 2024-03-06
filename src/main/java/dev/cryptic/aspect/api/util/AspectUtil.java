@@ -2,7 +2,7 @@ package dev.cryptic.aspect.api.util;
 
 import dev.cryptic.aspect.api.capabilities.CapabilityRegistry;
 import dev.cryptic.aspect.api.capabilities.aspect.IAspectCapability;
-import dev.cryptic.aspect.api.flux.AspectType;
+import dev.cryptic.aspect.api.aspect.AspectType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.util.LazyOptional;
 

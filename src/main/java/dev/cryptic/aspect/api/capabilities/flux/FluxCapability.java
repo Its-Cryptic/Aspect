@@ -1,6 +1,6 @@
 package dev.cryptic.aspect.api.capabilities.flux;
 
-import dev.cryptic.aspect.config.AspectCommonConfig;
+import dev.cryptic.aspect.common.config.AspectCommonConfig;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.Nullable;

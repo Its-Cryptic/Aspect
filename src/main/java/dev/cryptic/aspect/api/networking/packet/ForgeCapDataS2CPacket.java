@@ -1,6 +1,6 @@
 package dev.cryptic.aspect.api.networking.packet;
 
-import dev.cryptic.aspect.api.client.synceddata.SyncedForgeCapData;
+import dev.cryptic.aspect.client.synceddata.SyncedForgeCapData;
 import dev.cryptic.aspect.api.util.AspectUtil;
 import dev.cryptic.aspect.api.util.FluxUtil;
 import dev.cryptic.aspect.api.util.GolemUtil;

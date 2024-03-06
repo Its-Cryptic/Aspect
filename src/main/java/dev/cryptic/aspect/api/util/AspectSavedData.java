@@ -3,7 +3,7 @@ package dev.cryptic.aspect.api.util;
 import dev.cryptic.aspect.Aspect;
 import dev.cryptic.aspect.api.networking.ModMessages;
 import dev.cryptic.aspect.api.networking.packet.GolemDataS2CPacket;
-import dev.cryptic.aspect.entity.fluxentity.golem.AbstractGolem;
+import dev.cryptic.aspect.common.entity.fluxentity.golem.AbstractGolem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;

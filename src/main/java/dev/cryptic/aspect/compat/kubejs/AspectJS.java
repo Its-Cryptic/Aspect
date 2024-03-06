@@ -2,9 +2,9 @@ package dev.cryptic.aspect.compat.kubejs;
 
 import dev.cryptic.aspect.api.registry.AspectRegistry;
 import dev.cryptic.aspect.api.util.FluxUtil;
-import dev.cryptic.aspect.block.BlockRegistry;
-import dev.cryptic.aspect.entity.ModEntityTypes;
-import dev.cryptic.aspect.item.ItemRegistry;
+import dev.cryptic.aspect.common.block.BlockRegistry;
+import dev.cryptic.aspect.common.entity.ModEntityTypes;
+import dev.cryptic.aspect.common.item.ItemRegistry;
 
 public class AspectJS {
     public static final FluxUtil fluxUtil = new FluxUtil();
