@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import dev.cryptic.aspect.client.shader.lodestone.post.DepthWorldPostProcessor;
 import dev.cryptic.aspect.client.shader.lodestone.post.SobelPostProcessor;
 import dev.cryptic.aspect.client.shader.lodestone.post.TestMultiInstancePostProcessor;
+import dev.cryptic.aspect.client.shader.lodestone.post.VoronoiPostProcessor;
 import dev.cryptic.aspect.client.shader.post.AspectPostShaders;
 import dev.cryptic.aspect.api.registry.GameruleRegistry;
 import dev.cryptic.aspect.api.networking.ModMessages;
@@ -22,6 +23,7 @@ import dev.cryptic.aspect.common.item.ItemRegistry;
 //import dev.cryptic.aspect.misc.obj.MonkeyModel;
 import dev.cryptic.aspect.common.misc.obj.IcoSphereModel;
 import dev.cryptic.aspect.common.misc.obj.MonkeyModel;
+import dev.cryptic.aspect.common.misc.obj.SphereShieldModel;
 import dev.cryptic.aspect.common.setup.ModSetup;
 //import dev.cryptic.encryptedapi.registries.ObjModelRegistry;
 import dev.cryptic.encryptedapi.registries.ObjModelRegistry;
@@ -53,10 +55,10 @@ public class Aspect {
     public Aspect() {
         ObjModelRegistry.registerModel(MonkeyModel.INSTANCE);
         ObjModelRegistry.registerModel(IcoSphereModel.INSTANCE);
+        ObjModelRegistry.registerModel(SphereShieldModel.INSTANCE);
 
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::sendImc);
 
@@ -87,7 +89,6 @@ public class Aspect {
         ModSetup.sendIntercoms();
     }
 
-    // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents
     {
@@ -103,11 +104,13 @@ public class Aspect {
             //PostProcessHandler.addInstance(new TestPostProcessor());
             PostProcessHandler.addInstance(SobelPostProcessor.getInstance());
             PostProcessHandler.addInstance(DepthWorldPostProcessor.INSTANCE);
+            PostProcessHandler.addInstance(VoronoiPostProcessor.INSTANCE);
+
             PostProcessHandler.addInstance(TestMultiInstancePostProcessor.INSTANCE);
         }
     }
 
-    public static ResourceLocation resourceLocation(String path) {
+    public static ResourceLocation id(String path) {
         return new ResourceLocation(MODID, path);
     }
 

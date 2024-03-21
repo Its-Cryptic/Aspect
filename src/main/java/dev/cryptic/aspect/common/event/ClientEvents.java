@@ -10,6 +10,7 @@ import dev.cryptic.aspect.api.networking.ModMessages;
 //import dev.cryptic.aspects.api.networking.packet.DrinkWaterC2SPacket;
 import dev.cryptic.aspect.api.networking.packet.UseRawFluxC2SPacket;
 import dev.cryptic.aspect.api.util.KeyBinding;
+import dev.cryptic.aspect.client.shader.lodestone.post.VoronoiPostProcessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.InteractionHand;
@@ -52,11 +53,7 @@ public class ClientEvents {
                     if (KeyBinding.USE_RAW_FLUX_KEY.consumeClick()) {
                         Aspect.LOGGER.info("Raw Flux Key Pressed!");
                         //BerserkRenderer.getInstance().start(100, Easing.EXPO_OUT);
-                        if (DepthWorldPostProcessor.INSTANCE.isActive()) {
-                            DepthWorldPostProcessor.INSTANCE.setActive(false);
-                        } else {
-                            DepthWorldPostProcessor.INSTANCE.setActive(true);
-                        }
+                        VoronoiPostProcessor.INSTANCE.setActive(!VoronoiPostProcessor.INSTANCE.isActive());
                     }
                 }
             }

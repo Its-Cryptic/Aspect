@@ -1,11 +1,11 @@
-{
+  {
   "blend": {
     "func": "add",
     "srcrgb": "srcalpha",
     "dstrgb": "1-srcalpha"
   },
-  "vertex": "aspect:voronoi_test",
-  "fragment": "aspect:voronoi_test",
+  "vertex": "sobel",
+  "fragment": "aspect:world_space_test",
   "attributes": [ "Position" ],
   "samplers": [
     { "name": "DiffuseSampler" },
@@ -20,8 +20,7 @@
     { "name": "nearPlaneDistance", "type": "float", "count": 1,  "values": [ 0.0 ] },
     { "name": "farPlaneDistance", "type": "float", "count": 1,  "values": [ 0.0 ] },
     { "name": "InSize", "type": "float", "count": 2, "values": [ 1.0, 1.0 ] },
-    { "name": "OutSize", "type": "float", "count": 2, "values": [ 1.0, 1.0 ] },
-    { "name": "time", "type": "float", "count": 1,  "values": [ 0.0 ] }
+    { "name": "OutSize", "type": "float", "count": 2, "values": [ 1.0, 1.0 ] }
   ]
 
 }

@@ -9,15 +9,18 @@
   "block.aspect.zircon_block": "Zircon Block",
   "block.aspect.zircon_ore": "Zircon Ore",
 
-  "itemGroup.riftrealms": "Rift Realms",
-  "itemGroup.aspect": "Aspects",
-  "itemGroup.aspect_tools": "Aspects Tools",
-  "itemGroup.aspect_blocks": "Aspects Blocks",
+  "itemGroup.aspect": "Aspect",
+  "itemGroup.aspect_tools": "Aspect Tools",
+  "itemGroup.aspect_blocks": "Aspect Blocks",
 
   "aspect.aspect.none": "None",
   "aspect.aspect.flame": "Flame",
   "aspect.aspect.lightning": "Lightning",
   "aspect.aspect.blood": "Blood",
+  "aspect.aspect.ice": "Ice",
+  "aspect.aspect.earth": "Earth",
+  "aspect.aspect.wind": "Wind",
+
 
 
   "aspect_proficiency": "Aspect Proficiency",

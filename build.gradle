@@ -99,11 +99,14 @@ repositories {
         name 'JEI maven'
         url = "https://dvs1.progwml6.com/files/maven"
     }
+
     maven {
         name = "CTM Maven"
         url = "https://maven.tterrag.com/"
     }
+
     maven { url = 'https://maven.blamejared.com/' }
+
     maven {
         name = "Curse Maven"
         url "https://cursemaven.com"
@@ -111,6 +114,7 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    
     maven {
         name = 'GeckoLib'
         url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'

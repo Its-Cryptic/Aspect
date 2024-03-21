@@ -3,6 +3,7 @@ package dev.cryptic.aspect.common.event;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import dev.cryptic.aspect.Aspect;
+import dev.cryptic.aspect.common.misc.obj.SphereShieldModel;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -22,6 +23,7 @@ import team.lodestar.lodestone.systems.rendering.VFXBuilders;
 @Mod.EventBusSubscriber(modid = Aspect.MODID, value = Dist.CLIENT)
 public class RenderClientEvents {
     private static final ResourceLocation UV_TEST = new ResourceLocation(Aspect.MODID, "textures/vfx/uv_test.png");
+    private static final ResourceLocation SHIELD = new ResourceLocation(Aspect.MODID, "textures/vfx/shield01.png");
 
     @SubscribeEvent
     public static void onPlayerRender(RenderPlayerEvent event) {
@@ -74,30 +76,27 @@ public class RenderClientEvents {
             Camera camera = event.getCamera();
             PoseStack poseStack = event.getPoseStack();
             float partialTick = event.getPartialTick();
-            Vec3 renderPos = new Vec3(0, 10,0);
-            Vec3 relativePos = renderPos.subtract(camera.getPosition());
+            Vec3 renderPos = new Vec3(0, 10, 0);
             Vec3 cameraPos = camera.getPosition();
-            Vec3 vecToPlayer = cameraPos.subtract(renderPos).normalize();
-            Vec3 defaultForward = new Vec3(0, 1, 0);
-            Vec3 rotationAxis = defaultForward.cross(vecToPlayer).normalize();
-            Vector3f rotationAxisF = new Vector3f((float) rotationAxis.x, (float) rotationAxis.y, (float) rotationAxis.z);
-
-            double angle = Math.acos(defaultForward.dot(vecToPlayer));
-            //Quaternion rotationQuaternion = new Quaternion(rotationAxisF, (float) angle, false);
-
+            Vec3 relativePos = renderPos.subtract(cameraPos);
             poseStack.pushPose();
             poseStack.translate(relativePos.x, relativePos.y, relativePos.z);
-            //poseStack.mulPose(rotationQuaternion);
-            //poseStack.mulPose(Vector3f.XN.rotationDegrees(90));
-            //renderQuad(poseStack, partialTick, 1);
+            VertexConsumer vertexConsumer = RenderHandler.DELAYED_RENDER.getBuffer(LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE.applyAndCache(SHIELD));
+            renderShield(poseStack, vertexConsumer, event.getRenderTick() + partialTick);
             poseStack.popPose();
         }
+
     }
     public static void renderQuad(PoseStack poseStack, float partialTicks, float size) {
         float height = 0.0f;
         float width = 1.5f;
         VertexConsumer textureConsumer = RenderHandler.DELAYED_RENDER.getBuffer(LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE.applyAndCache(UV_TEST));
-        Vector3f[] positions = new Vector3f[]{new Vector3f(-width, height, width), new Vector3f(width, height, width), new Vector3f(width, height, -width), new Vector3f(-width, height, -width)};
+        Vector3f[] positions = new Vector3f[] {
+                new Vector3f(-width, height, width),
+                new Vector3f(width, height, width),
+                new Vector3f(width, height, -width),
+                new Vector3f(-width, height, -width)
+        };
         VFXBuilders.WorldVFXBuilder builder = VFXBuilders.createWorld().setPosColorTexLightmapDefaultFormat();
 
         poseStack.pushPose();
@@ -106,6 +105,32 @@ public class RenderClientEvents {
         builder.renderQuad(textureConsumer, poseStack, positions, size);
         builder.setPosColorLightmapDefaultFormat();
 
+        poseStack.popPose();
+    }
+
+    @SubscribeEvent
+    public static void newLevelRendererEvent(RenderLevelStageEvent event) {
+        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_LEVEL) return;
+        Minecraft minecraft = Minecraft.getInstance();
+        LocalPlayer player = minecraft.player;
+        PoseStack poseStack = event.getPoseStack();
+        VertexConsumer vertexConsumer = RenderHandler.DELAYED_RENDER.getBuffer(LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE.applyAndCache(UV_TEST));
+
+    }
+
+    public static void renderShield(PoseStack poseStack, VertexConsumer vertexConsumer, float time) {
+        //SphereShieldModel.INSTANCE.renderModel(poseStack, vertexConsumer, 255, false);
+        poseStack.pushPose();
+        float totalScale = (float) ((Math.cos(time*0.1))*0.4);
+        poseStack.scale(totalScale, totalScale, totalScale);
+        SphereShieldModel.INSTANCE.faces.forEach(face -> {
+            poseStack.pushPose();
+            Vector3f normal = face.normal();
+            double scale = (1-Math.cos(time*0.1))*0.4;
+            //poseStack.translate(normal.x() * scale, normal.y() * scale, normal.z() * scale);
+            face.renderTriangle(poseStack, vertexConsumer, 255, false);
+            poseStack.popPose();
+        });
         poseStack.popPose();
     }
 }

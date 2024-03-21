@@ -4,7 +4,7 @@
         "srcrgb": "srcalpha",
         "dstrgb": "1-srcalpha"
     },
-    "vertex": "sobel",
+    "vertex": "blit",
     "fragment": "aspect:tint",
     "attributes": [ "Position" ],
     "samplers": [
@@ -18,5 +18,4 @@
 
         { "name": "Progress", "type": "float", "count": 1, "values": [ 1.0 ] }
     ]
-
 }

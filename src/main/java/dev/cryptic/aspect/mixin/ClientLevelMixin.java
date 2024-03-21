@@ -11,16 +11,16 @@ public class ClientLevelMixin {
     @Shadow
     private ClientLevel.ClientLevelData clientLevelData;
 
-    /**
-     * @reason() Sky
-     * @author :urmmods:
-     */
-    @Overwrite
-    public Vec3 getSkyColor(Vec3 vec3, float v) {
-        long f = this.clientLevelData.getGameTime();
-        double g = Math.sin((float)f / 24) + 1;
-        return new Vec3(g, g, g);
-    }
+//    /**
+//     * @reason() Sky
+//     * @author :urmmods:
+//     */
+//    @Overwrite
+//    public Vec3 getSkyColor(Vec3 vec3, float v) {
+//        long f = this.clientLevelData.getGameTime();
+//        double g = Math.sin((float)f / 24) + 1;
+//        return new Vec3(g, g, g);
+//    }
 
 
 }

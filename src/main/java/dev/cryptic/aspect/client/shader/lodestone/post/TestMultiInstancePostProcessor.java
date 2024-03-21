@@ -20,7 +20,7 @@ public class TestMultiInstancePostProcessor extends MultiInstancePostProcessor<T
 
     @Override
     public ResourceLocation getPostChainLocation() {
-        return Aspect.resourceLocation("lode_test");
+        return Aspect.id("lode_test");
     }
 
     @Override

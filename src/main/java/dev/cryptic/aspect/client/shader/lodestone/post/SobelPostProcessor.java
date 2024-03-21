@@ -15,7 +15,7 @@ public class SobelPostProcessor extends PostProcessor {
     }
     @Override
     public ResourceLocation getPostChainLocation() {
-        return Aspect.resourceLocation("sobel");
+        return Aspect.id("sobel");
     }
 
     @Override

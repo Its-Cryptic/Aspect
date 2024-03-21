@@ -5,7 +5,8 @@
   "client": [
     "ClientLevelMixin",
     "LevelRendererMixin",
-    "ItemInHandRendererMixin"
+    "ItemInHandRendererMixin",
+    "PostProcessHandlerMixin"
   ],
   "server": [
   ]
