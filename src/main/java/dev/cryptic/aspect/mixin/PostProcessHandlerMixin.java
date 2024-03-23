@@ -1,6 +1,5 @@
 package dev.cryptic.aspect.mixin;
 
-import dev.cryptic.aspect.client.shader.lodestone.RenderData;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -8,6 +7,8 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import team.lodestar.lodestone.systems.postprocess.PostProcessHandler;
 import team.lodestar.lodestone.systems.postprocess.PostProcessor;
 
@@ -36,9 +37,8 @@ public class PostProcessHandlerMixin {
 
         copyDepthBuffer();
         PostProcessor.viewModelStack = event.getPoseStack();
-        RenderData.updatePartialTick(event.getPartialTick());
-        RenderData.updateRenderTick(event.getRenderTick());
         instances.forEach(PostProcessor::applyPostProcess);
         didCopyDepth = false;
     }
+
 }
