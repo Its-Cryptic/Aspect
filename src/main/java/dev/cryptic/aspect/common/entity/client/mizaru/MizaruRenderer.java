@@ -44,7 +44,7 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
 
     @Override
     public RenderType getRenderType(Mizaru animatable, ResourceLocation texture, @Nullable MultiBufferSource bufferSource, float partialTick) {
-        if (!isLost(animatable)) return AspectRenderType.aspectTest();
+        //if (!isLost(animatable)) return super.getRenderType(animatable, texture, bufferSource, partialTick);
         return super.getRenderType(animatable, texture, bufferSource, partialTick);
     }
 
@@ -72,7 +72,7 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
         poseStack.pushPose();
         poseStack.translate(0.0, 3, 0.0);
         poseStack.scale(0.5f, 0.5f, 0.5f);
-        IcoSphereModel.INSTANCE.renderModel(poseStack, vertexConsumer, 255, false);
+        IcoSphereModel.INSTANCE.renderModel(poseStack, vertexConsumer, 255);
         poseStack.popPose();
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
@@ -130,7 +130,7 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
             //Vector3f orginToFaceCenter = Vector3f.ZERO.copy().add(face.getCenter());
             double scale = (1-Math.cos(time*0.1))*0.4;
             poseStack.translate(normal.x() * scale, normal.y() * scale, normal.z() * scale);
-            face.renderTriangle(poseStack, vertexConsumer, 255, false);
+            face.renderTriangle(poseStack, vertexConsumer, 255);
             poseStack.popPose();
         });
         poseStack.popPose();

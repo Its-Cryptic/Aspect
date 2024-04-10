@@ -38,7 +38,7 @@ public class AspectRegistry {
             "none",
             new AspectColor(new Color(242, 0, 255), new Color(255, 0, 128), new Color(255, 119, 0)),
             new AspectColor(new Color(242, 0, 255), new Color(255, 0, 128), new Color(255, 119, 0)),
-            null
+            () -> null
     ));
 
     public static final RegistryObject<AspectType> FLAME = registerAspect(new AspectType(

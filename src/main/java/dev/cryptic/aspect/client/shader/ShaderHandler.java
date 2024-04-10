@@ -14,6 +14,8 @@ import team.lodestar.lodestone.systems.rendering.shader.ExtendedShaderInstance;
 import java.util.function.Consumer;
 
 public class ShaderHandler {
+
+
     public static class ClientOnly {
 
         public static void renderDarknessVignette(PoseStack poseStack) {

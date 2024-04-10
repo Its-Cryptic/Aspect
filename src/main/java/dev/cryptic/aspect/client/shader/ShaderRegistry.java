@@ -22,10 +22,16 @@ public class ShaderRegistry {
             "Speed", "Zoom", "Distortion", "Intensity", "Wibble"
     );
 
+    public static ShaderHolder SHIELD = new ShaderHolder(new ResourceLocation(Aspect.MODID, "shield"),
+            DefaultVertexFormat.BLOCK,
+            "NormalVec"
+    );
+
     @SubscribeEvent
     public static void shaderRegistry(RegisterShadersEvent event) throws IOException {
         ResourceProvider resourceProvider = event.getResourceProvider();
 
         registerShader(event, TOUCH_OF_DARKNESS.createInstance(resourceProvider));
+        registerShader(event, SHIELD.createInstance(resourceProvider));
     }
 }

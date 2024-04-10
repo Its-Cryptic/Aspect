@@ -22,17 +22,8 @@ import team.lodestar.lodestone.systems.rendering.VFXBuilders;
 
 @Mod.EventBusSubscriber(modid = Aspect.MODID, value = Dist.CLIENT)
 public class RenderClientEvents {
-    private static final ResourceLocation UV_TEST = new ResourceLocation(Aspect.MODID, "textures/vfx/uv_test.png");
+    public static final ResourceLocation UV_TEST = new ResourceLocation(Aspect.MODID, "textures/vfx/uv_test.png");
     private static final ResourceLocation SHIELD = new ResourceLocation(Aspect.MODID, "textures/vfx/shield01.png");
-
-    @SubscribeEvent
-    public static void onPlayerRender(RenderPlayerEvent event) {
-        Minecraft minecraft = Minecraft.getInstance();
-        LocalPlayer player = minecraft.player;
-        if (player != null) {
-            event.getRenderer().getTextureLocation(player);
-        }
-    }
 
     @SubscribeEvent
     public static void playerQuadRender(RenderLevelStageEvent event) {
@@ -82,7 +73,7 @@ public class RenderClientEvents {
             poseStack.pushPose();
             poseStack.translate(relativePos.x, relativePos.y, relativePos.z);
             VertexConsumer vertexConsumer = RenderHandler.DELAYED_RENDER.getBuffer(LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE.applyAndCache(SHIELD));
-            renderShield(poseStack, vertexConsumer, event.getRenderTick() + partialTick);
+            //renderShield(poseStack, vertexConsumer, event.getRenderTick() + partialTick);
             poseStack.popPose();
         }
 
@@ -128,7 +119,7 @@ public class RenderClientEvents {
             Vector3f normal = face.normal();
             double scale = (1-Math.cos(time*0.1))*0.4;
             //poseStack.translate(normal.x() * scale, normal.y() * scale, normal.z() * scale);
-            face.renderTriangle(poseStack, vertexConsumer, 255, false);
+            face.renderTriangle(poseStack, vertexConsumer, 255);
             poseStack.popPose();
         });
         poseStack.popPose();

@@ -102,7 +102,7 @@ public class Aspect {
             AspectPostShaders.getInstance().init();
 
             //PostProcessHandler.addInstance(new TestPostProcessor());
-            PostProcessHandler.addInstance(SobelPostProcessor.getInstance());
+            PostProcessHandler.addInstance(SobelPostProcessor.INSTANCE);
             PostProcessHandler.addInstance(DepthWorldPostProcessor.INSTANCE);
             PostProcessHandler.addInstance(VoronoiPostProcessor.INSTANCE);
 

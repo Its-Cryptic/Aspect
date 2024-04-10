@@ -199,7 +199,7 @@ dependencies {
 
     //implementation files('libs/encryptedapi-1.20.1-0.0.3.jar')
     //implementation 'dev.cryptic.encryptedapi:encryptedapi-1.20.1-0.0.3'
-    implementation fg.deobf("curse.maven:encrypted-api-980064:5147973")
+    implementation fg.deobf("curse.maven:encrypted-api-980064:5229094")
 
     //implementation "maven.modrinth:architectury-api:6.6.92+forge"
     //implementation "maven.modrinth:encrypted-api:1.20.1-0.0.2"

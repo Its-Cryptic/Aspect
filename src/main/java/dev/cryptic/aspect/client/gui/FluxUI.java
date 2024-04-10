@@ -26,7 +26,7 @@ public class FluxUI {
     public static void renderOverlay(ForgeGui gui, GuiGraphics guiGraphics, float partialTicks, int screenWidth, int screenHeight) {
         Player player = minecraft.player;
         if (player == null) return;
-        //if (true) return;
+        if (true) return;
 
         float flux = SyncedForgeCapData.getPlayerFlux();
         int maxFlux = SyncedForgeCapData.getPlayerMaxFlux();
@@ -56,7 +56,7 @@ public class FluxUI {
         VertexConsumer vertexConsumer = bufferSource.getBuffer(LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE.applyAndCache(UV_TEST));
         poseStack.pushPose();
         poseStack.translate(0, 0, 0);
-        MonkeyModel.INSTANCE.renderModel(poseStack, vertexConsumer, 255, false);
+        MonkeyModel.INSTANCE.renderModel(poseStack, vertexConsumer, 255);
         poseStack.popPose();
 
     }

@@ -47,10 +47,10 @@ void main() {
     uv = vec2(r*cos(phi),r*sin(phi)+.5);
 
     /////////////////////////
-    vec4 diffuseColor = texture(DiffuseSampler, uv);
-    float mainDepth = texture(MainDepthSampler, uv).r;
+    vec4 diffuseColor = texture(DiffuseSampler, texCoord);
+    float mainDepth = texture(MainDepthSampler, texCoord).r;
 
-    vec3 worldPos = worldPos(mainDepth, uv, invProjMat, InvModelViewMat, cameraPos);
+    vec3 worldPos = worldPos(mainDepth, texCoord, invProjMat, InvModelViewMat, cameraPos);
     float dist = distance(worldPos, sphereCenter);
     dist = (
 abs((worldPos.x-sphereCenter.x)-(worldPos.z-sphereCenter.z))
