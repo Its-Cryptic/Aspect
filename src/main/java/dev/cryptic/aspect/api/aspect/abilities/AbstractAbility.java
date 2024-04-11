@@ -6,7 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.Supplier;
 
-public abstract class AbstractAbility {
+public abstract class AbstractAbility implements CommonAbilityEvents, IAbilityInteractEvents {
     private ResourceLocation id;
     private String langKey;
 
@@ -39,4 +39,6 @@ public abstract class AbstractAbility {
     public AspectType getAspectType() {
         return aspectType.get();
     }
+
+
 }

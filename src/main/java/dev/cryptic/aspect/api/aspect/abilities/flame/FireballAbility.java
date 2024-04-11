@@ -10,4 +10,5 @@ public class FireballAbility extends AbstractAbility {
     public FireballAbility(String id, Supplier<AspectType> aspectType) {
         super(id, aspectType);
     }
+
 }
