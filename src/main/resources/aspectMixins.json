@@ -6,7 +6,11 @@
     "ClientLevelMixin",
     "LevelRendererMixin",
     "ItemInHandRendererMixin",
-    "PostProcessHandlerMixin"
+    "PostProcessHandlerMixin",
+    "PlayerRendererMixin",
+    "RenderTargetMixin",
+    "MinecraftMixin",
+    "LoadingOverlayMixin"
   ],
   "server": [
   ]

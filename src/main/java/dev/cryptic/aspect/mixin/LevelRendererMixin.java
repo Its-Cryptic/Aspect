@@ -1,7 +1,7 @@
 package dev.cryptic.aspect.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import dev.cryptic.aspect.client.shader.lodestone.RenderHelper;
+import dev.cryptic.aspect.client.shader.RenderHelper;
 import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.*;
 import org.joml.Matrix4f;

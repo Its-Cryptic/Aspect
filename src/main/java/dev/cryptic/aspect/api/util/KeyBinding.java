@@ -7,9 +7,9 @@ import net.minecraftforge.client.settings.KeyConflictContext;
 import org.lwjgl.glfw.GLFW;
 
 public class KeyBinding {
-    public static final String KEY_CATEGORY_ASPECTS = "key.category.aspect";
+    public static final String KEY_CATEGORY_ASPECTS = String.format("key.category.%s", Aspect.MODID);
     public static final String KEY_DRINK_WATER = String.format("key.%s.%s", Aspect.MODID, "drink_water");
-    public static final String KEY_USE_RAW_FLUX = "key.aspect.use_raw_flux";
+    public static final String KEY_USE_RAW_FLUX = String.format("key.%s.%s", Aspect.MODID, "use_raw_flux");
 
     public static final KeyMapping DRINKING_KEY = new KeyMapping(KEY_DRINK_WATER, KeyConflictContext.IN_GAME,
             InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_G, KEY_CATEGORY_ASPECTS);
@@ -21,6 +21,10 @@ public class KeyBinding {
 
     public static class AbilityKeyBinding {
         public static final KeyMapping PRIMARY_SKILL_1 = KeyBinding.register("primary_skill_1", GLFW.GLFW_KEY_1);
+    }
+
+    public static class UNREGISTERED {
+        public static final KeyMapping LEFT_ALT = KeyBinding.register("left_alt", GLFW.GLFW_KEY_LEFT_ALT);
     }
 
     protected static KeyMapping register(String keyName, int key) {

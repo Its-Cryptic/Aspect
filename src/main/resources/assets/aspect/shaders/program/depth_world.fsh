@@ -2,6 +2,7 @@
 
 uniform sampler2D DiffuseSampler;
 uniform sampler2D MainDepthSampler;
+//uniform sampler2D CutoutDepthSampler;
 
 uniform mat4 invViewMat;
 uniform mat4 invProjMat;

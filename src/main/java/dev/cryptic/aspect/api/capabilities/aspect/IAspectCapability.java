@@ -8,4 +8,8 @@ public interface IAspectCapability extends INBTSerializable<CompoundTag> {
 
     AspectType getAspectType();
     void setAspectType(AspectType aspectType);
+
+
+
+
 }

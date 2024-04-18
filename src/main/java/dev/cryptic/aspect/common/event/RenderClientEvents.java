@@ -7,10 +7,13 @@ import dev.cryptic.aspect.common.misc.obj.SphereShieldModel;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RenderArmEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -19,6 +22,8 @@ import org.joml.Vector3f;
 import team.lodestar.lodestone.handlers.RenderHandler;
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry;
 import team.lodestar.lodestone.systems.rendering.VFXBuilders;
+
+import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Aspect.MODID, value = Dist.CLIENT)
 public class RenderClientEvents {
@@ -116,7 +121,7 @@ public class RenderClientEvents {
         poseStack.scale(totalScale, totalScale, totalScale);
         SphereShieldModel.INSTANCE.faces.forEach(face -> {
             poseStack.pushPose();
-            Vector3f normal = face.normal();
+            List<Vector3f> normals = face.normals();
             double scale = (1-Math.cos(time*0.1))*0.4;
             //poseStack.translate(normal.x() * scale, normal.y() * scale, normal.z() * scale);
             face.renderTriangle(poseStack, vertexConsumer, 255);
@@ -124,4 +129,5 @@ public class RenderClientEvents {
         });
         poseStack.popPose();
     }
+
 }

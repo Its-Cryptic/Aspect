@@ -52,7 +52,7 @@ public class ItemInHandRendererMixin {
         p_109347_.mulPose(Axis.ZP.rotationDegrees(f * 120.0F));
         p_109347_.mulPose(Axis.XP.rotationDegrees(200.0F));
         p_109347_.mulPose(Axis.YP.rotationDegrees(f * -135.0F));
-        p_109347_.translate(f * 5.6F, 0.0F, 0.0F);
+        p_109347_.translate(f * 5.6F, 0.0F,  0.0F);
         PlayerRenderer playerrenderer = (PlayerRenderer)this.entityRenderDispatcher.<AbstractClientPlayer>getRenderer(abstractclientplayer);
         if (flag) {
             playerrenderer.renderRightHand(p_109347_, p_109348_, p_109349_, abstractclientplayer);

@@ -10,4 +10,9 @@ public class FlameWhipAbility extends AbstractAbility {
     public FlameWhipAbility(String id, Supplier<AspectType> aspectType) {
         super(id, aspectType);
     }
+
+    @Override
+    public boolean isToggleable() {
+        return false;
+    }
 }

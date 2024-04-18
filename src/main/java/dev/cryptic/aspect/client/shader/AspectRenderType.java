@@ -11,6 +11,10 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry;
+import team.lodestar.lodestone.systems.rendering.rendeertype.RenderTypeProvider;
+
+import java.util.OptionalDouble;
 
 public class AspectRenderType extends RenderType {
     public AspectRenderType(String p_173178_, VertexFormat p_173179_, VertexFormat.Mode p_173180_, int p_173181_, boolean p_173182_, boolean p_173183_, Runnable p_173184_, Runnable p_173185_) {
@@ -44,10 +48,37 @@ public class AspectRenderType extends RenderType {
                     .createCompositeState(false)
     );
 
-    public static RenderType TESTING = create("testing", DefaultVertexFormat.POSITION_TEX_COLOR_NORMAL, VertexFormat.Mode.TRIANGLES, 2097152, true, true,
+    //DefaultVertexFormat.POSITION_TEX_COLOR_NORMAL
+    //DefaultVertexFormat.BLOCK
+    public static RenderType TESTING = create("testing", DefaultVertexFormat.BLOCK, VertexFormat.Mode.TRIANGLES, 2097152, true, true,
             RenderType.CompositeState.builder()
                     .setShaderState(RENDERTYPE_SHIELD)
-                    .setTextureState(new TextureStateShard(new ResourceLocation(Aspect.MODID, "textures/vfx/uv_test.png"), false, false))
+                    .setLightmapState(LIGHTMAP)
+                    //.setTransparencyState(TEST_TRANSPARENCY)
+                    .setTextureState(new TextureStateShard(new ResourceLocation(Aspect.MODID, "textures/vfx/shield01.png"), false, false))
+                    .setWriteMaskState(RenderStateShard.COLOR_DEPTH_WRITE)
+                    .setDepthTestState(RenderStateShard.LEQUAL_DEPTH_TEST)
+                    .setCullState(NO_CULL)
                     .createCompositeState(true)
+    );
+
+    public static final RenderType.CompositeRenderType LINES = create("lines", DefaultVertexFormat.POSITION_COLOR_NORMAL, VertexFormat.Mode.LINES, 256, false, false,
+            RenderType.CompositeState.builder()
+                    .setShaderState(RENDERTYPE_LINES_SHADER)
+                    .setLineState(new RenderStateShard.LineStateShard(OptionalDouble.empty()))
+                    .setLayeringState(VIEW_OFFSET_Z_LAYERING)
+                    .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                    .setWriteMaskState(COLOR_DEPTH_WRITE)
+                    .setCullState(NO_CULL)
+                    .createCompositeState(false)
+    );
+
+    public static final RenderTypeProvider TRIANGLE_SPHERE_RENDERTYPE = new RenderTypeProvider((texture) ->
+            LodestoneRenderTypeRegistry.createGenericRenderType("aspect:triangle_sphere_rendertype", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.TRIANGLES, LodestoneRenderTypeRegistry.builder()
+                    .setShaderState(new RenderStateShard.ShaderStateShard(GameRenderer::getPositionColorTexLightmapShader))
+                    .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
+                    .setTextureState(texture)
+                    .setCullState(RenderStateShard.NO_CULL)
+            )
     );
 }

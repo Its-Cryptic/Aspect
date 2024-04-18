@@ -5,6 +5,7 @@
 
 uniform sampler2D DiffuseSampler;
 uniform sampler2D MainDepthSampler;
+uniform sampler2D CutoutDepthSampler;
 
 uniform mat4 InvModelViewMat;
 uniform mat4 invProjMat;
@@ -49,6 +50,8 @@ void main() {
     /////////////////////////
     vec4 diffuseColor = texture(DiffuseSampler, texCoord);
     float mainDepth = texture(MainDepthSampler, texCoord).r;
+    float cutoutDepth = texture(CutoutDepthSampler, texCoord).r;
+    bool isCutout = cutoutDepth > mainDepth;
 
     vec3 worldPos = worldPos(mainDepth, texCoord, invProjMat, InvModelViewMat, cameraPos);
     float dist = distance(worldPos, sphereCenter);
@@ -64,6 +67,10 @@ abs((worldPos.x-sphereCenter.x)-(worldPos.z-sphereCenter.z))
      randomness = 1.0;
     DistFromEdge = voronoi_distance_to_edge(worldPos+vec3(0.5,0.5,0.5), 1.0, randomness);
     vec4 voronoiTexture = voronoiTexture(DistFromEdge, 0.01, 0.03, vec4(0.15, 0.5, 1.0, 1.0));
+
+    if (isCutout) {
+        fragColor = diffuseColor;
+    } else
     if (dist <= radius + 0.0625 && dist >= radius - 0.0625) {
         fragColor = vec4(0.0, 0.0, 0.0, 1.0);
     } else {

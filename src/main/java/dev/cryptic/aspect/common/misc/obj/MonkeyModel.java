@@ -8,6 +8,7 @@ public class MonkeyModel extends ObjModel {
     public static MonkeyModel INSTANCE = new MonkeyModel();
     @Override
     public ResourceLocation getModelLocation() {
-        return Aspect.id("monkey");
+        //return Aspect.id("monkey");
+        return Aspect.id("monkeyhd");
     }
 }

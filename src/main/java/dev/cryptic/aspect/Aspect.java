@@ -21,6 +21,7 @@ import dev.cryptic.aspect.common.entity.client.mizaru.MizaruRenderer;
 import dev.cryptic.aspect.common.item.CreativeTabRegistry;
 import dev.cryptic.aspect.common.item.ItemRegistry;
 //import dev.cryptic.aspect.misc.obj.MonkeyModel;
+import dev.cryptic.aspect.common.misc.obj.IcoSphereHDModel;
 import dev.cryptic.aspect.common.misc.obj.IcoSphereModel;
 import dev.cryptic.aspect.common.misc.obj.MonkeyModel;
 import dev.cryptic.aspect.common.misc.obj.SphereShieldModel;
@@ -55,6 +56,7 @@ public class Aspect {
     public Aspect() {
         ObjModelRegistry.registerModel(MonkeyModel.INSTANCE);
         ObjModelRegistry.registerModel(IcoSphereModel.INSTANCE);
+        ObjModelRegistry.registerModel(IcoSphereHDModel.INSTANCE);
         ObjModelRegistry.registerModel(SphereShieldModel.INSTANCE);
 
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -100,6 +102,7 @@ public class Aspect {
             BlockEntityRenderers.register(ModBlockEntities.FLUX_CORE.get(), FluxCoreRenderer::new);
 
             AspectPostShaders.getInstance().init();
+
 
             //PostProcessHandler.addInstance(new TestPostProcessor());
             PostProcessHandler.addInstance(SobelPostProcessor.INSTANCE);

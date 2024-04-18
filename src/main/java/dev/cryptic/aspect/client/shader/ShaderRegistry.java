@@ -2,6 +2,7 @@ package dev.cryptic.aspect.client.shader;
 
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import dev.cryptic.aspect.Aspect;
+import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceProvider;
 import net.minecraftforge.api.distmarker.Dist;
@@ -17,21 +18,12 @@ import static team.lodestar.lodestone.registry.client.LodestoneShaderRegistry.re
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = Aspect.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ShaderRegistry {
 
-    public static ShaderHolder TOUCH_OF_DARKNESS = new ShaderHolder(new ResourceLocation(Aspect.MODID, "touch_of_darkness"),
-            DefaultVertexFormat.POSITION_COLOR_TEX,
-            "Speed", "Zoom", "Distortion", "Intensity", "Wibble"
-    );
-
-    public static ShaderHolder SHIELD = new ShaderHolder(new ResourceLocation(Aspect.MODID, "shield"),
-            DefaultVertexFormat.BLOCK,
-            "NormalVec"
-    );
+    public static ShaderHolder SHIELD = new ShaderHolder(new ResourceLocation(Aspect.MODID, "shield"), DefaultVertexFormat.BLOCK);
 
     @SubscribeEvent
     public static void shaderRegistry(RegisterShadersEvent event) throws IOException {
         ResourceProvider resourceProvider = event.getResourceProvider();
 
-        registerShader(event, TOUCH_OF_DARKNESS.createInstance(resourceProvider));
         registerShader(event, SHIELD.createInstance(resourceProvider));
     }
 }

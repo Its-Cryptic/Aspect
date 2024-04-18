@@ -24,6 +24,7 @@ import team.lodestar.lodestone.handlers.RenderHandler;
 import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry;
 import team.lodestar.lodestone.systems.rendering.VFXBuilders;
 
+import java.util.List;
 import java.util.UUID;
 
 public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
@@ -126,10 +127,10 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
 
         IcoSphereModel.INSTANCE.faces.forEach(face -> {
             poseStack.pushPose();
-            Vector3f normal = face.normal();
+            List<Vector3f> normal = face.normals();
             //Vector3f orginToFaceCenter = Vector3f.ZERO.copy().add(face.getCenter());
             double scale = (1-Math.cos(time*0.1))*0.4;
-            poseStack.translate(normal.x() * scale, normal.y() * scale, normal.z() * scale);
+            //poseStack.translate(normal.x() * scale, normal.y() * scale, normal.z() * scale);
             face.renderTriangle(poseStack, vertexConsumer, 255);
             poseStack.popPose();
         });

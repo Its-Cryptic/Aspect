@@ -10,4 +10,9 @@ public class ShockAbility extends AbstractAbility {
     public ShockAbility(String id, Supplier<AspectType> aspectType) {
         super(id, aspectType);
     }
+
+    @Override
+    public boolean isToggleable() {
+        return true;
+    }
 }
