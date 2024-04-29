@@ -3,7 +3,6 @@ package dev.cryptic.aspect.api.registry;
 import dev.cryptic.aspect.Aspect;
 import dev.cryptic.aspect.api.aspect.abilities.AbstractAbility;
 import dev.cryptic.aspect.api.aspect.abilities.flame.FireballAbility;
-import dev.cryptic.aspect.api.aspect.abilities.flame.FlameWhipAbility;
 import dev.cryptic.aspect.api.aspect.abilities.lightning.ShockAbility;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
@@ -25,8 +24,8 @@ public class AbilityRegistry {
         ABILITIES.register(eventBus);
     }
 
-    public static RegistryObject<AbstractAbility> registerAbility(AbstractAbility ability) {
-        return ABILITIES.register(ability.getName(), () -> ability);
+    public static RegistryObject<AbstractAbility> registerAbility(Supplier<AbstractAbility> ability) {
+        return ABILITIES.register(ability.get().getName(), ability);
     }
 
     public static AbstractAbility getAbility(String id) {
@@ -42,18 +41,10 @@ public class AbilityRegistry {
     }
 
     // Lightning
-    public static final RegistryObject<AbstractAbility> SHOCK_ABILITY = registerAbility(new ShockAbility(
-            "shock",
-            AspectRegistry.LIGHTNING
-    ));
+    public static final RegistryObject<AbstractAbility> SHOCK_ABILITY = registerAbility(ShockAbility::new);
 
-    public static final RegistryObject<AbstractAbility> FIREBALL_ABILITY = registerAbility(new FireballAbility(
-            "fireball",
-            AspectRegistry.FLAME
-    ));
+    // Flame
+    public static final RegistryObject<AbstractAbility> FIREBALL_ABILITY = registerAbility(FireballAbility::new);
 
-    public static final RegistryObject<AbstractAbility> FLAME_WHIP_ABILITY = registerAbility(new FlameWhipAbility(
-            "flame_whip",
-            AspectRegistry.FLAME
-    ));
+    // Blood
 }

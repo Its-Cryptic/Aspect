@@ -2,7 +2,7 @@ package dev.cryptic.aspect.common.event;
 
 import dev.cryptic.aspect.Aspect;
 import dev.cryptic.aspect.api.util.ClassUtil;
-import dev.cryptic.aspect.api.util.KeyBinding;
+import dev.cryptic.aspect.api.registry.KeyBinding;
 import net.minecraft.client.KeyMapping;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

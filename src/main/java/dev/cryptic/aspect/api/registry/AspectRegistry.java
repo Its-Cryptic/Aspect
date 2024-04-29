@@ -49,7 +49,6 @@ public class AspectRegistry {
             () -> {
                 ArrayList<AbstractAbility> abilities = new ArrayList<>();
                 abilities.add(AbilityRegistry.FIREBALL_ABILITY.get());
-                abilities.add(AbilityRegistry.FLAME_WHIP_ABILITY.get());
 
                 return abilities;
             }

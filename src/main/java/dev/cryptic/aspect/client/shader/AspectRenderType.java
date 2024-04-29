@@ -21,7 +21,8 @@ public class AspectRenderType extends RenderType {
         super(p_173178_, p_173179_, p_173180_, p_173181_, p_173182_, p_173183_, p_173184_, p_173185_);
     }
 
-    protected static final RenderStateShard.ShaderStateShard RENDERTYPE_SHIELD = new RenderStateShard.ShaderStateShard(ShaderRegistry.SHIELD.getInstance());
+    protected static final RenderStateShard.ShaderStateShard RENDERTYPE_SHIELD = ShaderRegistry.SHIELD.getShard();
+    protected static final RenderStateShard.ShaderStateShard RENDERTYPE_DISSOLVE = ShaderRegistry.SHIELD.getShard();
 
     protected static final RenderStateShard.TransparencyStateShard TEST_TRANSPARENCY = new RenderStateShard.TransparencyStateShard("test_transparency", () -> {
         RenderSystem.depthMask(false);
@@ -71,6 +72,18 @@ public class AspectRenderType extends RenderType {
                     .setWriteMaskState(COLOR_DEPTH_WRITE)
                     .setCullState(NO_CULL)
                     .createCompositeState(false)
+    );
+
+    public static RenderType DISSOLVE = create("dissolve", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.TRIANGLES, 2097152, true, true,
+            RenderType.CompositeState.builder()
+                    .setShaderState(RENDERTYPE_SHIELD)
+                    .setLightmapState(LIGHTMAP)
+                    //.setTransparencyState(TEST_TRANSPARENCY)
+                    .setTextureState(new TextureStateShard(new ResourceLocation(Aspect.MODID, "textures/vfx/shield01.png"), false, false))
+                    .setWriteMaskState(RenderStateShard.COLOR_DEPTH_WRITE)
+                    .setDepthTestState(RenderStateShard.LEQUAL_DEPTH_TEST)
+                    .setCullState(NO_CULL)
+                    .createCompositeState(true)
     );
 
     public static final RenderTypeProvider TRIANGLE_SPHERE_RENDERTYPE = new RenderTypeProvider((texture) ->

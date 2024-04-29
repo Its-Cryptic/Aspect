@@ -18,4 +18,8 @@ public class AbilityHelper {
         });
         return overwrittenMethods;
     }
+
+    public static boolean hasImplementedMethod(AbstractAbility ability, Method method) {
+        return ClassUtil.isMethodOverridden(ability.getClass(), method.toString(), ClassUtil.getMethodParameterTypes(method));
+    }
 }

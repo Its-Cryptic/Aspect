@@ -5,7 +5,6 @@ import dev.cryptic.aspect.client.shader.lodestone.post.DepthWorldPostProcessor;
 import dev.cryptic.aspect.client.shader.lodestone.post.SobelPostProcessor;
 import dev.cryptic.aspect.client.shader.lodestone.post.TestMultiInstancePostProcessor;
 import dev.cryptic.aspect.client.shader.lodestone.post.VoronoiPostProcessor;
-import dev.cryptic.aspect.client.shader.post.AspectPostShaders;
 import dev.cryptic.aspect.api.registry.GameruleRegistry;
 import dev.cryptic.aspect.api.networking.ModMessages;
 import dev.cryptic.aspect.api.registry.AbilityRegistry;
@@ -100,8 +99,6 @@ public class Aspect {
             EntityRenderers.register(ModEntityTypes.FIRE_BLAST.get(), FireBlastRenderer::new);
 
             BlockEntityRenderers.register(ModBlockEntities.FLUX_CORE.get(), FluxCoreRenderer::new);
-
-            AspectPostShaders.getInstance().init();
 
 
             //PostProcessHandler.addInstance(new TestPostProcessor());

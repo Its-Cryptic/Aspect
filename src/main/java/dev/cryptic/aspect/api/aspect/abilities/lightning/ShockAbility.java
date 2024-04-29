@@ -1,18 +1,26 @@
 package dev.cryptic.aspect.api.aspect.abilities.lightning;
 
-import dev.cryptic.aspect.api.aspect.AspectType;
+import dev.cryptic.aspect.Aspect;
 import dev.cryptic.aspect.api.aspect.abilities.AbstractAbility;
-
-import java.util.function.Supplier;
 
 public class ShockAbility extends AbstractAbility {
 
-    public ShockAbility(String id, Supplier<AspectType> aspectType) {
-        super(id, aspectType);
+    public ShockAbility() {
+        this.resourceLocation = Aspect.id("shock");
     }
 
     @Override
     public boolean isToggleable() {
         return true;
+    }
+
+    @Override
+    public boolean isClickable() {
+        return false;
+    }
+
+    @Override
+    public boolean isDoubleClickable() {
+        return false;
     }
 }

@@ -1,4 +1,4 @@
-package dev.cryptic.aspect.api.util;
+package dev.cryptic.aspect.api.registry;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import dev.cryptic.aspect.Aspect;
@@ -20,7 +20,11 @@ public class KeyBinding {
     public static final KeyMapping SCROLL_ABILITY_BUTTON = KeyBinding.register("scroll_ability_button", GLFW.GLFW_KEY_LEFT_ALT);
 
     public static class AbilityKeyBinding {
-        public static final KeyMapping PRIMARY_SKILL_1 = KeyBinding.register("primary_skill_1", GLFW.GLFW_KEY_1);
+        public static final KeyMapping PRIMARY_SKILL_1 = KeyBinding.register("primary_skill_1", GLFW.GLFW_KEY_Z);
+        public static final KeyMapping PRIMARY_SKILL_2 = KeyBinding.register("primary_skill_2", GLFW.GLFW_KEY_X);
+        public static final KeyMapping POWERUP_SKILL_1 = KeyBinding.register("powerup_skill_1", GLFW.GLFW_KEY_C);
+        public static final KeyMapping SPECIAL_SKILL_1 = KeyBinding.register("powerup_skill_1", GLFW.GLFW_KEY_V);
+        public static final KeyMapping ULTIMATE_SKILL_1 = KeyBinding.register("ultimate_skill_1", GLFW.GLFW_KEY_B);
     }
 
     public static class UNREGISTERED {
