@@ -23,7 +23,7 @@ public class RenderTargetMixin implements IRenderTargetMixin {
      * @param renderTarget the render target to copy the color buffer from
      */
     @Override
-    public void aspects$copyColorFrom(RenderTarget renderTarget) {
+    public void aspect$copyColorFrom(RenderTarget renderTarget) {
         RenderSystem.assertOnRenderThreadOrInit();
         GlStateManager._glBindFramebuffer(GlConst.GL_READ_FRAMEBUFFER, renderTarget.frameBufferId);
         GlStateManager._glBindFramebuffer(GlConst.GL_DRAW_FRAMEBUFFER, this.frameBufferId);

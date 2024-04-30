@@ -181,7 +181,7 @@ public class RenderClientEvents {
         if (tempRenderTarget == null) return;
         RenderTarget mainRenderTarget = Minecraft.getInstance().getMainRenderTarget();
         tempRenderTarget.copyDepthFrom(mainRenderTarget);
-        ((IRenderTargetMixin) tempRenderTarget).aspects$copyColorFrom(mainRenderTarget);
+        ((IRenderTargetMixin) tempRenderTarget).aspect$copyColorFrom(mainRenderTarget);
 
         GlStateManager._glBindFramebuffer(GL_DRAW_FRAMEBUFFER, mainRenderTarget.frameBufferId);
     }
