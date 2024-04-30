@@ -1,11 +1,13 @@
-package dev.cryptic.aspect.mixin;
+package dev.cryptic.aspect.mixin.mixins.client;
 
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.LevelTimeAccess;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.*;
 
 @Mixin(ClientLevel.class)
-public class ClientLevelMixin {
+public abstract class ClientLevelMixin implements LevelTimeAccess {
 
     @Final
     @Shadow

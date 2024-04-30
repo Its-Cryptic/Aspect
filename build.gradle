@@ -184,9 +184,6 @@ dependencies {
     // GeckoLib Dependency
     implementation fg.deobf("software.bernie.geckolib:geckolib-forge-${minecraftVersion}:${geckoVersion}")
 
-    // Patchouli Dependency
-    //implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouliVersion}")
-
     // KubeJS Dependency
     implementation fg.deobf("dev.latvian.mods:kubejs-forge:${kubejsVersion}")
 
@@ -197,22 +194,14 @@ dependencies {
     //runtimeOnly fg.deobf("curse.maven:probejs-585406:4744799")
     runtimeOnly fg.deobf("curse.maven:ftb-library-forge-404465:5051953")
 
-    //implementation files('libs/encryptedapi-1.20.1-0.0.3.jar')
-    //implementation 'dev.cryptic.encryptedapi:encryptedapi-1.20.1-0.0.3'
     implementation fg.deobf("curse.maven:encrypted-api-980064:5255433")
-
-    //implementation fg.deobf("curse.maven:alexs-caves-924854:5162617")
-    //implementation fg.deobf("curse.maven:citadel-331936:5143956")
-
-    //implementation "maven.modrinth:architectury-api:6.6.92+forge"
-    //implementation "maven.modrinth:encrypted-api:1.20.1-0.0.2"
 
     implementation 'org.spongepowered:mixin:0.8.2'
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     mixin {
-        add sourceSets.main, 'aspectMixins.json'
-        config 'aspectMixins.json'
+        add sourceSets.main, "${mod_id}.mixins.json"
+        config "${mod_id}.mixins.json"
         debug.verbose = true
         debug.export = true
     }
@@ -281,7 +270,7 @@ tasks.withType(JavaCompile).configureEach {
 
 task processAspectMixins(type: Copy) {
     from 'src/main/resources'
-    include 'aspectMixins.json'
+    include "${mod_id}.mixins.json"
     into 'build/resources/main'
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }

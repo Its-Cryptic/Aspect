@@ -73,7 +73,7 @@ void main() {
     vec4 blackHoleShader, blackHoleUV;
     blackHoleUV = screenUV + vec4(vec2(0.05*sin(screenUV.x+RenderTime*0.05),0), 0, 0);
     blackHoleShader = textureProj(ColorBuffer, blackHoleUV);
-    fragColor = blackHoleShader;
+    fragColor = blackHoleShader * vec4(1.0, 1.0, 0.0, 1.0);
 
 
 

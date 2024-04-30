@@ -1,4 +1,4 @@
-package dev.cryptic.aspect.mixin;
+package dev.cryptic.aspect.mixin.mixins.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

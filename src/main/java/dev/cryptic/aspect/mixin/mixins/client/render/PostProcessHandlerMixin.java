@@ -1,4 +1,4 @@
-package dev.cryptic.aspect.mixin;
+package dev.cryptic.aspect.mixin.mixins.client.render;
 
 import dev.cryptic.aspect.client.shader.lodestone.post.ExtendedPostProcessor;
 import net.minecraftforge.client.event.RenderLevelStageEvent;

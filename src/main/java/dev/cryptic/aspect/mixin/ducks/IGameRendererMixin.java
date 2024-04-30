@@ -1,4 +1,4 @@
-package dev.cryptic.aspect.compat;
+package dev.cryptic.aspect.mixin.ducks;
 
 import net.minecraft.client.renderer.ShaderInstance;
 

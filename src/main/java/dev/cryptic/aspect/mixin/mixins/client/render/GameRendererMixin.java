@@ -1,8 +1,8 @@
-package dev.cryptic.aspect.mixin;
+package dev.cryptic.aspect.mixin.mixins.client.render;
 
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.datafixers.util.Pair;
-import dev.cryptic.aspect.compat.IGameRendererMixin;
+import dev.cryptic.aspect.mixin.ducks.IGameRendererMixin;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.server.packs.resources.ResourceProvider;

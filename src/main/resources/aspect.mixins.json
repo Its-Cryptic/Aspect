@@ -1,0 +1,21 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.cryptic.aspect.mixin.mixins",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+  ],
+  "client": [
+    "client.ClientLevelMixin",
+
+    "client.render.GameRendererMixin",
+    "client.render.LevelRendererMixin",
+    "client.render.ItemInHandRendererMixin",
+    "client.render.PostProcessHandlerMixin",
+    "client.render.PlayerRendererMixin",
+
+    "client.render.framebuffer.RenderTargetMixin"
+  ],
+  "server": [
+  ]
+}

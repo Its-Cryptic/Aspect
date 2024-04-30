@@ -2,9 +2,7 @@ package dev.cryptic.aspect.test;
 
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.pipeline.TextureTarget;
-import com.mojang.blaze3d.platform.GlConst;
 import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
@@ -13,7 +11,7 @@ import dev.cryptic.aspect.client.shader.AspectRenderType;
 import dev.cryptic.aspect.client.shader.ShaderRegistry;
 import dev.cryptic.aspect.client.shader.RenderHelper;
 import dev.cryptic.aspect.common.misc.obj.IcoSphereHDModel;
-import dev.cryptic.aspect.common.misc.obj.SphereShieldModel;
+import dev.cryptic.aspect.mixin.ducks.IRenderTargetMixin;
 import dev.cryptic.encryptedapi.api.vfx.model.Face;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -181,11 +179,11 @@ public class RenderClientEvents {
 
     public static void copyBuffers() {
         if (tempRenderTarget == null) return;
+        RenderTarget mainRenderTarget = Minecraft.getInstance().getMainRenderTarget();
+        tempRenderTarget.copyDepthFrom(mainRenderTarget);
+        ((IRenderTargetMixin) tempRenderTarget).aspects$copyColorFrom(mainRenderTarget);
 
-        tempRenderTarget.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
-        ((IRenderTargetMixin) (Object) tempRenderTarget).aspects$copyColorFrom(Minecraft.getInstance().getMainRenderTarget());
-
-        GlStateManager._glBindFramebuffer(GL_DRAW_FRAMEBUFFER, Minecraft.getInstance().getMainRenderTarget().frameBufferId);
+        GlStateManager._glBindFramebuffer(GL_DRAW_FRAMEBUFFER, mainRenderTarget.frameBufferId);
     }
 
     public static final ResourceLocation UV_GRID = new ResourceLocation(Aspect.MODID, "textures/vfx/uv_test.png");
