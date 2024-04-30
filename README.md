@@ -25,4 +25,4 @@ AspectJS.fluxUtil.setAspectType(player, AspectJS.ASPECT_TYPES.FLAME);
 
 ## Note:
 
- This mod is in early development and will likely not be available to play for at least half a year.
+ This mod is in early development and will likely not be in a playable state until Late Summer 2024
