@@ -4,9 +4,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import dev.cryptic.aspect.Aspect;
-import dev.cryptic.aspect.client.shader.AspectRenderType;
 import dev.cryptic.aspect.common.entity.fluxentity.golem.threewisemonkeys.Mizaru;
-import dev.cryptic.aspect.common.misc.obj.IcoSphereModel;
+import dev.cryptic.aspect.registry.client.AspectObjModels;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -73,7 +72,7 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
         poseStack.pushPose();
         poseStack.translate(0.0, 3, 0.0);
         poseStack.scale(0.5f, 0.5f, 0.5f);
-        IcoSphereModel.INSTANCE.renderModel(poseStack, vertexConsumer, 255);
+        AspectObjModels.IcoSphereModel.renderModel(poseStack, vertexConsumer, 255);
         poseStack.popPose();
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
@@ -125,7 +124,7 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
         poseStack.scale(scale1, scale1, scale1);
         poseStack.mulPose(Axis.YP.rotationDegrees(time * 2.0f));
 
-        IcoSphereModel.INSTANCE.faces.forEach(face -> {
+        AspectObjModels.IcoSphereModel.faces.forEach(face -> {
             poseStack.pushPose();
             List<Vector3f> normal = face.normals();
             //Vector3f orginToFaceCenter = Vector3f.ZERO.copy().add(face.getCenter());

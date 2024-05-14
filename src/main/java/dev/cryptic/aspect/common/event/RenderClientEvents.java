@@ -3,19 +3,15 @@ package dev.cryptic.aspect.common.event;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import dev.cryptic.aspect.Aspect;
-import dev.cryptic.aspect.common.misc.obj.SphereShieldModel;
+import dev.cryptic.aspect.registry.client.AspectObjModels;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderArmEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
-import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.joml.Vector3f;
@@ -119,7 +115,7 @@ public class RenderClientEvents {
         poseStack.pushPose();
         float totalScale = (float) ((Math.cos(time*0.1))*0.4);
         poseStack.scale(totalScale, totalScale, totalScale);
-        SphereShieldModel.INSTANCE.faces.forEach(face -> {
+        AspectObjModels.SphereShieldModel.faces.forEach(face -> {
             poseStack.pushPose();
             List<Vector3f> normals = face.normals();
             double scale = (1-Math.cos(time*0.1))*0.4;

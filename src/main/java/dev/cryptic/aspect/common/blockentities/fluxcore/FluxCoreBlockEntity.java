@@ -1,6 +1,6 @@
 package dev.cryptic.aspect.common.blockentities.fluxcore;
 
-import dev.cryptic.aspect.common.blockentities.ModBlockEntities;
+import dev.cryptic.aspect.registry.common.AspectBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -17,7 +17,7 @@ public class FluxCoreBlockEntity extends BlockEntity implements GeoBlockEntity {
     private int flux;
 
     public FluxCoreBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.FLUX_CORE.get(), pos, state);
+        super(AspectBlockEntities.FLUX_CORE.get(), pos, state);
     }
 
     public void tick() {

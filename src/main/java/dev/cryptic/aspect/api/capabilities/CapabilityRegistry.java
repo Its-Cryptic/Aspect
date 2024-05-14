@@ -3,7 +3,7 @@ package dev.cryptic.aspect.api.capabilities;
 import dev.cryptic.aspect.Aspect;
 import dev.cryptic.aspect.api.capabilities.aspect.AspectCapabilityAttacher;
 import dev.cryptic.aspect.api.capabilities.aspect.IAspectCapability;
-import dev.cryptic.aspect.api.registry.AttributeRegistry;
+import dev.cryptic.aspect.registry.common.AspectAttributes;
 import dev.cryptic.aspect.api.capabilities.flux.FluxCapabilityAttacher;
 import dev.cryptic.aspect.api.capabilities.flux.IFluxCapability;
 import dev.cryptic.aspect.api.capabilities.golem.SoulCapabilityAttacher;
@@ -110,7 +110,7 @@ public class CapabilityRegistry {
             if (event.phase == TickEvent.Phase.START && event.side == LogicalSide.SERVER) {
                 if (event.player.tickCount % UPDATE_INTERVAL == 0) {
                     getFlux(event.player).ifPresent(flux -> {
-                        float fluxRegen = (float) event.player.getAttribute(AttributeRegistry.FLUX_REGEN.get()).getValue();
+                        float fluxRegen = (float) event.player.getAttribute(AspectAttributes.FLUX_REGEN.get()).getValue();
                         flux.addFlux(fluxRegen);
                     });
                 }
@@ -130,7 +130,7 @@ public class CapabilityRegistry {
                         if (entity instanceof AbstractFluxEntity) {
                             LivingEntity livingEntity = (LivingEntity) entity;
                             getFlux(livingEntity).ifPresent(flux -> {
-                                float fluxRegen = (float) livingEntity.getAttribute(AttributeRegistry.FLUX_REGEN.get()).getValue();
+                                float fluxRegen = (float) livingEntity.getAttribute(AspectAttributes.FLUX_REGEN.get()).getValue();
                                 flux.addFlux(fluxRegen);
                             });
                         }

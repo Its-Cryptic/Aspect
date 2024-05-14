@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import dev.cryptic.aspect.Aspect;
 import dev.cryptic.aspect.client.synceddata.SyncedForgeCapData;
-import dev.cryptic.aspect.common.misc.obj.MonkeyModel;
+import dev.cryptic.aspect.registry.client.AspectObjModels;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
@@ -49,15 +49,6 @@ public class FluxUI {
         guiGraphics.fill(posX+1, (int) (posY + barHeight - (lerpedFluxPercentage * barHeight)), posX + barWidth - 1, posY + barHeight, 0xFF00FF00);
 
         guiGraphics.drawString(minecraft.font, fluxString, posX + barWidth + 2, posY + barHeight - (int)(lerpedFluxPercentage * barHeight) - 5, 0xFFFFFFFF);
-
-
-        PoseStack poseStack = guiGraphics.pose();
-        MultiBufferSource.BufferSource bufferSource = guiGraphics.bufferSource();
-        VertexConsumer vertexConsumer = bufferSource.getBuffer(LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE.applyAndCache(UV_TEST));
-        poseStack.pushPose();
-        poseStack.translate(0, 0, 0);
-        MonkeyModel.INSTANCE.renderModel(poseStack, vertexConsumer, 255);
-        poseStack.popPose();
 
     }
 }

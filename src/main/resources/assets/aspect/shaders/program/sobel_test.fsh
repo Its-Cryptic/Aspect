@@ -37,7 +37,7 @@ vec4 sobel(sampler2D s, vec3 color, bool isDepth) {
             intensity = linearizeDepth(depth);
         } else {
             vec3 sample = texture(s, texCoord + offset[i]).rgb;
-        intensity = (sample.r + sample.g + sample.b) / 3.0;
+            intensity = (sample.r + sample.g + sample.b) / 3.0;
         }
 
         if (i != 4) {

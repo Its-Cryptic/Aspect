@@ -16,6 +16,7 @@ uniform mat4 ModelViewMat;
 uniform mat4 ProjMat;
 uniform vec3 ChunkOffset;
 uniform int FogShape;
+uniform mat4 IViewRotMat;
 
 uniform mat4 InvViewMat;
 
@@ -24,6 +25,7 @@ out vec4 vertexColor;
 out vec2 texCoord0;
 out vec4 normal;
 out vec4 screenUV;
+out vec3 worldPosition;
 
 void main() {
     vec4 viewSpacePosition = ModelViewMat * vec4(Position, 1.0);
@@ -36,9 +38,10 @@ void main() {
     vertexColor = Color * minecraft_sample_lightmap(Sampler2, UV2);
     texCoord0 = UV0;
 
+    worldPosition = Position;
+
     normal = vec4(Normal, 0.0);
     vec3 transformedNormal = normalize(mat3(ModelViewMat) * Normal);
-    //normal = vec4(transformedNormal, 0.0);
 }
 
 

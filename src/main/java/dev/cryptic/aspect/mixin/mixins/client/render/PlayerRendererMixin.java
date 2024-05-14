@@ -2,14 +2,11 @@ package dev.cryptic.aspect.mixin.mixins.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import dev.cryptic.aspect.client.shader.AspectRenderType;
-import dev.cryptic.aspect.client.shader.ShaderRegistry;
-import dev.cryptic.aspect.common.misc.obj.IcoSphereModel;
-import dev.cryptic.aspect.common.misc.obj.SphereShieldModel;
+import dev.cryptic.aspect.registry.client.AspectRenderType;
+import dev.cryptic.aspect.registry.client.AspectCoreShaders;
+import dev.cryptic.aspect.registry.client.AspectObjModels;
 import dev.cryptic.aspect.test.RenderClientEvents;
 import dev.cryptic.encryptedapi.api.vfx.model.Face;
-import dev.cryptic.encryptedapi.api.vfx.model.models.MonkeyModel;
-import dev.cryptic.encryptedapi.api.vfx.sprite.VFXSpriteLibrary;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -26,7 +23,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry;
 import team.lodestar.lodestone.systems.rendering.shader.ExtendedShaderInstance;
 
 import java.util.List;
@@ -60,9 +56,9 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
 
         poseStack.pushPose();
         RenderClientEvents.mixinPoseStackTransformations(poseStack);
-        ExtendedShaderInstance shader = (ExtendedShaderInstance) ShaderRegistry.SHIELD.getInstance().get();
+        ExtendedShaderInstance shader = (ExtendedShaderInstance) AspectCoreShaders.SHIELD.getInstance().get();
         shader.safeGetUniform("lookVector").set(Minecraft.getInstance().gameRenderer.getMainCamera().getLookVector());
-        IcoSphereModel.INSTANCE.faces.forEach(face -> aspects$renderTriangleLines(face, poseStack, bufferSource.getBuffer(AspectRenderType.LINES), f));
+        AspectObjModels.IcoSphereModel.faces.forEach(face -> aspects$renderTriangleLines(face, poseStack, bufferSource.getBuffer(AspectRenderType.LINES), f));
         poseStack.scale(0.6f, 0.6f, 0.6f);
         //MonkeyModel.INSTANCE.faces.forEach(face -> aspects$renderTriangle(face, poseStack, bufferSource.getBuffer(AspectRenderType.TRIANGLE_SPHERE_RENDERTYPE.applyAndCache(VFXSpriteLibrary.Misc.UV_GRID)), f));
         poseStack.popPose();

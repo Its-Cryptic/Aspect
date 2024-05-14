@@ -1,6 +1,6 @@
 package dev.cryptic.aspect.common.entity.ability.flame.fireblast;
 
-import dev.cryptic.aspect.common.entity.ModEntityTypes;
+import dev.cryptic.aspect.registry.common.AspectEntities;
 import dev.cryptic.aspect.common.entity.ability.AbstractAbilityProjectile;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
@@ -16,7 +16,7 @@ public class FireBlastProjectile extends AbstractAbilityProjectile {
     }
 
     public FireBlastProjectile(LivingEntity shooter, Level level) {
-        super(ModEntityTypes.FIRE_BLAST.get(), level);
+        super(AspectEntities.FIRE_BLAST.get(), level);
         setOwner(shooter);
     }
 

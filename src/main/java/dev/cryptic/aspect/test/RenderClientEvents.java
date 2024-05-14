@@ -7,10 +7,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import dev.cryptic.aspect.Aspect;
-import dev.cryptic.aspect.client.shader.AspectRenderType;
-import dev.cryptic.aspect.client.shader.ShaderRegistry;
+import dev.cryptic.aspect.registry.client.AspectRenderType;
+import dev.cryptic.aspect.registry.client.AspectCoreShaders;
 import dev.cryptic.aspect.client.shader.RenderHelper;
-import dev.cryptic.aspect.common.misc.obj.IcoSphereHDModel;
+import dev.cryptic.aspect.registry.client.AspectObjModels;
 import dev.cryptic.aspect.mixin.ducks.IRenderTargetMixin;
 import dev.cryptic.encryptedapi.api.vfx.model.Face;
 import net.minecraft.client.Camera;
@@ -58,9 +58,9 @@ public class RenderClientEvents {
             float radius = 1.0f;
 
 
-            Matrix4f ModelViewMat = new Matrix4f(RenderHelper.getModelViewStack().last().pose());
+            Matrix4f ModelViewMat = new Matrix4f(RenderHelper.getViewStack().last().pose());
 
-            ExtendedShaderInstance shader = (ExtendedShaderInstance) ShaderRegistry.SHIELD.getInstance().get();
+            ExtendedShaderInstance shader = (ExtendedShaderInstance) AspectCoreShaders.DISSOLVE.getInstance().get();
             shader.safeGetUniform("lookVector").set(renderPos.subtract(cameraPos).normalize().toVector3f());
             //shader.safeGetUniform("lookVector").set(minecraft.options.getCameraType().isMirrored() ? camera.getLookVector().normalize() : camera.getLookVector().normalize().negate());
 
@@ -70,7 +70,7 @@ public class RenderClientEvents {
 
             shader.safeGetUniform("RenderTime").set(RenderHelper.getRenderTime());
             shader.safeGetUniform("ModelViewMatrix").set(ModelViewMat);
-            shader.safeGetUniform("InvViewMat").set(new Matrix4f(RenderHelper.modelViewStack.last().pose()).invert());
+            shader.safeGetUniform("InvViewMat").set(new Matrix4f(RenderHelper.viewStack.last().pose()).invert());
 
             copyBuffers();
             shader.setSampler("DepthBuffer", tempRenderTarget.getDepthTextureId());
@@ -79,8 +79,8 @@ public class RenderClientEvents {
             poseStack.pushPose();
             poseStack.translate(relativePos.x, relativePos.y, relativePos.z);
             poseStack.scale(radius, radius, radius);
-            for (Face face : IcoSphereHDModel.INSTANCE.faces) {
-                VertexConsumer vertexConsumer = RenderHelper.getBufferSource().getBuffer(AspectRenderType.TESTING);
+            for (Face face : AspectObjModels.IcoSphereHDModel.faces) {
+                VertexConsumer vertexConsumer = RenderHelper.getBufferSource().getBuffer(AspectRenderType.DISSOLVE);
 
                 renderTriangle(face, poseStack, vertexConsumer, OverlayTexture.NO_OVERLAY);
             }
@@ -106,7 +106,7 @@ public class RenderClientEvents {
                     .color(255, 255, 255, 255)
                     .uv(uv.x, -uv.y)
                     .uv2(packedLight)
-                    .normal(normal.x(), normal.y(), normal.z())
+                    .normal(poseStack.last().normal(), normal.x(), normal.y(), normal.z())
                     .overlayCoords(OverlayTexture.NO_OVERLAY)
                     .endVertex();
         }

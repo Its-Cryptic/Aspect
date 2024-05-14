@@ -1,6 +1,6 @@
 package dev.cryptic.aspect.common.entity.fluxentity.golem.threewisemonkeys;
 
-import dev.cryptic.aspect.api.registry.AttributeRegistry;
+import dev.cryptic.aspect.registry.common.AspectAttributes;
 import dev.cryptic.aspect.common.entity.fluxentity.AbstractFluxEntity;
 import dev.cryptic.aspect.common.entity.fluxentity.golem.AbstractGolem;
 import net.minecraft.core.BlockPos;
@@ -49,7 +49,7 @@ public class Mizaru extends AbstractGolem {
                 .add(Attributes.ATTACK_SPEED, 1.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.4f)
 
-                .add(AttributeRegistry.FLUX_REGEN.get(), 2.0f)
+                .add(AspectAttributes.FLUX_REGEN.get(), 2.0f)
                 .build();
     }
 

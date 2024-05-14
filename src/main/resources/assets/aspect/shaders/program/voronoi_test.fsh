@@ -37,17 +37,6 @@ void main() {
     vec3 sphereCenter = vec3(16, -60, -18);
     float radius = 5.0;
 
-    vec2 uv = texCoord;
-    /// Fisheye Distortion ///
-
-    float d=length(uv);
-    float z = sqrt(1.0 - d * d);
-    float r = atan(d, z) / 3.14159;
-    float phi = atan(uv.y, uv.x);
-
-    uv = vec2(r*cos(phi),r*sin(phi)+.5);
-
-    /////////////////////////
     vec4 diffuseColor = texture(DiffuseSampler, texCoord);
     float mainDepth = texture(MainDepthSampler, texCoord).r;
     float cutoutDepth = texture(CutoutDepthSampler, texCoord).r;
@@ -75,12 +64,21 @@ abs((worldPos.x-sphereCenter.x)-(worldPos.z-sphereCenter.z))
         fragColor = vec4(0.0, 0.0, 0.0, 1.0);
     } else {
         if (dist <= radius) {
-        fragColor = mix(diffuseColor, voronoiTexture, voronoiTexture.a);
+            fragColor = mix(diffuseColor, voronoiTexture, voronoiTexture.a);
         } else {
-        fragColor = diffuseColor;
+            fragColor = diffuseColor;
         }
     }
 
+//    if (dist <= radius + 0.0625 && dist >= radius - 0.0625) {
+//        fragColor = vec4(0.0, 0.0, 0.0, 1.0);
+//    } else {
+//        if (dist <= radius) {
+//            fragColor = mix(diffuseColor, voronoiTexture, voronoiTexture.a);
+//        } else {
+//            fragColor = diffuseColor;
+//        }
+//    }
 
     //fragColor = mix(diffuseColor*vec4(vec3((radius-dist)/radius),1.0), voronoiTexture, voronoiTexture.a);
 }

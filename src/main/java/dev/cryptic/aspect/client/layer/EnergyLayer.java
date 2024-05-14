@@ -2,6 +2,8 @@ package dev.cryptic.aspect.client.layer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.blaze3d.vertex.VertexFormat;
+import dev.cryptic.aspect.registry.client.AspectRenderType;
 import dev.cryptic.encryptedapi.api.vfx.sprite.VFXSpriteLibrary;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
@@ -48,7 +50,7 @@ public class EnergyLayer {
     }
 
     private static RenderType getRenderType(ResourceLocation texture, float f) {
-        return LodestoneRenderTypeRegistry.SCROLLING_TEXTURE.applyAndCache(texture);
+        return AspectRenderType.dissolve(VertexFormat.Mode.QUADS);
     }
 
     private static boolean shouldRender(LivingEntity entity, Long shouldRenderFlag) {

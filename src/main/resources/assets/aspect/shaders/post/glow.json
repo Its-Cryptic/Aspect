@@ -1,0 +1,41 @@
+{
+    "targets": [
+        "final",
+        "depthMain",
+        "depthCutout",
+        "depthBlockEntity",
+        "depthTranslucent"
+    ],
+    "passes": [
+        {
+            "name": "aspect:multi/glow",
+            "intarget": "minecraft:main",
+            "outtarget": "final",
+            "auxtargets": [
+                {
+                    "name": "MainDepthSampler",
+                    "id": "depthMain:depth"
+                },
+                {
+                    "name": "CutoutDepthSampler",
+                    "id": "depthCutout:depth"
+                },
+                {
+                    "name": "BEDepthSampler",
+                    "id": "depthBlockEntity:depth"
+                },
+                {
+                    "name": "TranslucentDepthSampler",
+                    "id": "depthTranslucent:depth"
+                }
+            ],
+            "uniforms": [
+            ]
+        },
+        {
+            "name": "blit",
+            "intarget": "final",
+            "outtarget": "minecraft:main"
+        }
+    ]
+}

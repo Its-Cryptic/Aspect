@@ -18,19 +18,22 @@ import java.util.ArrayList;
 import java.util.function.Supplier;
 
 public class AspectRegistry {
-    public static final ResourceKey<Registry<AspectType>> ASPECT_REGISTRY_KEY = ResourceKey.createRegistryKey(new ResourceLocation(Aspect.MODID, "aspects"));
-    private static final DeferredRegister<AspectType> ASPECTS = DeferredRegister.create(ASPECT_REGISTRY_KEY, Aspect.MODID);
-    public static final Supplier<IForgeRegistry<AspectType>> REGISTRY = ASPECTS.makeRegistry(() -> new RegistryBuilder<AspectType>().disableSaving().disableOverrides());
+    public static final ResourceKey<Registry<AspectType>> ASPECT_REGISTRY_KEY = ResourceKey.createRegistryKey(Aspect.id("aspects"));
+    public static final DeferredRegister<AspectType> ASPECTS = DeferredRegister.create(ASPECT_REGISTRY_KEY, Aspect.MODID);
+    public static final Supplier<IForgeRegistry<AspectType>> REGISTRY = ASPECTS.makeRegistry(() -> new RegistryBuilder<AspectType>()
+                    .disableSaving()
+                    .disableOverrides()
+                    .setName(ASPECT_REGISTRY_KEY.location())
+    );
 
     public static int id = 0;
 
     public static AspectType getAspectFromId(int id) {
-        for (RegistryObject<AspectType> aspectType : ASPECTS.getEntries()) {
-            if (aspectType.get().getId() == id) {
-                return aspectType.get();
-            }
-        }
-        return null;
+        return ASPECTS.getEntries().stream()
+                .map(RegistryObject::get)
+                .filter(aspectType -> aspectType.getId() == id)
+                .findFirst()
+                .orElse(null);
     }
 
     public static final RegistryObject<AspectType> NONE = registerAspect(new AspectType(
@@ -67,13 +70,13 @@ public class AspectRegistry {
             }
     ));
 
+    private static RegistryObject<AspectType> registerAspect(AspectType aspect) {
+        return ASPECTS.register(aspect.getName(), () -> aspect);
+    }
+
     public static void register(IEventBus eventBus) {
         ASPECTS.register(eventBus);
         //eventBus.register(AspectRegistry::clientSetup);
-    }
-
-    private static RegistryObject<AspectType> registerAspect(AspectType aspect) {
-        return ASPECTS.register(aspect.getName(), () -> aspect);
     }
 
     public static ArrayList<AspectType> getAspects() {

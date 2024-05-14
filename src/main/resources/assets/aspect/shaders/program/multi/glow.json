@@ -1,0 +1,34 @@
+{
+  "blend": {
+    "func": "add",
+    "srcrgb": "srcalpha",
+    "dstrgb": "1-srcalpha"
+  },
+  "vertex": "aspect:texel_blit",
+  "fragment": "aspect:multi/glow",
+  "attributes": [ "Position" ],
+  "samplers": [
+    { "name": "DiffuseSampler" },
+    { "name": "MainDepthSampler" },
+    { "name": "CutoutDepthSampler" },
+    { "name": "BEDepthSampler" },
+    { "name": "TranslucentDepthSampler" },
+
+    { "name": "BEDiffuseSampler" },
+    { "name": "TDiffuseSampler" }
+
+  ],
+  "uniforms": [
+    { "name": "DataBuffer", "type": "int", "count": 1, "values": [ 0 ] },
+    { "name": "DataSize", "type": "int", "count": 1, "values": [ 0 ] },
+    { "name": "InstanceCount", "type": "int", "count": 1, "values": [ 0 ] },
+    { "name": "ProjMat", "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+    { "name": "InvModelViewMat", "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+    { "name": "invProjMat", "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+    { "name": "cameraPos", "type": "float", "count": 3,  "values": [ 0.0, 0.0, 0.0 ] },
+    { "name": "time", "type": "float", "count": 1,  "values": [ 0.0 ] },
+    { "name": "InSize",      "type": "float",     "count": 2,  "values": [ 1.0, 1.0 ] },
+    { "name": "OutSize",     "type": "float",     "count": 2,  "values": [ 1.0, 1.0 ] }
+  ]
+
+}

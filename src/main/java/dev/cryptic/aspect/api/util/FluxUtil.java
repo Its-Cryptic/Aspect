@@ -2,7 +2,7 @@ package dev.cryptic.aspect.api.util;
 
 import dev.cryptic.aspect.api.capabilities.CapabilityRegistry;
 import dev.cryptic.aspect.api.capabilities.flux.IFluxCapability;
-import dev.cryptic.aspect.api.registry.AttributeRegistry;
+import dev.cryptic.aspect.registry.common.AspectAttributes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.util.LazyOptional;
@@ -68,6 +68,6 @@ public class FluxUtil {
     }
 
     public static double getFluxRegen(ServerPlayer player) {
-        return Objects.requireNonNull(player.getAttribute(AttributeRegistry.FLUX_REGEN.get())).getValue();
+        return Objects.requireNonNull(player.getAttribute(AspectAttributes.FLUX_REGEN.get())).getValue();
     }
 }

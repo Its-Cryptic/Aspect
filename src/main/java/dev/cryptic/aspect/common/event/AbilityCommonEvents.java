@@ -2,7 +2,7 @@ package dev.cryptic.aspect.common.event;
 
 import dev.cryptic.aspect.Aspect;
 import dev.cryptic.aspect.api.util.ClassUtil;
-import dev.cryptic.aspect.api.registry.KeyBinding;
+import dev.cryptic.aspect.registry.client.AspectKeybinds;
 import net.minecraft.client.KeyMapping;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -27,17 +27,5 @@ public class AbilityCommonEvents {
     - System for determining which casting method a player is using (Single Tap, Double Tap, Hold)
      */
 
-    @SubscribeEvent
-    public static void onKeyInput(InputEvent.Key event) {
-        // Filter for fields of type KeyMapping
-        Arrays.stream(ClassUtil.getDeclaredFieldsOfType(KeyBinding.AbilityKeyBinding.class, KeyMapping.class)).forEach(field -> {
-            try {
-                KeyMapping keyMapping = (KeyMapping) field.get(null);
-
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        });
-    }
 
 }

@@ -10,27 +10,38 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 public class RenderHelper {
-    public static PoseStack modelViewStack;
+    public static PoseStack viewStack;
 
-    public static void updateModelViewStack(PoseStack poseStack) {
-        RenderHelper.modelViewStack = poseStack;
+    public static void updateViewStack(PoseStack poseStack) {
+        RenderHelper.viewStack = poseStack;
     }
-    public static PoseStack getModelViewStack() {
-        return modelViewStack;
+    public static PoseStack getViewStack() {
+        return viewStack;
     }
 
     public static void applyExtraUniforms(PostChain postChain) {
-        Matrix4f ModelViewMat = new Matrix4f(RenderHelper.getModelViewStack().last().pose());
-        Matrix4f InvModelViewMat = (new Matrix4f(RenderHelper.getModelViewStack().last().pose())).invert();
+        Matrix4f ViewMat = new Matrix4f(RenderHelper.getViewStack().last().pose());
+        Matrix4f InvViewMat = (new Matrix4f(RenderHelper.getViewStack().last().pose())).invert();
         Vector3f playerPos = Minecraft.getInstance().player.position().toVector3f();
         float time = RenderHelper.getRenderTime();
         for (PostPass pass : postChain.passes) {
             EffectInstance shader = pass.getEffect();
-            shader.safeGetUniform("ModelViewMat").set(ModelViewMat);
-            shader.safeGetUniform("InvModelViewMat").set(InvModelViewMat);
+            shader.safeGetUniform("ModelViewMat").set(ViewMat);
+            shader.safeGetUniform("InvModelViewMat").set(InvViewMat);
             shader.safeGetUniform("playerPos").set(playerPos);
             shader.safeGetUniform("time").set(time);
         }
+    }
+
+    public static void applyExtraUniforms(EffectInstance shader) {
+        Matrix4f ViewMat = new Matrix4f(RenderHelper.getViewStack().last().pose());
+        Matrix4f InvViewMat = (new Matrix4f(RenderHelper.getViewStack().last().pose())).invert();
+        Vector3f playerPos = Minecraft.getInstance().player.position().toVector3f();
+        float time = RenderHelper.getRenderTime();
+        shader.safeGetUniform("ModelViewMat").set(ViewMat);
+        shader.safeGetUniform("InvModelViewMat").set(InvViewMat);
+        shader.safeGetUniform("playerPos").set(playerPos);
+        shader.safeGetUniform("time").set(time);
     }
 
     public static float getRenderTime() {

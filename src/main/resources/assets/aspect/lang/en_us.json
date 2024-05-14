@@ -44,6 +44,12 @@
 
   "note.aspect.mizaru_spawner": "Summons Mizaru",
   "note.aspect.kikazaru_spawner": "Summons Kikazaru",
-  "note.aspect.iwazaru_spawner": "Summons Iwazaru"
+  "note.aspect.iwazaru_spawner": "Summons Iwazaru",
+
+  "argument.aspect.id.invalid": "Unknown Aspect '%s'",
+
+  "aspect.commands.setaspect.success": "Successfully set %s's aspect to %s!",
+  "aspect.commands.getaspect.success": "%s's aspect is %s",
+  "aspect.commands.worldevent.success": "Spawned %s world event at %s, %s, %s"
 
 }

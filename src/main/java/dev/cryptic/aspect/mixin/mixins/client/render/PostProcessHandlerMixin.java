@@ -1,6 +1,7 @@
 package dev.cryptic.aspect.mixin.mixins.client.render;
 
-import dev.cryptic.aspect.client.shader.lodestone.post.ExtendedPostProcessor;
+import dev.cryptic.aspect.client.shader.lodestone.post.multi.ExtendedMultiInstancePostProcessor;
+import dev.cryptic.aspect.client.shader.lodestone.post.single.ExtendedPostProcessor;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.spongepowered.asm.mixin.*;
@@ -28,6 +29,24 @@ public class PostProcessHandlerMixin {
                     .filter(ExtendedPostProcessor.class::isInstance)
                     .map(ExtendedPostProcessor.class::cast)
                     .forEach(ExtendedPostProcessor::copyExtraDepth);
+            instances.stream()
+                    .filter(ExtendedMultiInstancePostProcessor.class::isInstance)
+                    .map(ExtendedMultiInstancePostProcessor.class::cast)
+                    .forEach(ExtendedMultiInstancePostProcessor::copyCutoutDepth);
+        }
+        if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_BLOCK_ENTITIES) {
+            // Copy Extra Depth Buffer after block entities for each extended post processor
+            instances.stream()
+                    .filter(ExtendedMultiInstancePostProcessor.class::isInstance)
+                    .map(ExtendedMultiInstancePostProcessor.class::cast)
+                    .forEach(ExtendedMultiInstancePostProcessor::copyBlockEntityDepth);
+        }
+        if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS) {
+            // Copy Extra Depth Buffer after translucent blocks for each extended post processor
+            instances.stream()
+                    .filter(ExtendedMultiInstancePostProcessor.class::isInstance)
+                    .map(ExtendedMultiInstancePostProcessor.class::cast)
+                    .forEach(ExtendedMultiInstancePostProcessor::copyTransparent);
         }
         if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_LEVEL) {
             copyDepthBuffer();
