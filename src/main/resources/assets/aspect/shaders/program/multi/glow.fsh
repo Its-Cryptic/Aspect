@@ -17,7 +17,7 @@ uniform samplerBuffer DataBuffer;
 uniform int InstanceCount;
 uniform int DataSize;
 
-uniform mat4 InvModelViewMat;
+uniform mat4 invViewMat;
 uniform mat4 invProjMat;
 uniform vec3 cameraPos;
 uniform float time;
@@ -45,11 +45,11 @@ void main() {
     float beDepth = getDepth(BEDepthSampler, texCoord);
     float translucentDepth = getDepth(TranslucentDepthSampler, texCoord);
 
-    vec3 worldPosMain = worldPos(mainDepth, texCoord, invProjMat, InvModelViewMat, cameraPos);
-    vec3 normalMain = ReconstructNormal(MainDepthSampler, texCoord, oneTexel, invProjMat, InvModelViewMat, cameraPos);
+    vec3 worldPosMain = worldPos(mainDepth, texCoord, invProjMat, invViewMat, cameraPos);
+    vec3 normalMain = ReconstructNormal(MainDepthSampler, texCoord, oneTexel, invProjMat, invViewMat, cameraPos);
 
-    vec3 worldPosBE = worldPos(beDepth, texCoord, invProjMat, InvModelViewMat, cameraPos);
-    vec3 normalBE = ReconstructNormal(BEDepthSampler, texCoord, oneTexel, invProjMat, InvModelViewMat, cameraPos);
+    vec3 worldPosBE = worldPos(beDepth, texCoord, invProjMat, invViewMat, cameraPos);
+    vec3 normalBE = ReconstructNormal(BEDepthSampler, texCoord, oneTexel, invProjMat, invViewMat, cameraPos);
 
     bool isCutout = cutoutDepth > mainDepth;
 

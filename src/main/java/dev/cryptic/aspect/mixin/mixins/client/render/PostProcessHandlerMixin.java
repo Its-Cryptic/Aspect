@@ -48,9 +48,13 @@ public class PostProcessHandlerMixin {
                     .map(ExtendedMultiInstancePostProcessor.class::cast)
                     .forEach(ExtendedMultiInstancePostProcessor::copyTransparent);
         }
+        if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_SOLID_BLOCKS) {
+            // Copies Correct PoseStack for each post processor
+            PostProcessor.viewModelStack = event.getPoseStack();
+        }
         if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_LEVEL) {
             copyDepthBuffer();
-            PostProcessor.viewModelStack = event.getPoseStack();
+            //PostProcessor.viewModelStack = event.getPoseStack();
             instances.forEach(PostProcessor::applyPostProcess);
             didCopyDepth = false;
         }
