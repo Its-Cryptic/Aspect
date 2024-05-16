@@ -73,7 +73,7 @@ public class RenderClientEvents {
             Vec3 relativePos = renderPos.subtract(cameraPos);
             poseStack.pushPose();
             poseStack.translate(relativePos.x, relativePos.y, relativePos.z);
-            VertexConsumer vertexConsumer = RenderHandler.DELAYED_RENDER.getBuffer(LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE.applyAndCache(SHIELD));
+            //VertexConsumer vertexConsumer = RenderHandler.DELAYED_RENDER.getBuffer(LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE.applyAndCache(SHIELD));
             //renderShield(poseStack, vertexConsumer, event.getRenderTick() + partialTick);
             poseStack.popPose();
         }
@@ -82,20 +82,18 @@ public class RenderClientEvents {
     public static void renderQuad(PoseStack poseStack, float partialTicks, float size) {
         float height = 0.0f;
         float width = 1.5f;
-        VertexConsumer textureConsumer = RenderHandler.DELAYED_RENDER.getBuffer(LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE.applyAndCache(UV_TEST));
         Vector3f[] positions = new Vector3f[] {
                 new Vector3f(-width, height, width),
                 new Vector3f(width, height, width),
                 new Vector3f(width, height, -width),
                 new Vector3f(-width, height, -width)
         };
-        VFXBuilders.WorldVFXBuilder builder = VFXBuilders.createWorld().setPosColorTexLightmapDefaultFormat();
+        VFXBuilders.WorldVFXBuilder builder = VFXBuilders.createWorld().setRenderType(LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE.applyAndCache(UV_TEST));
 
         poseStack.pushPose();
 
         poseStack.translate(0f, 0.001f, 0f);
-        builder.renderQuad(textureConsumer, poseStack, positions, size);
-        builder.setPosColorLightmapDefaultFormat();
+        builder.renderQuad(poseStack, positions, size);
 
         poseStack.popPose();
     }
@@ -106,7 +104,6 @@ public class RenderClientEvents {
         Minecraft minecraft = Minecraft.getInstance();
         LocalPlayer player = minecraft.player;
         PoseStack poseStack = event.getPoseStack();
-        VertexConsumer vertexConsumer = RenderHandler.DELAYED_RENDER.getBuffer(LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE.applyAndCache(UV_TEST));
 
     }
 

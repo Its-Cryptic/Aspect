@@ -86,9 +86,8 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
     public void renderQuad(PoseStack poseStack, float partialTicks) {
         float height = 0.0f;
         float width = 1.5f;
-        VertexConsumer textureConsumer = RenderHandler.DELAYED_RENDER.getBuffer(LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE.applyAndCache(UV_TEST));
         Vector3f[] positions = new Vector3f[]{new Vector3f(-width, height, width), new Vector3f(width, height, width), new Vector3f(width, height, -width), new Vector3f(-width, height, -width)};
-        VFXBuilders.WorldVFXBuilder builder = VFXBuilders.createWorld().setPosColorTexLightmapDefaultFormat();
+        VFXBuilders.WorldVFXBuilder builder = VFXBuilders.createWorld().setRenderType(LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE.applyAndCache(UV_TEST));
 
         poseStack.pushPose();
 
@@ -104,14 +103,12 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
 
         poseStack.mulPose(rotationQuaternion);
         poseStack.translate(0f, 0.001f, 0f);
-        builder.renderQuad(textureConsumer, poseStack, positions, 1f);
+        builder.renderQuad(poseStack, positions, 1f);
 
         // Render again but 180 degrees rotated to fix backface culling now broken :(
 //        Quaternion additionalRotation = new Quaternion(rotationAxis, 180.0f, true);
 //        poseStack.mulPose(additionalRotation);
 //        builder.renderQuad(textureConsumer, poseStack, positions, 1f);
-
-        builder.setPosColorLightmapDefaultFormat();
 
         poseStack.popPose();
     }
