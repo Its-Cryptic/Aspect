@@ -1,0 +1,1 @@
+Aspects are where using [[Flux]] gets interesting. Players can actively shape their soul to produce flux with special properties, most commonly manifesting as natural phenomena and elements.

@@ -117,7 +117,7 @@ public class AspectRenderType extends RenderType {
             LodestoneRenderTypeRegistry.createGenericRenderType("aspect:triangle_sphere_rendertype", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.TRIANGLES, LodestoneRenderTypeRegistry.builder()
                     .setShaderState(new RenderStateShard.ShaderStateShard(GameRenderer::getPositionColorTexLightmapShader))
                     .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
-                    .setTextureState(texture)
+                    .setTextureState(texture.get())
                     .setCullState(RenderStateShard.NO_CULL)
             )
     );

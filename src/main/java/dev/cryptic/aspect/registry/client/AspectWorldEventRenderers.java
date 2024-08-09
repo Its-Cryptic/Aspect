@@ -2,6 +2,7 @@ package dev.cryptic.aspect.registry.client;
 
 import com.mojang.datafixers.util.Pair;
 import dev.cryptic.aspect.client.worldevent.LavaWorldEventRenderer;
+import dev.cryptic.aspect.client.worldevent.ability.StormWorldEventRenderer;
 import dev.cryptic.aspect.registry.common.AspectWorldEventTypes;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import team.lodestar.lodestone.registry.client.LodestoneWorldEventRendererRegistry;
@@ -12,16 +13,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AspectWorldEventRenderers {
-    private static final List<Pair<WorldEventType, WorldEventRenderer<?>>> renderers = new ArrayList<>();
-    public static final Pair<WorldEventType, WorldEventRenderer<?>> LAVA_FISSURE_RENDERER = register(AspectWorldEventTypes.LAVA, new LavaWorldEventRenderer());
+    private static final List<WorldEventRenderHolder> renderers = new ArrayList<>();
+    public static final WorldEventRenderHolder LAVA_FISSURE_RENDERER = register(AspectWorldEventTypes.LAVA, new LavaWorldEventRenderer());
+    public static final WorldEventRenderHolder STORM_RENDERER = register(AspectWorldEventTypes.STORM, new StormWorldEventRenderer());
 
-
-    private static Pair<WorldEventType, WorldEventRenderer<?>> register(WorldEventType type, WorldEventRenderer<?> renderer) {
-        Pair<WorldEventType, WorldEventRenderer<?>> pair = new Pair<>(type, renderer);
+    private static WorldEventRenderHolder register(WorldEventType type, WorldEventRenderer<?> renderer) {
+        WorldEventRenderHolder pair = new WorldEventRenderHolder(type, renderer);
         renderers.add(pair);
         return pair;
     }
     public static void init(FMLClientSetupEvent event) {
-        renderers.forEach(pair -> LodestoneWorldEventRendererRegistry.registerRenderer(pair.getFirst(), pair.getSecond()));
+        renderers.forEach(pair -> LodestoneWorldEventRendererRegistry.registerRenderer(pair.type, pair.renderer));
+    }
+
+    public record WorldEventRenderHolder(WorldEventType type, WorldEventRenderer<?> renderer) {
     }
 }

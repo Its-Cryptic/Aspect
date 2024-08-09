@@ -37,7 +37,7 @@ public class LavaWorldEventRenderer extends WorldEventRenderer<LavaWorldEvent> {
         float renderTime = instance.tickCount + partialTicks;
         int duration = instance.duration;
         float f = 0.5f*(1.0f - Mth.cos((2.0f*Mth.PI/duration)*renderTime));
-        Aspect.LOGGER.info(""+renderTime/duration);
+        //Aspect.LOGGER.info(""+renderTime/duration);
 
         poseStack.pushPose();
         poseStack.translate(instance.position.x, instance.position.y, instance.position.z);

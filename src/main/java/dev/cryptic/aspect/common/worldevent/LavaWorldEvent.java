@@ -10,7 +10,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
 import team.lodestar.lodestone.systems.worldevent.WorldEventInstance;
-import team.lodestar.lodestone.systems.worldevent.WorldEventType;
 
 public class LavaWorldEvent extends WorldEventInstance {
 
@@ -46,17 +45,16 @@ public class LavaWorldEvent extends WorldEventInstance {
 
     @Override
     public WorldEventInstance deserializeNBT(CompoundTag tag) {
-        LavaWorldEvent lavaWorldEvent = new LavaWorldEvent(
-                new Vec3(tag.getDouble("x"), tag.getDouble("y"), tag.getDouble("z")),
-                tag.getInt("radius"),
-                tag.getInt("duration")
-        );
-        lavaWorldEvent.tickCount = tag.getInt("tickCount");
-        return lavaWorldEvent;
+        this.position = new Vec3(tag.getDouble("x"), tag.getDouble("y"), tag.getDouble("z"));
+        this.radius = tag.getInt("radius");
+        this.duration = tag.getInt("duration");
+        this.tickCount = tag.getInt("tickCount");
+        return super.deserializeNBT(tag);
     }
 
     @Override
     public void tick(Level level) {
+        Aspect.LOGGER.info("Level: {}, UUID: {}", level, uuid);
 
         if (level instanceof ClientLevel clientLevel) {
             if (lightingFx == null) {

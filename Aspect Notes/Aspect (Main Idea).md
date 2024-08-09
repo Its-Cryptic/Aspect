@@ -1,0 +1,1 @@
+Aspect is a magic mod with a huge emphasis on exploration into the unknown. The player will learn how to move their soul out of their own body to traverse the fabric of reality and explore inhabited planets across the universe.

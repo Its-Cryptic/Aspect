@@ -2,6 +2,7 @@ package dev.cryptic.aspect.common.entity.ability.flame.fireblast;
 
 import dev.cryptic.aspect.registry.common.AspectEntities;
 import dev.cryptic.aspect.common.entity.ability.AbstractAbilityProjectile;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -49,6 +50,11 @@ public class FireBlastProjectile extends AbstractAbilityProjectile {
 
         super.onHit(hitResult);
         this.discard();
+    }
+
+    @Override
+    protected void readAdditionalSaveData(CompoundTag pCompound) {
+        super.readAdditionalSaveData(pCompound);
     }
 
     public int getAge(){

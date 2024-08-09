@@ -1,0 +1,1 @@
+Flux is the energy radiated by the [[Soul]].  Every soul including those with physical
