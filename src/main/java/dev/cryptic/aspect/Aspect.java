@@ -1,6 +1,7 @@
 package dev.cryptic.aspect;
 
 import com.mojang.logging.LogUtils;
+import dev.cryptic.aspect.api.registry.AspectRegistryFromAddon;
 import dev.cryptic.aspect.registry.client.AspectParticles;
 import dev.cryptic.aspect.registry.client.AspectWorldEventRenderers;
 import dev.cryptic.aspect.registry.common.*;
@@ -31,7 +32,6 @@ import org.slf4j.Logger;
 import software.bernie.geckolib.GeckoLib;
 
 
-// The value here should match an entry in the META-INF/mods.toml file
 @Mod(Aspect.MODID)
 public class Aspect {
     public static final String MODID = "aspect";
@@ -39,6 +39,7 @@ public class Aspect {
 
     public Aspect() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
 
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::sendImc);
@@ -52,6 +53,7 @@ public class Aspect {
 
         AbilityRegistry.register(modEventBus);
         AspectRegistry.register(modEventBus);
+        AspectRegistryFromAddon.register(modEventBus);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AspectCommonConfig.SPEC, "aspect-common.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AspectClientConfig.SPEC, "aspect-client.toml");

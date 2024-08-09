@@ -67,12 +67,12 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
 
         // Max packed light is 255
         //this.renderQuad(poseStack, partialTick);
-        VertexConsumer vertexConsumer = bufferSource.getBuffer(LodestoneRenderTypeRegistry.TEXTURE.applyAndCache(EMOJI));
+        //VertexConsumer vertexConsumer = bufferSource.getBuffer(LodestoneRenderTypeRegistry.TEXTURE.applyAndCache(EMOJI));
         //this.renderIsoSphere(poseStack, entity.level().getGameTime() + partialTick, vertexConsumer);
         poseStack.pushPose();
         poseStack.translate(0.0, 3, 0.0);
         poseStack.scale(0.5f, 0.5f, 0.5f);
-        AspectObjModels.IcoSphereModel.renderModel(poseStack, vertexConsumer, 255);
+        //AspectObjModels.IcoSphereModel.renderModel(poseStack, vertexConsumer, 255);
         poseStack.popPose();
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
@@ -87,7 +87,7 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
         float height = 0.0f;
         float width = 1.5f;
         Vector3f[] positions = new Vector3f[]{new Vector3f(-width, height, width), new Vector3f(width, height, width), new Vector3f(width, height, -width), new Vector3f(-width, height, -width)};
-        VFXBuilders.WorldVFXBuilder builder = VFXBuilders.createWorld().setRenderType(LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE.applyAndCache(UV_TEST));
+        //VFXBuilders.WorldVFXBuilder builder = VFXBuilders.createWorld().setRenderType(LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE.applyAndCache(UV_TEST));
 
         poseStack.pushPose();
 
@@ -103,7 +103,7 @@ public class MizaruRenderer extends GeoEntityRenderer<Mizaru> {
 
         poseStack.mulPose(rotationQuaternion);
         poseStack.translate(0f, 0.001f, 0f);
-        builder.renderQuad(poseStack, positions, 1f);
+        //builder.renderQuad(poseStack, positions, 1f);
 
         // Render again but 180 degrees rotated to fix backface culling now broken :(
 //        Quaternion additionalRotation = new Quaternion(rotationAxis, 180.0f, true);

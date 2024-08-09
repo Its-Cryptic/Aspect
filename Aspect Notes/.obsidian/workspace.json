@@ -1,0 +1,180 @@
+{
+  "main": {
+    "id": "812ac68124352d47",
+    "type": "split",
+    "children": [
+      {
+        "id": "372f87de6009299b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "28184ea9dcdc7d60",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Magic System/Flux.md",
+                "mode": "source",
+                "backlinks": true,
+                "source": false
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "4e5385164ed02ddb",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "59d9e95fa09fbf0b",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "graph",
+              "state": {},
+              "pinned": true
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "cb795aed7507d8b1",
+    "type": "split",
+    "children": [
+      {
+        "id": "19ae111b81e22511",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "175edfde7e313de3",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "fe48462af4111999",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "3a3681b1ecffca6b",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "b90065a7f88486a5",
+    "type": "split",
+    "children": [
+      {
+        "id": "052d661851c86ef0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "00579aa5b7619bc2",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Magic System/Flux.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "7b0756fbcacc5e67",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Magic System/Flux.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "22aabc78d68805f7",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "c31a4595f7a16251",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Magic System/Flux.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "28184ea9dcdc7d60",
+  "lastOpenFiles": [
+    "Magic System/Soul.md",
+    "video.mp4",
+    "Magic System/Flux.md",
+    "Magic System/Golemancy.md",
+    "flingburger.mp4",
+    "Magic System/Aspects.md",
+    "Magic System",
+    "Untitled.canvas",
+    "Aspect (Main Idea).md",
+    "Untitled.md",
+    "Magic System.md"
+  ]
+}

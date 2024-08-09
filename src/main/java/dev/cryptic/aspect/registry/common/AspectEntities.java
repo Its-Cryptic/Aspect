@@ -29,6 +29,7 @@ public class AspectEntities {
 
     public static final RegistryObject<EntityType<Mizaru>> MIZARU = ENTITY_TYPES.register("mizaru", () ->
             EntityType.Builder.of(Mizaru::new, MobCategory.MONSTER)
+                    .
                     .sized(0.7F, 2.0F)
                     .build(Aspect.id("mizaru").toString())
     );

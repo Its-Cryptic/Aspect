@@ -88,12 +88,12 @@ public class RenderClientEvents {
                 new Vector3f(width, height, -width),
                 new Vector3f(-width, height, -width)
         };
-        VFXBuilders.WorldVFXBuilder builder = VFXBuilders.createWorld().setRenderType(LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE.applyAndCache(UV_TEST));
+        //VFXBuilders.WorldVFXBuilder builder = VFXBuilders.createWorld().setRenderType(LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE.applyAndCache(UV_TEST));
 
         poseStack.pushPose();
 
         poseStack.translate(0f, 0.001f, 0f);
-        builder.renderQuad(poseStack, positions, size);
+        //builder.renderQuad(poseStack, positions, size);
 
         poseStack.popPose();
     }

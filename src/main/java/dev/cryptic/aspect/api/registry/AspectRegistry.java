@@ -20,11 +20,7 @@ import java.util.function.Supplier;
 public class AspectRegistry {
     public static final ResourceKey<Registry<AspectType>> ASPECT_REGISTRY_KEY = ResourceKey.createRegistryKey(Aspect.id("aspects"));
     public static final DeferredRegister<AspectType> ASPECTS = DeferredRegister.create(ASPECT_REGISTRY_KEY, Aspect.MODID);
-    public static final Supplier<IForgeRegistry<AspectType>> REGISTRY = ASPECTS.makeRegistry(() -> new RegistryBuilder<AspectType>()
-                    .disableSaving()
-                    .disableOverrides()
-                    .setName(ASPECT_REGISTRY_KEY.location())
-    );
+    public static final Supplier<IForgeRegistry<AspectType>> REGISTRY = ASPECTS.makeRegistry(() -> new RegistryBuilder<AspectType>().disableSaving());
 
     public static int id = 0;
 
@@ -76,7 +72,6 @@ public class AspectRegistry {
 
     public static void register(IEventBus eventBus) {
         ASPECTS.register(eventBus);
-        //eventBus.register(AspectRegistry::clientSetup);
     }
 
     public static ArrayList<AspectType> getAspects() {
